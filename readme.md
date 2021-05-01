@@ -1,5 +1,5 @@
 # Jet-Bring
 ## Componenti
-    - Matteo Lando
-    - Paolo Ostan
-    - Stefano Leggio
+- Matteo Lando
+- Paolo Ostan
+- Stefano Leggio
