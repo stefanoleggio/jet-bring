@@ -21,7 +21,7 @@ val lightGrey: Color = Color(0xff4c636b)
 val darkGrey: Color = Color(0xff303e47)
 
 
-class JetBringActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
