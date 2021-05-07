@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import androidx.compose.material.Icon
@@ -15,10 +14,6 @@ import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
 import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import com.example.jet_bring.ui.theme.JetbringTheme
-
-
-val lightGrey: Color = Color(0xff4c636b)
-val darkGrey: Color = Color(0xff303e47)
 
 
 class MainActivity : AppCompatActivity() {
@@ -35,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                     Scaffold(
                         topBar = {
                             TopAppBar(title = { Text(text = title.value) },
-                                backgroundColor = lightGrey,
+                                backgroundColor = MaterialTheme.colors.primaryVariant,
                                 actions = {
                                     IconButton(onClick = {}) {
                                         Icon(Icons.Rounded.Email, contentDescription = "Localized description")
@@ -46,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
                         bottomBar = {
                             val items = listOf(Screen.Liste, Screen.Ispirazione, Screen.Profilo)
-                            BottomNavigation(backgroundColor = lightGrey) {
+                            BottomNavigation(backgroundColor = MaterialTheme.colors.primary) {
                                 val navBackStackEntry by navController.currentBackStackEntryAsState()
                                 val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
                                 items.forEach {
