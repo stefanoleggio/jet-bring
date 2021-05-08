@@ -22,62 +22,49 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetbringTheme  {
-                val navController = rememberNavController()
-                val title = remember { mutableStateOf("Liste") }
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(title = { Text(text = title.value) },
-                                backgroundColor = MaterialTheme.colors.primaryVariant,
-                                actions = {
-                                    IconButton(onClick = {}) {
-                                        Icon(Icons.Rounded.Email, contentDescription = "Localized description")
-
-                                    }
-                                })
-                        },
-
-                        bottomBar = {
-                            val items = listOf(Screen.Liste, Screen.Ispirazione, Screen.Profilo)
-                            BottomNavigation(backgroundColor = MaterialTheme.colors.primary) {
-                                val navBackStackEntry by navController.currentBackStackEntryAsState()
-                                val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-                                items.forEach {
-                                    BottomNavigationItem(
-
-                                        icon = {
-                                            Icon(
-                                                it.icon,
-                                                contentDescription = "Localized description"
-                                            )
-                                        },
-                                        selected = currentRoute == it.route,
-                                        label = { Text(text = it.label) },
-                                        onClick = {
-                                            navController.popBackStack(
-                                                navController.graph.startDestination, false
-                                            )
-                                            if (currentRoute != it.route) {
-                                                navController.navigate(it.route)
-                                            }
-                                        })
-                                }
-                            }
-                        }
-                    ) {
-                        ScreenController(navController, title)
-                    }
-                }
+                MainScreen()
             }
         }
     }
 }
 
+
 @Composable
-fun ScreenController(navController: NavHostController, topBarTitle: MutableState<String>) {
-    NavHost(navController = navController, startDestination = "Liste") {
+fun MainScreen() {
+
+    val navController = rememberNavController()
+    val title = remember { mutableStateOf("Liste") }
+
+    val bottomNavigationItems = listOf(
+        Screen.Liste,
+        Screen.Ispirazione,
+        Screen.Profilo,
+    )
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(text = title.value) },
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+                actions = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Rounded.Email, contentDescription = "Localized description")
+
+                    }
+                })
+        },
+        bottomBar = {
+            AppBottomNavigation(navController, bottomNavigationItems)
+        },
+    ) {
+        MainScreenNavigationConfigurations(navController,title)
+    }
+}
+
+@Composable
+private fun MainScreenNavigationConfigurations(
+    navController: NavHostController,
+    topBarTitle: MutableState<String>
+) {
+    NavHost(navController, startDestination = "Liste") {
         composable("Liste") {
             ListeScreen()
             topBarTitle.value = "Liste"
@@ -92,6 +79,40 @@ fun ScreenController(navController: NavHostController, topBarTitle: MutableState
             ProfiloScreen()
             topBarTitle.value = "Profilo"
         }
-
     }
+}
+
+@Composable
+private fun AppBottomNavigation(
+    navController: NavHostController,
+    items: List<Screen>
+) {
+    BottomNavigation {
+        val currentRoute = currentRoute(navController)
+        items.forEach { screen ->
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        screen.icon,
+                        contentDescription = ""
+                    )
+                },
+                label = { Text(text = screen.label) },
+                selected = currentRoute == screen.route,
+                onClick = {
+                    // This if check gives us a "singleTop" behavior where we do not create a
+                    // second instance of the composable if we are already on that destination
+                    if (currentRoute != screen.route) {
+                        navController.navigate(screen.route)
+                    }
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }
