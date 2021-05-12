@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import androidx.navigation.compose.popUpTo
 
 @Composable
 fun ListeScreen(navController: NavHostController) {
@@ -70,7 +71,10 @@ fun CategoryCard(navController: NavHostController, title: String, route: String)
                 end = 10.dp
             )
             .clickable {
-                navController.navigate(route)
+                navController.navigate(route){
+                    popUpTo = navController.graph.startDestination
+                }
+
             }
             .fillMaxWidth(),
         elevation = 8.dp,

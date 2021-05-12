@@ -83,7 +83,10 @@ fun AppBottomNavigation(
                 selected = currentRoute == screen.route,
                 onClick = {
                     if (currentRoute != screen.route) {
-                        navController.navigate(screen.route)
+                        navController.navigate(screen.route) {
+                            popUpTo = navController.graph.startDestination
+                            launchSingleTop = true
+                        }
                     }
                 }
             )
