@@ -1,11 +1,13 @@
 package com.example.jet_bring.ui.profilo
 
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -19,12 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.theme.JetbringTheme
 val padding = 16.dp
 @Composable
@@ -35,7 +39,7 @@ fun ProfiloScreen() {
     JetbringTheme() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-        ) {
+            contentPadding = PaddingValues(padding,padding)) {
             //item{Spacer(Modifier.size(padding))}
             item{Text(
                 "Hi, $name",
@@ -53,15 +57,14 @@ fun ProfiloScreen() {
                         color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
 
                         ) {
-                        //image goes here
+                        /*TODO putting here an image*/
                     }
                 }
             }
             item {Spacer(Modifier.size(padding))}
-            item {
-
-                Table("stocazzo",Icons.Default.Settings)
-
+            items(items = tableDataList) {
+                Table(it.title,it.iconTitle)
+                Spacer(Modifier.padding(padding))
             }
         }
         /*
@@ -89,18 +92,16 @@ private fun Table(
         color = MaterialTheme.colors.surface
 
     ) {
-        Column(Modifier
-            .padding(PaddingValues(
-                start = padding,
-                top = padding,
-                end = 5.dp,
-                bottom = padding
-            )
-            )
+        Column(
         ) {
             HeaderBox(title = title, icon = iconTitle)
             Spacer(modifier = Modifier.padding(padding/4))
             Surface(
+                Modifier
+                    .padding(PaddingValues(
+                            start = padding,
+                            end = padding/4
+                        )),
                 color = MaterialTheme.colors.background
             ){
                 Spacer( modifier = Modifier
@@ -110,6 +111,7 @@ private fun Table(
             }
 
             Text(text = "ciao")
+            //ClickableBox(title = "My new Box", onItemClicked = ListeScreen())
         }
     }
 }
@@ -123,6 +125,12 @@ private fun HeaderBox(
         Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colors.surface)
+            .padding(PaddingValues(
+                start = padding,
+                top = padding,
+                end = 5.dp
+            )
+        )
     )
     {
         Icon(
@@ -133,30 +141,40 @@ private fun HeaderBox(
         //
     }
 }
-/*
+
 @Composable
 private fun ClickableBox(
     title: String,
-    onClick -> JUnit
+
 ) {
-    Surface(Modifier.clickable(onClick = onClick)) {
+    Surface(
+        Modifier
+            .padding(padding / 4)
+            .fillMaxWidth()
+    ) {
+        Text(text = title)
     }
 }
-*/
+
 
 @Composable
 @Preview
 fun ScreenPreview() {
     ProfiloScreen()
 }
-/*
+
 @Composable
 @Preview
-fun tablePreview() {
-    table(
-        "ciaociao",
+fun TablePreview() {
+    Table(
+        "tablePreview",
         Icons.Default.Settings
 
     )
 }
-*/
+
+@Composable
+@Preview
+fun ClickableBoxPreview() {
+    ClickableBox("Clickable Box Preview")
+}
