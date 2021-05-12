@@ -1,21 +1,164 @@
 package com.example.jet_bring.ui.profilo
 
+import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.example.jet_bring.ui.theme.JetbringTheme
+val padding = 16.dp
 @Composable
-fun ProfiloScreen() {
-    Text(text = "Profilo",
+fun ProfiloScreen(mypadding: PaddingValues) {
+    val fontSize = 24.sp
+    val name = "Ciccio"
+
+    JetbringTheme() {
+        LazyColumn(
+            modifier = Modifier.fillMaxWidth(),
+            contentPadding = mypadding
+        ) {
+            //item{Spacer(Modifier.size(padding))}
+            item{Text(
+                "Hi, $name",
+                style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = fontSize )
+            )}
+            item{Spacer(Modifier.size(padding))}
+
+            item {
+                Column(modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,) {
+                    Surface(
+                        modifier = Modifier
+                            .size(150.dp),
+                        shape = CircleShape,
+                        color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
+
+                        ) {
+                        //image goes here
+                    }
+                }
+            }
+            item {Spacer(Modifier.size(padding))}
+            item {
+
+                Table("stocazzo",Icons.Default.Settings)
+
+            }
+        }
+        /*
+    Text(
+        text = "Profilo",
         style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
         textAlign = TextAlign.Center,
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background))
+            .background(MaterialTheme.colors.background)
+    )
+     */
+    }
 }
+
+@Composable
+private fun Table(
+    title: String,
+    iconTitle:ImageVector
+)   {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth(),
+        shape= RoundedCornerShape(10.dp),
+        color = MaterialTheme.colors.surface
+
+    ) {
+        Column(Modifier
+            .padding(PaddingValues(
+                start = padding,
+                top = padding,
+                end = 5.dp,
+                bottom = padding
+            )
+            )
+        ) {
+            HeaderBox(title = title, icon = iconTitle)
+            Spacer(modifier = Modifier.padding(padding/4))
+            Surface(
+                color = MaterialTheme.colors.background
+            ){
+                Spacer( modifier = Modifier
+                    .padding(1.dp)
+                    .fillMaxWidth()
+                )
+            }
+
+            Text(text = "ciao")
+        }
+    }
+}
+
+@Composable
+private fun HeaderBox(
+    title: String,
+    icon:ImageVector
+) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.surface)
+    )
+    {
+        Icon(
+            icon,
+            contentDescription = null)
+        Spacer(modifier = Modifier.padding(padding/4))
+        Text(text = title)
+        //
+    }
+}
+/*
+@Composable
+private fun ClickableBox(
+    title: String,
+    onClick -> JUnit
+) {
+    Surface(Modifier.clickable(onClick = onClick)) {
+    }
+}
+*/
+/*
+@Composable
+@Preview
+fun ScreenPreview() {
+    ProfiloScreen()
+}*/
+/*
+@Composable
+@Preview
+fun tablePreview() {
+    table(
+        "ciaociao",
+        Icons.Default.Settings
+
+    )
+}
+
+ */
