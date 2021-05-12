@@ -9,9 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 
 @Composable
-fun ProfiloScreen() {
+fun ProfiloScreen(navController: NavHostController) {
     Text(text = "Profilo",
         style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
         textAlign = TextAlign.Center,

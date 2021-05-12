@@ -5,9 +5,10 @@ import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 
 @Composable
-fun IspirazioneScreen() {
+fun IspirazioneScreen(navController: NavHostController) {
     LazyColumn {
         // Add a single item
         item {
