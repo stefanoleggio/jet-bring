@@ -28,14 +28,13 @@ import androidx.compose.ui.unit.sp
 import com.example.jet_bring.ui.theme.JetbringTheme
 val padding = 16.dp
 @Composable
-fun ProfiloScreen(mypadding: PaddingValues) {
+fun ProfiloScreen() {
     val fontSize = 24.sp
     val name = "Ciccio"
 
     JetbringTheme() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
-            contentPadding = mypadding
         ) {
             //item{Spacer(Modifier.size(padding))}
             item{Text(
@@ -144,12 +143,12 @@ private fun ClickableBox(
     }
 }
 */
-/*
+
 @Composable
 @Preview
 fun ScreenPreview() {
     ProfiloScreen()
-}*/
+}
 /*
 @Composable
 @Preview
@@ -160,5 +159,4 @@ fun tablePreview() {
 
     )
 }
-
- */
+*/
