@@ -1,5 +1,6 @@
 package com.example.jet_bring
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Email
@@ -11,6 +12,7 @@ import com.example.jet_bring.navigation.AppBottomNavigation
 import com.example.jet_bring.navigation.NavigationManager
 import com.example.jet_bring.navigation.Screen
 
+@ExperimentalFoundationApi
 @Composable
 fun JetbringApp() {
     val title = remember { mutableStateOf("Liste") }
