@@ -4,8 +4,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.KEY_ROUTE
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.navigation.AppBottomNavigation
 import com.example.jet_bring.navigation.NavigationManager
@@ -23,16 +27,22 @@ fun JetbringApp() {
     )
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = title.value) },
-                backgroundColor = MaterialTheme.colors.primaryVariant,
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Rounded.Email, contentDescription = "Localized description")
-                    }
-                })
+            if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
+                TopAppBar(title = { Text(text = title.value) },
+                    backgroundColor = MaterialTheme.colors.primaryVariant,
+                    actions = {
+                        IconButton(onClick = {}) {
+                            Icon(Icons.Rounded.Email, contentDescription = "Localized description")
+                        }
+                    })
+            }
         },
         bottomBar = {
-            AppBottomNavigation(navController, bottomNavigationItems)
+
+            if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
+                AppBottomNavigation(navController, bottomNavigationItems)
+            }
+
         },
         content = {
             itemPadding -> NavigationManager(navController, title,itemPadding)
@@ -40,4 +50,9 @@ fun JetbringApp() {
     )
 
 
+}
+@Composable
+public fun currentRoute(navController: NavHostController): String? {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }

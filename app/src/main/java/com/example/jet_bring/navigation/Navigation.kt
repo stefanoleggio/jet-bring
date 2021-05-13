@@ -11,8 +11,11 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
+import com.example.jet_bring.ui.ispirazione.components.Ricetta
+import com.example.jet_bring.ui.ispirazione.components.RicetteDetails
 import com.example.jet_bring.ui.liste.CategoryScreen
 import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.ProfiloScreen
@@ -21,7 +24,7 @@ import com.example.jet_bring.ui.profilo.ProfiloScreen
 fun NavigationManager (
     navController: NavHostController,
     topBarTitle: MutableState<String>,
-    screenPadding: PaddingValues
+    screenPadding: PaddingValues,
 ){
     NavHost(navController, startDestination = "liste") {
 
@@ -56,6 +59,20 @@ fun NavigationManager (
             CategoryScreen(navController)
             topBarTitle.value = "Frutta e verdura"
         }
+
+        /*
+        *
+        *   Routes Ispirazione
+        *
+        */
+
+        composable("ispirazione/ricetteDetails/{ricettaId}", arguments =  listOf(navArgument("ricettaId") { type = NavType.StringType   ; defaultValue = "1"})
+                ) { backStackEntry ->
+            RicetteDetails(navController, backStackEntry.arguments!!.getString("ricettaId"))
+            topBarTitle.value = "Ricetta"
+        }
+
+
     }
 }
 
