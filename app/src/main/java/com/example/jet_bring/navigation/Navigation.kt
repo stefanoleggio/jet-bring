@@ -1,5 +1,6 @@
 package com.example.jet_bring.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
@@ -19,7 +20,8 @@ import com.example.jet_bring.ui.profilo.ProfiloScreen
 @Composable
 fun NavigationManager (
     navController: NavHostController,
-    topBarTitle: MutableState<String>
+    topBarTitle: MutableState<String>,
+    screenPadding: PaddingValues
 ){
     NavHost(navController, startDestination = "liste") {
 
@@ -40,7 +42,7 @@ fun NavigationManager (
         }
 
         composable("profilo") {
-            ProfiloScreen(navController)
+            ProfiloScreen(navController,screenPadding)
             topBarTitle.value = "Profilo"
         }
 

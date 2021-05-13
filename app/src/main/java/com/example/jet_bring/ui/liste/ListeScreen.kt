@@ -1,5 +1,4 @@
 package com.example.jet_bring.ui.liste
-
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -108,3 +107,4 @@ fun CategoryCard(navController: NavHostController, title: String, route: String)
         }
     }
 }
+

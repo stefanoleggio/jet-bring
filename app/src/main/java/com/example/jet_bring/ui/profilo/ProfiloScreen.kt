@@ -12,11 +12,27 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 
 @Composable
-fun ProfiloScreen(navController: NavHostController) {
-    Text(text = "Profilo",
-        style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background))
+fun ProfiloScreen(navController: NavHostController,scafPaddingValues: PaddingValues) {
+    LazyColumn(itemPadding = scafPaddingValues) {
+
+        item() {Text(
+            text = "Profilo",
+            style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+        )
+    }
+    }
+    items(20) {
+        Text(
+            text = "Profilo $it",
+            style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+        )
+    }
 }

@@ -34,7 +34,10 @@ fun JetbringApp() {
         bottomBar = {
             AppBottomNavigation(navController, bottomNavigationItems)
         },
-    ) {
-        NavigationManager(navController, title)
-    }
+        content = {
+            itemPadding -> NavigationManager(navController, title,itemPadding)
+                  },
+    )
+
+
 }
