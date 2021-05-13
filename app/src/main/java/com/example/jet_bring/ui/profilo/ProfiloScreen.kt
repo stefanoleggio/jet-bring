@@ -1,7 +1,9 @@
 package com.example.jet_bring.ui.profilo
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,26 +15,28 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun ProfiloScreen(navController: NavHostController,scafPaddingValues: PaddingValues) {
-    LazyColumn(itemPadding = scafPaddingValues) {
+    LazyColumn(contentPadding = scafPaddingValues) {
 
-        item() {Text(
-            text = "Profilo",
-            style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background)
-        )
-    }
-    }
-    items(20) {
-        Text(
-            text = "Profilo $it",
-            style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background)
-        )
+        item() {
+            Text(
+                text = "Profilo",
+                style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.background)
+            )
+        }
+
+        items(21) {
+            Text(
+                text = "Profilo $it",
+                style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(MaterialTheme.colors.background)
+            )
+        }
     }
 }
