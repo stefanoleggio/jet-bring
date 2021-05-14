@@ -29,8 +29,8 @@ fun ProfiloScreen(
     scafPaddingValues: PaddingValues
 ) {
     val fontSize = 24.sp
-    val name = "Ciccio"
-
+    val name = "Ciccio" /*TODO sostituire con user.name*/
+    val email = "CiccioEmail@gmail.com" /*TODO sostituire con user.email*/
     JetbringTheme() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -51,11 +51,14 @@ fun ProfiloScreen(
             item {
                 Column(modifier = Modifier
                     .fillMaxWidth()
-                    .clickable {
-                        navController.navigate("profilo/ilTuoProfilo") {
-                            popUpTo = navController.graph.startDestination
-                        }
-                    },
+                    .clickable(
+                        onClick= {
+                            navController.navigate("profilo/ilTuoProfilo") {
+                                popUpTo = navController.graph.startDestination
+                            }
+                        },
+
+                    ),
                     horizontalAlignment = Alignment.CenterHorizontally,) {
                     Surface(
                         modifier = Modifier
@@ -70,6 +73,13 @@ fun ProfiloScreen(
                         )
 
                     }
+                    Spacer(modifier = Modifier.padding(padding/2))
+                    Text(text = name,
+                    color = MaterialTheme.colors.onBackground
+                        ) /*TODO inserire userData.name qui quando pronto*/
+                    Text(text = email,
+                        color = MaterialTheme.colors.onBackground
+                    ) /*TODO inserire userData.email qui quando pronto*/
                 }
             }
             item {Spacer(Modifier.size(padding))}
@@ -90,11 +100,11 @@ fun ProfiloScreen(
      */
     }
 }
-/*
+
 @Composable
 @Preview
-fun ScreenPreview() {
+fun ProfiloScreenPreview() {
     ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp))
 }
-*/
+
 

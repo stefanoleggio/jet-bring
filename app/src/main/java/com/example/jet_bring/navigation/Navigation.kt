@@ -6,9 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
@@ -19,6 +17,8 @@ import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.ViewModel
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.profilo.UserData
 
 @ExperimentalComposeUiApi
@@ -28,11 +28,8 @@ fun NavigationManager (
     topBarTitle: MutableState<String>,
     screenPadding: PaddingValues,
 ){
-
+    val profileViewModel = ProfiloViewModel()
     NavHost(navController, startDestination = "liste") {
-
-
-
 
         /*
         *
@@ -79,7 +76,7 @@ fun NavigationManager (
             topBarTitle.value = "info su jet-Bring"
         }
         composable("profilo/ilTuoProfilo") {
-            IlTuoProfilo()
+            IlTuoProfilo(profileViewModel.user.name,profileViewModel.user.email,profileViewModel::editProfileName,profileViewModel::editProfileEmail)
             topBarTitle.value = "Il tuo Profilo"
         }
 

@@ -4,6 +4,7 @@ import android.graphics.drawable.Icon
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -11,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
+import androidx.compose.material.ButtonDefaults.outlinedButtonColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Person
@@ -32,14 +34,18 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 
 @ExperimentalComposeUiApi
 @Composable
-fun IlTuoProfilo() {
-    val user  = UserData()
+fun IlTuoProfilo(username: String,
+                 userEmail: String,
+                 modifiedName: (String)-> Unit,
+                 modifiedEmail: (String) -> Unit
+) {
+    /*
     val (username:String, modifiedName) = remember {
         mutableStateOf(user.name)
     }
     val (userEmail:String, modifiedEmail) = remember {
         mutableStateOf(user.email)
-    }
+    }*/
     JetbringTheme() {
         Column {
             //Spacer(modifier = Modifier.padding(padding))
@@ -51,7 +57,9 @@ fun IlTuoProfilo() {
                 horizontalArrangement = Arrangement.Center
             ) {
                 Surface(
-                    modifier = Modifier.size(100.dp),
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clickable {},
                     shape = CircleShape,
                     color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
 
@@ -75,6 +83,22 @@ fun IlTuoProfilo() {
                 text = userEmail,
                 modifiedEmail
             )
+            Row(Modifier.padding(padding)
+                .fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+            ) {
+                Button(
+                    onClick = { /*TODO save action for profile data*/ },
+                    Modifier,
+                    colors = outlinedButtonColors(
+                        backgroundColor = MaterialTheme.colors.secondary,
+                        contentColor = MaterialTheme.colors.onSurface
+                    )
+                )
+                {
+                    Text("Salva")
+                }
+            }
         }
     }
 }
@@ -102,8 +126,11 @@ fun ProfileInputRow(
             shape = RoundedCornerShape(10.dp),
             color = MaterialTheme.colors.surface,
             ) {
-            Column(Modifier.padding(start = padding)) {
-                Text(text = title)
+            Column() {
+                Text(
+                    text = title,
+                    modifier =Modifier.padding(start = padding)
+                )
                 InputText(text = text, onModifiedText, modifier = Modifier.fillMaxWidth())
             }
         }
@@ -115,7 +142,7 @@ fun ProfileInputRow(
 @Preview
 @Composable
 fun IlTuoProfiloPreview() {
-    IlTuoProfilo()
+    IlTuoProfilo("ciao", "ciao",{},{})
 }
 
 @ExperimentalComposeUiApi
