@@ -6,11 +6,15 @@ import androidx.compose.material.icons.rounded.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.navigation.AppBottomNavigation
 import com.example.jet_bring.navigation.NavigationManager
 import com.example.jet_bring.navigation.Screen
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.ui.profilo.UserData
 
+@ExperimentalComposeUiApi
 @Composable
 fun JetbringApp() {
     val title = remember { mutableStateOf("Liste") }
@@ -35,7 +39,11 @@ fun JetbringApp() {
             AppBottomNavigation(navController, bottomNavigationItems)
         },
         content = {
-            itemPadding -> NavigationManager(navController, title,itemPadding)
+            itemPadding -> NavigationManager(
+                navController,
+                title,
+                itemPadding,
+            )
                   },
     )
 

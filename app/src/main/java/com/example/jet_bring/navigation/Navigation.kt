@@ -15,15 +15,24 @@ import androidx.navigation.compose.*
 import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
 import com.example.jet_bring.ui.liste.CategoryScreen
 import com.example.jet_bring.ui.liste.ListeScreen
+import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.jet_bring.ui.profilo.UserData
 
+@ExperimentalComposeUiApi
 @Composable
 fun NavigationManager (
     navController: NavHostController,
     topBarTitle: MutableState<String>,
-    screenPadding: PaddingValues
+    screenPadding: PaddingValues,
 ){
+
     NavHost(navController, startDestination = "liste") {
+
+
+
 
         /*
         *
@@ -42,7 +51,10 @@ fun NavigationManager (
         }
 
         composable("profilo") {
-            ProfiloScreen(navController,screenPadding)
+            ProfiloScreen(
+                navController,
+                screenPadding,
+            )
             topBarTitle.value = "Profilo"
         }
 
@@ -56,6 +68,21 @@ fun NavigationManager (
             CategoryScreen(navController)
             topBarTitle.value = "Frutta e verdura"
         }
+
+        /*
+        *
+        *   Routes Profilo
+        *
+        */
+        composable("profilo/InfoJetBring") {
+            CategoryScreen(navController)
+            topBarTitle.value = "info su jet-Bring"
+        }
+        composable("profilo/ilTuoProfilo") {
+            IlTuoProfilo()
+            topBarTitle.value = "Il tuo Profilo"
+        }
+
     }
 }
 
