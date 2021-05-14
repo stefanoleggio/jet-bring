@@ -10,13 +10,13 @@ class ProfiloViewModel : ViewModel() {
     var user by mutableStateOf(UserData())
 
     fun editProfileName(userName:String) {
-        user.name = userName
+        user = UserData(userName,user.email,user.profileIcon)
     }
     fun editProfileEmail(userEmail:String) {
-        user.email = userEmail
+        user = UserData(user.name,userEmail,user.profileIcon)
     }
     fun editProfileIcon(userMod: UserData) {
-        user.profileIcon = userMod.profileIcon
+        user = userMod
     }
 
     fun onEditDone() {}

@@ -29,15 +29,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.theme.JetbringTheme
 
 @ExperimentalComposeUiApi
 @Composable
-fun IlTuoProfilo(username: String,
-                 userEmail: String,
-                 modifiedName: (String)-> Unit,
-                 modifiedEmail: (String) -> Unit
+fun IlTuoProfilo(
+                profiloViewModel: ProfiloViewModel
 ) {
     /*
     val (username:String, modifiedName) = remember {
@@ -74,17 +73,19 @@ fun IlTuoProfilo(username: String,
             ProfileInputRow(
                 icon = Icons.Rounded.Person,
                 title = "Come ti chiamano i tuoi amici?",
-                text = username,
-                modifiedName
+                text = profiloViewModel.user.name,
+                onModifiedText = profiloViewModel::editProfileName
             )
             ProfileInputRow(
                 icon = Icons.Rounded.Email,
                 title = "Qual è la tua email?",
-                text = userEmail,
-                modifiedEmail
+                text = profiloViewModel.user.email,
+                onModifiedText = profiloViewModel::editProfileEmail
             )
-            Row(Modifier.padding(padding)
-                .fillMaxWidth(),
+            Row(
+                Modifier
+                    .padding(padding)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
             ) {
                 Button(
@@ -142,7 +143,7 @@ fun ProfileInputRow(
 @Preview
 @Composable
 fun IlTuoProfiloPreview() {
-    IlTuoProfilo("ciao", "ciao",{},{})
+    IlTuoProfilo(viewModel())
 }
 
 @ExperimentalComposeUiApi

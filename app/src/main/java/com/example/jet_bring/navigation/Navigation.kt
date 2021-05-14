@@ -51,6 +51,7 @@ fun NavigationManager (
             ProfiloScreen(
                 navController,
                 screenPadding,
+                profileViewModel
             )
             topBarTitle.value = "Profilo"
         }
@@ -76,7 +77,9 @@ fun NavigationManager (
             topBarTitle.value = "info su jet-Bring"
         }
         composable("profilo/ilTuoProfilo") {
-            IlTuoProfilo(profileViewModel.user.name,profileViewModel.user.email,profileViewModel::editProfileName,profileViewModel::editProfileEmail)
+            IlTuoProfilo(
+                profileViewModel
+            )
             topBarTitle.value = "Il tuo Profilo"
         }
 

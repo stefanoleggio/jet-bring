@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
@@ -26,11 +27,10 @@ val padding = 16.dp
 @Composable
 fun ProfiloScreen(
     navController: NavHostController,
-    scafPaddingValues: PaddingValues
+    scafPaddingValues: PaddingValues,
+    profiloViewModel: ProfiloViewModel
 ) {
     val fontSize = 24.sp
-    val name = "Ciccio" /*TODO sostituire con user.name*/
-    val email = "CiccioEmail@gmail.com" /*TODO sostituire con user.email*/
     JetbringTheme() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -43,7 +43,7 @@ fun ProfiloScreen(
         ) {
 
             item{Text(
-                "Hi, ${name}",
+                "Hi, ${profiloViewModel.user.name}",
                 style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = fontSize )
             )}
             item{Spacer(Modifier.size(padding))}
@@ -74,10 +74,10 @@ fun ProfiloScreen(
 
                     }
                     Spacer(modifier = Modifier.padding(padding/2))
-                    Text(text = name,
+                    Text(text = profiloViewModel.user.name,
                     color = MaterialTheme.colors.onBackground
                         ) /*TODO inserire userData.name qui quando pronto*/
-                    Text(text = email,
+                    Text(text = profiloViewModel.user.email,
                         color = MaterialTheme.colors.onBackground
                     ) /*TODO inserire userData.email qui quando pronto*/
                 }
@@ -104,7 +104,7 @@ fun ProfiloScreen(
 @Composable
 @Preview
 fun ProfiloScreenPreview() {
-    ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp))
+    ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),viewModel())
 }
 
 
