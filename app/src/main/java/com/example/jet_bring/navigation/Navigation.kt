@@ -1,5 +1,6 @@
 package com.example.jet_bring.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.example.jet_bring.model.CategoryRecovery
 import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
 import com.example.jet_bring.ui.ispirazione.components.Ricetta
 import com.example.jet_bring.ui.ispirazione.components.RicetteDetails
@@ -20,6 +22,7 @@ import com.example.jet_bring.ui.liste.CategoryScreen
 import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 
+@ExperimentalFoundationApi
 @Composable
 fun NavigationManager (
     navController: NavHostController,
@@ -55,9 +58,11 @@ fun NavigationManager (
         *
         */
 
-        composable("liste/frutta-e-verdura") {
-            CategoryScreen(navController)
-            topBarTitle.value = "Frutta e verdura"
+        composable(
+            "liste/{categoryId}") { backStackEntry ->
+            val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
+            CategoryScreen(navController, categoryId)
+            topBarTitle.value = CategoryRecovery.getName(categoryId)
         }
 
         /*
