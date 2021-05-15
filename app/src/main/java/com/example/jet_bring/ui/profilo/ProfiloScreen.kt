@@ -7,10 +7,16 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,13 +58,13 @@ fun ProfiloScreen(
                 Column(modifier = Modifier
                     .fillMaxWidth()
                     .clickable(
-                        onClick= {
+                        onClick = {
                             navController.navigate("profilo/ilTuoProfilo") {
                                 popUpTo = navController.graph.startDestination
                             }
                         },
 
-                    ),
+                        ),
                     horizontalAlignment = Alignment.CenterHorizontally,) {
                     Surface(
                         modifier = Modifier
@@ -84,12 +90,15 @@ fun ProfiloScreen(
             }
             item {Spacer(Modifier.size(padding))}
 
-            item{Table(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController,Unit)}
+            item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController)
+            {}
+            }
             item{Spacer(Modifier.padding(padding))}
             items(items = tableDataList.subList(1, tableDataList.lastIndex)) {
-                Table(it.title,it.iconTitle,navController,Unit)
+                Table(it.title,it.iconTitle,navController) {}
                 Spacer(Modifier.padding(padding))
             }
+
         }
         /*
     Text(
@@ -105,11 +114,76 @@ fun ProfiloScreen(
 }
 
 @Composable
+fun SettingsTable(
+    title: String,
+    iconTitle: ImageVector,
+    navController: NavHostController,
+    content: @Composable () -> Unit
+)   {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth(),
+        shape= RoundedCornerShape(10.dp),
+        color = MaterialTheme.colors.surface
+
+    ) {
+        Column {
+            HeaderBox(title = title, icon = iconTitle)
+            Spacer(modifier = Modifier.padding(padding/4))
+            Surface(
+                Modifier
+                    .padding(PaddingValues(
+                        start = padding,
+                        end = padding/4
+                    )),
+                color = MaterialTheme.colors.background
+            ){
+                Spacer( modifier = Modifier
+                    .padding(1.dp)
+                    .fillMaxWidth()
+                )
+            }
+
+            TwoButtonsRow(
+                "Aspetto della lista",
+                "Tema",
+                {},
+                {},
+                Icons.Default.ShoppingCart,
+                Icons.Default.ShoppingCart
+            ) /*TODO aggiungere azioni bottoni e icone corrette*/
+            ClickableBox(title = "Impostazioni Lista",
+                navController = rememberNavController(),
+                route = "casamia",
+                Icons.Default.List
+            )
+            ClickableBox(title = "Altre Impostazioni",
+                navController = rememberNavController(),
+                route = "casatua"
+            )
+
+        }
+    }
+}
+
+@Composable
 @Preview
 fun ProfiloScreenPreview() {
     ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),
         ProfiloViewModel()
     )
+}
+
+@Composable
+@Preview
+fun SettingsTablePreview() {
+    SettingsTable(
+        title = "Impostazioni",
+        iconTitle = Icons.Default.Settings,
+        navController = rememberNavController()
+    ) {
+
+    }
 }
 
 

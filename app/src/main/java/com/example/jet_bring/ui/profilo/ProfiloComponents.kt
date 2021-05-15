@@ -11,16 +11,22 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -36,7 +42,7 @@ fun Table(
     title: String,
     iconTitle:ImageVector,
     navController: NavHostController,
-    component: Unit
+    content: @Composable () -> Unit
 )   {
     Surface(
         modifier = Modifier
@@ -45,11 +51,11 @@ fun Table(
         color = MaterialTheme.colors.surface
 
     ) {
-        LazyColumn(
+        Column(
         ) {
-            item {HeaderBox(title = title, icon = iconTitle)}
-            item {Spacer(modifier = Modifier.padding(padding/4))}
-                item {Surface(
+            HeaderBox(title = title, icon = iconTitle)
+            Spacer(modifier = Modifier.padding(padding/4))
+            Surface(
                 Modifier
                     .padding(PaddingValues(
                         start = padding,
@@ -61,10 +67,10 @@ fun Table(
                     .padding(1.dp)
                     .fillMaxWidth()
                 )
-            }}
+            }
 
-            item{ClickableBox(title = "liste",navController,"liste")}
-            item{ TwoButtonsRow()}
+            //ClickableBox(title = "liste",navController,"liste")
+
         }
     }
 }
@@ -103,8 +109,9 @@ fun Table(
 fun ClickableBox(
     title: String,
     navController: NavHostController,
-    route: String
-) {
+    route: String,
+    icon: ImageVector? = null,
+    ) {
     Surface(
         Modifier
             .fillMaxWidth()
@@ -114,28 +121,45 @@ fun ClickableBox(
                 }
             }
     ) {
-        Text(text = title,
-            Modifier.padding(padding,padding/2))
+        if(icon!= null) {
+            Row(Modifier.padding(padding,padding/2),
+                verticalAlignment = Alignment.CenterVertically) {
+                Icon(icon, contentDescription = null,)
+                Spacer(modifier = Modifier.padding(padding/4))
+                Text(text = title)
+            }
+        }else {
+            Text(
+                text = title,
+                Modifier.padding(padding, padding / 2)
+            )
+        }
     }
 }
 @Composable
-fun TwoButtonsRow() {
-    Row(Modifier.fillMaxWidth()
-        .padding(padding)) {
-        Button(onClick = {/*TODO inserire metodo per cambiare aspetto lista*/},
-            Modifier.weight(1f)
-        ) {
-            Text("Aspetto della lista")
-        }
+fun TwoButtonsRow(b1Text: String,b2Text:String,b1Click:() -> Unit,b2Click:() -> Unit, icon1: ImageVector,icon2:ImageVector) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(padding)) {
+        MyButton(bText = b1Text, bClick = b1Click, icon = icon1, modifier = Modifier.weight(1f))
         Spacer(Modifier.padding(padding))
-        Button(onClick = {/*TODO inserire metodo per cambiare tema*/},
-            Modifier.weight(1f)
-        ) {
-            Text("Tema")
+        MyButton(bText = b2Text, bClick = b2Click, icon = icon2, modifier = Modifier.weight(1f))
+    }
+}
+@Composable
+fun MyButton(bText: String,bClick:() -> Unit, icon: ImageVector,modifier:Modifier) {
+    Button(
+        onClick = bClick,
+        modifier
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Icon(icon, contentDescription = null)
+            Text(bText,
+            )
         }
     }
 }
-
 @ExperimentalComposeUiApi
 @Composable
 fun InputText(
@@ -166,9 +190,9 @@ fun TablePreview() {
     Table(
         "tablePreview",
         Icons.Default.Settings,
-        rememberNavController(),
-        TwoButtonsRow()
-    )
+        rememberNavController()) {
+        TwoButtonsRow("ciao", "miao",{},{},Icons.Default.Add,Icons.Default.Settings)
+    }
 }
 
 @Composable
@@ -176,9 +200,14 @@ fun TablePreview() {
 fun ClickableBoxPreview() {
     ClickableBox("Clickable Box Preview", rememberNavController(),"liste")
 }
+@Composable
+@Preview
+fun ClickableBoxIconPreview() {
+    ClickableBox("Clickable Box Preview", rememberNavController(),"liste",Icons.Default.Add)
+}
 
 @Composable
 @Preview
 fun TwoButtonsRowPreview() {
-    TwoButtonsRow()
+    TwoButtonsRow("Aspetto della lista", "miao", {},{},Icons.Default.Add,Icons.Default.Settings)
 }
