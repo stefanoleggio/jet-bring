@@ -40,7 +40,7 @@ fun NavigationManager (
         }
 
         composable("ispirazione") {
-            IspirazioneScreen(navController)
+            IspirazioneScreen(navController,screenPadding)
             topBarTitle.value = "Ispirazione"
         }
 

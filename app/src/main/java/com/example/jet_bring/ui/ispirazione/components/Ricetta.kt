@@ -7,7 +7,7 @@ data class Ricetta (
     val id: Int? = null,
     val titolo: String? = null,
     val pubblicatore: String? = null,
-    val immagine: String? = null,
+    val immagine: Int? = null,
     val sourceUrl: String? = null,
     val voti: Int? = 0,
     val descrizione: String? = null,

@@ -1,8 +1,7 @@
 package com.example.jet_bring.ui.ispirazione.components
 
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -13,8 +12,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.jet_bring.R
-import androidx.compose.foundation.indication
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
@@ -24,10 +24,13 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import com.example.jet_bring.ui.ispirazione.ricette
 import com.example.jet_bring.ui.liste.ListeScreen
 
 /**Sezione di navigazione*/
@@ -71,7 +74,7 @@ fun RicetteCard (
             )
             .fillMaxWidth()
             .noRippleClickable {
-                navController.navigate("$route/${ricetta.id}"){
+                navController.navigate("$route/${ricetta.id}") {
                 }
             },
 
@@ -88,7 +91,18 @@ fun RicetteCard (
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
                         .wrapContentWidth(Alignment.Start),
-                    style = MaterialTheme.typography.h6
+                    fontSize = 15.sp
+                )
+
+            }
+            ricetta.descrizione?.let { descrizione ->
+
+                Text(
+                    text = descrizione,
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    fontSize = 15.sp
+
                 )
 
             }
@@ -97,46 +111,34 @@ fun RicetteCard (
                 Text(
                     text = titolo,
                     modifier = Modifier
-                        .fillMaxWidth(0.85f)
+                        .fillMaxWidth()
                         .wrapContentWidth(Alignment.Start),
-                    style = MaterialTheme.typography.h4
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
                 )
 
             }
 
-
+            val image = "R.drawable." + ricetta.immagine
             ricetta.immagine?.let { url ->
                 Image(
-                    painter = painterResource(id = R.drawable.photo_1),
+                    painter = painterResource(id = ricetta.immagine),
                     modifier = Modifier
-                        .fillMaxWidth()
+                        .fillMaxWidth(0.97F)
                         .clip(shape = RoundedCornerShape(16.dp))
-                        .padding(top = 5.dp),
+                        .height(265.dp)
+                        .padding(top = 5.dp)
+                        .align( Alignment.CenterHorizontally ),
+
                     contentScale = ContentScale.Crop,
                     contentDescription = ""
                 )
             }
-            Row(
-
-            ) {
-                Icon(Icons.Rounded.Search, contentDescription = "Localized description")
-                Text(
-                    text = "Vedi la ricetta",
-
-                )
-                Icon(Icons.Rounded.Share, contentDescription = "Localized description")
-                Text(
-                    text = "Condividi"
-                )
-                Icon(Icons.Rounded.Favorite, contentDescription = "Localized description")
-                Text(
-                    text = ricetta.voti.toString()
-                )
-
-            }
+            AlignInRow(ricetta)
 
         }
 
     }
 }
+
 
