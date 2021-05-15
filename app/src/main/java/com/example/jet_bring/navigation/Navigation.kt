@@ -6,9 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -18,14 +16,25 @@ import com.example.jet_bring.ui.ispirazione.components.Ricetta
 import com.example.jet_bring.ui.ispirazione.components.RicetteDetails
 import com.example.jet_bring.ui.liste.CategoryScreen
 import com.example.jet_bring.ui.liste.ListeScreen
+import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import com.example.jet_bring.ui.ispirazione.components.AddRicetta
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.ui.profilo.UserData
 
+@ExperimentalComposeUiApi
 @Composable
 fun NavigationManager (
     navController: NavHostController,
     topBarTitle: MutableState<String>,
-    screenPadding: PaddingValues,
+    screenPadding: PaddingValues = PaddingValues(0.dp),
+    backArrow: MutableState<Boolean>
 ){
+    val profileViewModel = ProfiloViewModel()
     NavHost(navController, startDestination = "liste") {
 
         /*
@@ -37,16 +46,23 @@ fun NavigationManager (
         composable("liste") {
             ListeScreen(navController)
             topBarTitle.value = "Liste"
+            backArrow.value = false
         }
 
         composable("ispirazione") {
             IspirazioneScreen(navController)
             topBarTitle.value = "Ispirazione"
+            backArrow.value = false
         }
 
         composable("profilo") {
-            ProfiloScreen(navController,screenPadding)
+            ProfiloScreen(
+                navController,
+                screenPadding,
+                profileViewModel
+            )
             topBarTitle.value = "Profilo"
+            backArrow.value = false
         }
 
         /*
@@ -60,6 +76,7 @@ fun NavigationManager (
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
             CategoryScreen(navController, categoryId)
             topBarTitle.value = CategoryRecovery.getName(categoryId)
+            backArrow.value = true
         }
 
         /*
@@ -79,6 +96,21 @@ fun NavigationManager (
         }
 
 
+
+        /*
+        *
+        *   Routes Profilo
+        *
+        */
+
+        composable("profilo/ilTuoProfilo") {
+            profileViewModel.notSaved()
+            IlTuoProfilo(
+                profileViewModel
+            )
+            topBarTitle.value = "Il tuo Profilo"
+            backArrow.value = true
+        }
     }
 }
 
