@@ -35,7 +35,8 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 fun Table(
     title: String,
     iconTitle:ImageVector,
-    navController: NavHostController
+    navController: NavHostController,
+    component: Unit
 )   {
     Surface(
         modifier = Modifier
@@ -44,11 +45,11 @@ fun Table(
         color = MaterialTheme.colors.surface
 
     ) {
-        Column(
+        LazyColumn(
         ) {
-            HeaderBox(title = title, icon = iconTitle)
-            Spacer(modifier = Modifier.padding(padding/4))
-            Surface(
+            item {HeaderBox(title = title, icon = iconTitle)}
+            item {Spacer(modifier = Modifier.padding(padding/4))}
+                item {Surface(
                 Modifier
                     .padding(PaddingValues(
                         start = padding,
@@ -60,10 +61,10 @@ fun Table(
                     .padding(1.dp)
                     .fillMaxWidth()
                 )
-            }
+            }}
 
-            ClickableBox(title = "liste",navController,"liste")
-            //ClickableBox(title = "My new Box", onItemClicked = ListeScreen())
+            item{ClickableBox(title = "liste",navController,"liste")}
+            item{ TwoButtonsRow()}
         }
     }
 }
@@ -117,6 +118,23 @@ fun ClickableBox(
             Modifier.padding(padding,padding/2))
     }
 }
+@Composable
+fun TwoButtonsRow() {
+    Row(Modifier.fillMaxWidth()
+        .padding(padding)) {
+        Button(onClick = {/*TODO inserire metodo per cambiare aspetto lista*/},
+            Modifier.weight(1f)
+        ) {
+            Text("Aspetto della lista")
+        }
+        Spacer(Modifier.padding(padding))
+        Button(onClick = {/*TODO inserire metodo per cambiare tema*/},
+            Modifier.weight(1f)
+        ) {
+            Text("Tema")
+        }
+    }
+}
 
 @ExperimentalComposeUiApi
 @Composable
@@ -148,8 +166,8 @@ fun TablePreview() {
     Table(
         "tablePreview",
         Icons.Default.Settings,
-        rememberNavController()
-
+        rememberNavController(),
+        TwoButtonsRow()
     )
 }
 
@@ -157,4 +175,10 @@ fun TablePreview() {
 @Preview
 fun ClickableBoxPreview() {
     ClickableBox("Clickable Box Preview", rememberNavController(),"liste")
+}
+
+@Composable
+@Preview
+fun TwoButtonsRowPreview() {
+    TwoButtonsRow()
 }

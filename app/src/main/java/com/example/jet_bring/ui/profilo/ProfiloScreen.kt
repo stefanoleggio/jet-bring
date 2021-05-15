@@ -83,8 +83,11 @@ fun ProfiloScreen(
                 }
             }
             item {Spacer(Modifier.size(padding))}
-            items(items = tableDataList) {
-                Table(it.title,it.iconTitle,navController)
+
+            item{Table(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController,Unit)}
+            item{Spacer(Modifier.padding(padding))}
+            items(items = tableDataList.subList(1, tableDataList.lastIndex)) {
+                Table(it.title,it.iconTitle,navController,Unit)
                 Spacer(Modifier.padding(padding))
             }
         }
@@ -104,7 +107,9 @@ fun ProfiloScreen(
 @Composable
 @Preview
 fun ProfiloScreenPreview() {
-    ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),ProfiloViewModel())
+    ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),
+        ProfiloViewModel()
+    )
 }
 
 
