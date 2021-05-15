@@ -4,13 +4,13 @@ package com.example.jet_bring.ui.ispirazione.components
  * Data class usata per memorizzare le informazioni delle ricette
  */
 data class Ricetta (
-    val id: Int? = null,
-    val titolo: String? = null,
-    val pubblicatore: String? = null,
-    val immagine: Int? = null,
-    val sourceUrl: String? = null,
-    val voti: Int? = 0,
-    val descrizione: String? = null,
-    val ingredienti: List<String> = listOf(),
-    val dateAdded: String? = null,
+    var id: Int? = 1,
+    var titolo: String? = "titolo",
+    var pubblicatore: String? = "descrizione",
+    var immagine: Int? = null,
+    var sourceUrl: String? = "http://",
+    var voti: Int? = 0,
+    var descrizione: String? = "descrizione",
+    var ingredienti: List<String> = listOf(),
+    var dateAdded: String? = null,
 )

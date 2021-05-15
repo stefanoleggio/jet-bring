@@ -9,17 +9,21 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
+import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
+import com.example.jet_bring.ui.ispirazione.components.AddRicetta
 import com.example.jet_bring.ui.ispirazione.components.Ricetta
 import com.example.jet_bring.ui.ispirazione.components.RicetteDetails
 import com.example.jet_bring.ui.liste.CategoryScreen
 import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 
+@ExperimentalComposeUiApi
 @Composable
 fun NavigationManager (
     navController: NavHostController,
@@ -28,6 +32,7 @@ fun NavigationManager (
 ){
     NavHost(navController, startDestination = "liste") {
 
+        val addRicettaViewModel = AddRicettaViewModel()
         /*
         *
         *   Routes principali
@@ -70,6 +75,10 @@ fun NavigationManager (
                 ) { backStackEntry ->
             RicetteDetails(navController, backStackEntry.arguments!!.getString("ricettaId"))
             topBarTitle.value = "Ricetta"
+        }
+        composable("ispirazione/addRicetta") {
+            AddRicetta(navController, addRicettaViewModel, )
+            topBarTitle.value = "Aggiungi ricetta"
         }
 
 

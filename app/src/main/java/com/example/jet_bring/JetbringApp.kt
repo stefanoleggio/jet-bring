@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.navigation.AppBottomNavigation
 import com.example.jet_bring.navigation.NavigationManager
@@ -52,9 +53,14 @@ fun JetbringApp() {
                   },
         floatingActionButton = {
                 if (currentRoute(navController) == "ispirazione") {
-                    FloatingActionButton(onClick = { /*do something*/}, elevation = FloatingActionButtonDefaults.elevation(8.dp)) {
-                        Icon(Icons.Rounded.Add, contentDescription = null, tint = MaterialTheme.colors.onBackground)
-                    }
+                    FloatingActionButton(
+                        onClick = {
+                            navController.navigate("ispirazione/addRicetta") {
+                            }
+                        },
+                        elevation = FloatingActionButtonDefaults.elevation(8.dp)) {
+                            Icon(Icons.Rounded.Add, contentDescription = null, tint = MaterialTheme.colors.onBackground)
+                        }
                 }
 
         }

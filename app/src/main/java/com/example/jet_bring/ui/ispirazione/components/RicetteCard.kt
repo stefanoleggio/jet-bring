@@ -23,6 +23,7 @@ import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -32,6 +33,7 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.ui.ispirazione.ricette
 import com.example.jet_bring.ui.liste.ListeScreen
+import kotlin.math.min
 
 /**Sezione di navigazione*/
 object MainDestinations {
@@ -78,6 +80,7 @@ fun RicetteCard (
                 }
             },
 
+
         elevation = 0.dp,
         backgroundColor = MaterialTheme.colors.background
 
@@ -122,7 +125,7 @@ fun RicetteCard (
             val image = "R.drawable." + ricetta.immagine
             ricetta.immagine?.let { url ->
                 Image(
-                    painter = painterResource(id = ricetta.immagine),
+                    painter = painterResource(id = ricetta.immagine!!),
                     modifier = Modifier
                         .fillMaxWidth(0.97F)
                         .clip(shape = RoundedCornerShape(16.dp))

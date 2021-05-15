@@ -157,39 +157,11 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
 
 
             }
-            Text(text = "ciao\n\n\n\n\n\n\n\n\n\n\n\n\n\ncisaociao\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "cisaociao\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "\n" +
-                    "cisao")
+            Spacer(modifier = Modifier.height(700.dp))
         }
 
         Button(
-            onClick = { /* Do something! */ },
+            onClick = { navController.popBackStack() },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent
             ),
