@@ -27,6 +27,7 @@ fun NavigationManager (
     navController: NavHostController,
     topBarTitle: MutableState<String>,
     screenPadding: PaddingValues,
+    backArrow: MutableState<Boolean>
 ){
     val profileViewModel = ProfiloViewModel()
     NavHost(navController, startDestination = "liste") {
@@ -40,11 +41,13 @@ fun NavigationManager (
         composable("liste") {
             ListeScreen(navController)
             topBarTitle.value = "Liste"
+            backArrow.value = false
         }
 
         composable("ispirazione") {
             IspirazioneScreen(navController)
             topBarTitle.value = "Ispirazione"
+            backArrow.value = false
         }
 
         composable("profilo") {
@@ -54,6 +57,7 @@ fun NavigationManager (
                 profileViewModel
             )
             topBarTitle.value = "Profilo"
+            backArrow.value = false
         }
 
         /*
@@ -65,6 +69,7 @@ fun NavigationManager (
         composable("liste/frutta-e-verdura") {
             CategoryScreen(navController)
             topBarTitle.value = "Frutta e verdura"
+            backArrow.value = true
         }
 
         /*
@@ -75,6 +80,7 @@ fun NavigationManager (
         composable("profilo/InfoJetBring") {
             CategoryScreen(navController)
             topBarTitle.value = "info su jet-Bring"
+            backArrow.value = true
         }
         composable("profilo/ilTuoProfilo") {
             profileViewModel.notSaved()
@@ -82,6 +88,7 @@ fun NavigationManager (
                 profileViewModel
             )
             topBarTitle.value = "Il tuo Profilo"
+            backArrow.value = true
         }
 
     }

@@ -91,11 +91,11 @@ fun ProfiloScreen(
             item {Spacer(Modifier.size(padding))}
 
             item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController)
-            {}
+
             }
             item{Spacer(Modifier.padding(padding))}
             items(items = tableDataList.subList(1, tableDataList.lastIndex)) {
-                Table(it.title,it.iconTitle,navController) {}
+                Table(it.title,it.iconTitle,navController)
                 Spacer(Modifier.padding(padding))
             }
 
@@ -117,8 +117,7 @@ fun ProfiloScreen(
 fun SettingsTable(
     title: String,
     iconTitle: ImageVector,
-    navController: NavHostController,
-    content: @Composable () -> Unit
+    navController: NavHostController
 )   {
     Surface(
         modifier = Modifier
@@ -181,9 +180,7 @@ fun SettingsTablePreview() {
         title = "Impostazioni",
         iconTitle = Icons.Default.Settings,
         navController = rememberNavController()
-    ) {
-
-    }
+    )
 }
 
 

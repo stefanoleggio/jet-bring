@@ -41,8 +41,7 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 fun Table(
     title: String,
     iconTitle:ImageVector,
-    navController: NavHostController,
-    content: @Composable () -> Unit
+    navController: NavHostController
 )   {
     Surface(
         modifier = Modifier
@@ -155,7 +154,7 @@ fun MyButton(bText: String,bClick:() -> Unit, icon: ImageVector,modifier:Modifie
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(icon, contentDescription = null)
-            Text(bText,
+            Text(bText, /*TODO sistemare dimensione testo*/
             )
         }
     }
@@ -190,9 +189,7 @@ fun TablePreview() {
     Table(
         "tablePreview",
         Icons.Default.Settings,
-        rememberNavController()) {
-        TwoButtonsRow("ciao", "miao",{},{},Icons.Default.Add,Icons.Default.Settings)
-    }
+        rememberNavController())
 }
 
 @Composable
