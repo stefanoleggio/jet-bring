@@ -41,7 +41,7 @@ fun JetbringApp() {
                         }
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.navigateUp() }) {
+                        IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
                                 Icons.Rounded.ArrowBack,
                                 contentDescription = "Localized description"
