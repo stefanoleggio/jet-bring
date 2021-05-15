@@ -104,7 +104,7 @@ fun ProfiloScreen(
 @Composable
 @Preview
 fun ProfiloScreenPreview() {
-    ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),viewModel())
+    ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),ProfiloViewModel())
 }
 
 

@@ -77,6 +77,7 @@ fun NavigationManager (
             topBarTitle.value = "info su jet-Bring"
         }
         composable("profilo/ilTuoProfilo") {
+            profileViewModel.notSaved()
             IlTuoProfilo(
                 profileViewModel
             )

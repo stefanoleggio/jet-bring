@@ -8,17 +8,25 @@ import androidx.lifecycle.ViewModel
 class ProfiloViewModel : ViewModel() {
 
     var user by mutableStateOf(UserData())
+    var temp by mutableStateOf(UserData())
+
 
     fun editProfileName(userName:String) {
-        user = UserData(userName,user.email,user.profileIcon)
+        temp = UserData(userName,user.email,user.profileIcon)
     }
     fun editProfileEmail(userEmail:String) {
-        user = UserData(user.name,userEmail,user.profileIcon)
+        temp = UserData(user.name,userEmail,user.profileIcon)
     }
     fun editProfileIcon(userMod: UserData) {
-        user = userMod
+        temp = userMod
     }
 
-    fun onEditDone() {}
+    fun onSaveDone() {
+        user = temp
+    }
+
+    fun notSaved() {
+        temp = user
+    }
 
 }

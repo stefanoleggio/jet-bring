@@ -38,13 +38,7 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 fun IlTuoProfilo(
                 profiloViewModel: ProfiloViewModel
 ) {
-    /*
-    val (username:String, modifiedName) = remember {
-        mutableStateOf(user.name)
-    }
-    val (userEmail:String, modifiedEmail) = remember {
-        mutableStateOf(user.email)
-    }*/
+
     JetbringTheme() {
         Column {
             //Spacer(modifier = Modifier.padding(padding))
@@ -73,13 +67,13 @@ fun IlTuoProfilo(
             ProfileInputRow(
                 icon = Icons.Rounded.Person,
                 title = "Come ti chiamano i tuoi amici?",
-                text = profiloViewModel.user.name,
+                text = profiloViewModel.temp.name,
                 onModifiedText = profiloViewModel::editProfileName
             )
             ProfileInputRow(
                 icon = Icons.Rounded.Email,
                 title = "Qual è la tua email?",
-                text = profiloViewModel.user.email,
+                text = profiloViewModel.temp.email,
                 onModifiedText = profiloViewModel::editProfileEmail
             )
             Row(
@@ -89,7 +83,7 @@ fun IlTuoProfilo(
                 horizontalArrangement = Arrangement.End,
             ) {
                 Button(
-                    onClick = { /*TODO save action for profile data*/ },
+                    onClick = { profiloViewModel.onSaveDone() },
                     Modifier,
                     colors = outlinedButtonColors(
                         backgroundColor = MaterialTheme.colors.secondary,
@@ -143,7 +137,7 @@ fun ProfileInputRow(
 @Preview
 @Composable
 fun IlTuoProfiloPreview() {
-    IlTuoProfilo(viewModel())
+    IlTuoProfilo(ProfiloViewModel())
 }
 
 @ExperimentalComposeUiApi
