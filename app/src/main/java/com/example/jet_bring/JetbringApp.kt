@@ -61,23 +61,23 @@ fun JetbringApp() {
                 )
             } else if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
                 TopAppBar(title = { Text(text = title.value) },
-                backgroundColor = MaterialTheme.colors.primaryVariant,
-                actions = {
-                IconButton(onClick = {}) {
-                    Icon(Icons.Rounded.Email, contentDescription = "Localized description")
-                }
-            })
+                    backgroundColor = MaterialTheme.colors.primaryVariant,
+                    actions = {
+                        IconButton(onClick = {}) {
+                            Icon(Icons.Rounded.Email, contentDescription = "Localized description")
+                        }
+                    })
             } else {
-            TopAppBar(title = { Text(text = title.value) },
-                backgroundColor = MaterialTheme.colors.primaryVariant,
-                actions = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Rounded.Email, contentDescription = "Localized description")
+                TopAppBar(title = { Text(text = title.value) },
+                    backgroundColor = MaterialTheme.colors.primaryVariant,
+                    actions = {
+                        IconButton(onClick = {}) {
+                            Icon(Icons.Rounded.Email, contentDescription = "Localized description")
 
+                        }
                     }
-                }
-            )
-        }
+                )
+            }
         },
         bottomBar = {
 
@@ -87,24 +87,24 @@ fun JetbringApp() {
 
         },
         content = {
-            itemPadding -> NavigationManager(
-                navController,
-                title,
-                itemPadding,
-                backArrow
-            )
-                  },
+                itemPadding -> NavigationManager(
+            navController,
+            title,
+            itemPadding,
+            backArrow
+        )
+        },
         floatingActionButton = {
-                if (currentRoute(navController) == "ispirazione") {
-                    FloatingActionButton(
-                        onClick = {
-                            navController.navigate("ispirazione/addRicetta") {
-                            }
-                        },
-                        elevation = FloatingActionButtonDefaults.elevation(8.dp)) {
-                            Icon(Icons.Rounded.Add, contentDescription = null, tint = MaterialTheme.colors.onBackground)
+            if (currentRoute(navController) == "ispirazione") {
+                FloatingActionButton(
+                    onClick = {
+                        navController.navigate("ispirazione/addRicetta") {
                         }
+                    },
+                    elevation = FloatingActionButtonDefaults.elevation(8.dp)) {
+                    Icon(Icons.Rounded.Add, contentDescription = null, tint = MaterialTheme.colors.onBackground)
                 }
+            }
 
         }
     )
