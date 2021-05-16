@@ -13,6 +13,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
+import com.example.jet_bring.ui.ispirazione.components.AddRicetta
 import com.example.jet_bring.ui.ispirazione.components.Ricetta
 import com.example.jet_bring.ui.ispirazione.components.RicetteDetails
 import com.example.jet_bring.ui.liste.CategoryScreen
@@ -21,6 +22,7 @@ import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.unit.dp
+import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 
@@ -40,8 +42,8 @@ fun NavigationManager (
      */
 
     val listeViewModel = ListeViewModel()
-
     val profileViewModel  = ProfiloViewModel()
+    val addRicettaViewModel = AddRicettaViewModel()
 
     NavHost(navController, startDestination = "liste") {
 
@@ -99,7 +101,7 @@ fun NavigationManager (
             topBarTitle.value = "Ricetta"
         }
         composable("ispirazione/addRicetta") {
-            //AddRicetta(navController, addRicettaViewModel, )
+            AddRicetta(navController, addRicettaViewModel, )
             topBarTitle.value = "Aggiungi ricetta"
         }
 
