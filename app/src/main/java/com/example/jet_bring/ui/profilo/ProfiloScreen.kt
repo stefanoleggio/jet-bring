@@ -94,7 +94,7 @@ fun ProfiloScreen(
             }
             item{Spacer(Modifier.padding(padding))}
             items(items = tableDataList.subList(1, tableDataList.lastIndex)) {
-                Table(it.title,it.iconTitle,navController)
+                Table(it.title,it.iconTitle,navController,it.list)
                 Spacer(Modifier.padding(padding))
             }
 

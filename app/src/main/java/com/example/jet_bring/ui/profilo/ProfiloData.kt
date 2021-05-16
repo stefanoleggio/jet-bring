@@ -18,17 +18,23 @@ data class UserData(
     var profileIcon: Int = R.drawable.jet_bringicon
 )
 
-data class TitleIcon(
+data class TableData(
     val title: String,
-    val iconTitle: ImageVector
+    val iconTitle: ImageVector,
+    val list: List<CBoxArg> = listOf()
+)
+
+data class CBoxArg(
+    val title: String,
+    val link: String
 )
 
 /*TODO correggere le icone per farle corrispondere a quelle originali*/
-val tableDataList = listOf<TitleIcon>(
-    TitleIcon("Impostazioni", Icons.Default.Settings),
-    TitleIcon("Guida e Consigli",Icons.Default.Info),
-    TitleIcon("Consigliala",Icons.Default.Lock),
-    TitleIcon("Altre Opzioni di Jet-Bring",Icons.Default.ArrowForward),
-    TitleIcon("Altro",Icons.Default.ThumbUp)
+val tableDataList = listOf<TableData>(
+    TableData("Impostazioni", Icons.Default.Settings),
+    TableData("Guida e Consigli",Icons.Default.Info),
+    TableData("Consigliala",Icons.Default.Lock),
+    TableData("Altre Opzioni di Jet-Bring",Icons.Default.ArrowForward),
+    TableData("Altro",Icons.Default.ThumbUp)
 )
 

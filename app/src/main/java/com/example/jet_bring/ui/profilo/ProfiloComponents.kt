@@ -41,7 +41,8 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 fun Table(
     title: String,
     iconTitle:ImageVector,
-    navController: NavHostController
+    navController: NavHostController,
+    boxesArgs: List<CBoxArg>
 )   {
     Surface(
         modifier = Modifier
@@ -68,7 +69,9 @@ fun Table(
                 )
             }
 
-            //ClickableBox(title = "liste",navController,"liste")
+            boxesArgs.forEach() {
+                ClickableBox(title = it.title, navController = navController, route = it.link)
+            }
 
         }
     }
@@ -186,10 +189,18 @@ fun InputText(
 @Composable
 @Preview
 fun TablePreview() {
+    val testList = listOf<CBoxArg>(
+        CBoxArg("ciao","null",),
+        CBoxArg("ciaone","null",),
+        CBoxArg("ciaotto","null",),
+        CBoxArg("ciaello","null",)
+    )
     Table(
         "tablePreview",
         Icons.Default.Settings,
-        rememberNavController())
+        rememberNavController(),
+        testList
+    )
 }
 
 @Composable
