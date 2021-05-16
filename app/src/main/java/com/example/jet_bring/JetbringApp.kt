@@ -41,33 +41,33 @@ fun JetbringApp() {
     )
     Scaffold(
         topBar = {
-            if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
+            if(backArrow.value) {
                 TopAppBar(title = { Text(text = title.value) },
                     backgroundColor = MaterialTheme.colors.primaryVariant,
                     actions = {
                         IconButton(onClick = {}) {
                             Icon(Icons.Rounded.Email, contentDescription = "Localized description")
+
                         }
-                    })
-            } else if(backArrow.value) {
-            TopAppBar(title = { Text(text = title.value) },
+                    },
+                    navigationIcon = {
+                        IconButton(onClick = { navController.popBackStack() }) {
+                            Icon(
+                                Icons.Rounded.ArrowBack,
+                                contentDescription = "Localized description"
+                            )
+                        }
+                    }
+                )
+            } else if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
+                TopAppBar(title = { Text(text = title.value) },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 actions = {
-                    IconButton(onClick = {}) {
-                        Icon(Icons.Rounded.Email, contentDescription = "Localized description")
-
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            Icons.Rounded.ArrowBack,
-                            contentDescription = "Localized description"
-                        )
-                    }
+                IconButton(onClick = {}) {
+                    Icon(Icons.Rounded.Email, contentDescription = "Localized description")
                 }
-            )
-        } else {
+            })
+            } else {
             TopAppBar(title = { Text(text = title.value) },
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 actions = {
