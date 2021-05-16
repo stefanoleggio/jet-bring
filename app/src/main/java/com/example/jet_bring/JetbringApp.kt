@@ -26,6 +26,7 @@ import com.example.jet_bring.navigation.Screen
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.profilo.UserData
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 fun JetbringApp() {
@@ -116,6 +117,7 @@ public fun currentRoute(navController: NavHostController): String? {
     return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 @Preview

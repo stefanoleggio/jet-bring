@@ -1,5 +1,6 @@
 package com.example.jet_bring.navigation
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,10 +23,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.jet_bring.model.CategoryRecovery
 import com.example.jet_bring.ui.ispirazione.components.AddRicetta
+import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.profilo.UserData
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
 fun NavigationManager (
@@ -34,7 +39,16 @@ fun NavigationManager (
     screenPadding: PaddingValues = PaddingValues(0.dp),
     backArrow: MutableState<Boolean>
 ){
-    val profileViewModel = ProfiloViewModel()
+    /*
+     *
+     *  ViewModels
+     *
+     */
+
+    val listeViewModel = ListeViewModel()
+
+    val profileViewModel  = ProfiloViewModel()
+
     NavHost(navController, startDestination = "liste") {
 
         /*
@@ -44,13 +58,13 @@ fun NavigationManager (
         */
 
         composable("liste") {
-            ListeScreen(navController)
+            ListeScreen(navController, listeViewModel)
             topBarTitle.value = "Liste"
             backArrow.value = false
         }
 
         composable("ispirazione") {
-            IspirazioneScreen(navController)
+            IspirazioneScreen(navController, screenPadding)
             topBarTitle.value = "Ispirazione"
             backArrow.value = false
         }
@@ -74,7 +88,7 @@ fun NavigationManager (
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
-            CategoryScreen(navController, categoryId)
+            CategoryScreen(navController, categoryId, listeViewModel)
             topBarTitle.value = CategoryRecovery.getName(categoryId)
             backArrow.value = true
         }
@@ -91,7 +105,7 @@ fun NavigationManager (
             topBarTitle.value = "Ricetta"
         }
         composable("ispirazione/addRicetta") {
-            AddRicetta(navController, addRicettaViewModel, )
+            //AddRicetta(navController, addRicettaViewModel, )
             topBarTitle.value = "Aggiungi ricetta"
         }
 
