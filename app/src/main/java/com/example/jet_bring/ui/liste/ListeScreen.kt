@@ -27,15 +27,11 @@ import com.example.jet_bring.model.*
 @ExperimentalFoundationApi
 @Composable
 fun ListeScreen(navController: NavHostController, listeViewModel: ListeViewModel) {
-
     Column() {
         MyProductsCard(listeViewModel)
         LazyColumn {
-            item {
-                for(category in categories) {
-                    CategoryCard(navController, category)
-                }
-
+            items(listeViewModel.getCategories()) { category->
+                CategoryCard(navController, category)
             }
         }
     }
@@ -56,7 +52,6 @@ fun MyProductsCard(listeViewModel: ListeViewModel) {
             .defaultMinSize(minHeight = 100.dp),
         backgroundColor = MaterialTheme.colors.background,
         elevation = 0.dp
-
     ) {
         Column(
             modifier = Modifier
@@ -68,15 +63,13 @@ fun MyProductsCard(listeViewModel: ListeViewModel) {
                     fontSize = 25.sp
                 )
             } else {
-                //val products = listeViewModel.getProducts()
-                val category: Category = CategoryRecovery.getCategory(1)
                 LazyVerticalGrid(
                     cells = GridCells.Adaptive(minSize = 100.dp),
                     modifier = Modifier
                         .padding(10.dp)
 
                 ) {
-                    items(listeViewModel.getProducts()) { product ->
+                    items(listeViewModel.getSelectedProducts()) { product ->
                         val onButtonClick = rememberSaveable { mutableStateOf(false) }
                         ProductButton(product, onButtonClick, removeSelectedProduct = true, listeViewModel)
                     }

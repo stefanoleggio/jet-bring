@@ -20,15 +20,9 @@ import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.jet_bring.model.CategoryRecovery
-import com.example.jet_bring.ui.ispirazione.components.AddRicetta
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
-import com.example.jet_bring.ui.profilo.UserData
 
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
@@ -39,9 +33,9 @@ fun NavigationManager (
     screenPadding: PaddingValues = PaddingValues(0.dp),
     backArrow: MutableState<Boolean>
 ){
-    /*
+    /**
      *
-     *  ViewModels
+     * ViewModels
      *
      */
 
@@ -51,11 +45,11 @@ fun NavigationManager (
 
     NavHost(navController, startDestination = "liste") {
 
-        /*
-        *
-        *   Routes principali
-        *
-        */
+        /**
+         *
+         * Main routes
+         *
+         */
 
         composable("liste") {
             ListeScreen(navController, listeViewModel)
@@ -79,25 +73,25 @@ fun NavigationManager (
             backArrow.value = false
         }
 
-        /*
-        *
-        *   Routes Liste
-        *
-        */
+        /**
+         *
+         * Liste routes
+         *
+         */
 
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
             CategoryScreen(navController, categoryId, listeViewModel)
-            topBarTitle.value = CategoryRecovery.getName(categoryId)
+            topBarTitle.value = listeViewModel.getCategoryName(categoryId)
             backArrow.value = true
         }
 
-        /*
-        *
-        *   Routes Ispirazione
-        *
-        */
+        /**
+         *
+         * Ispirazione routes
+         *
+         */
 
         composable("ispirazione/ricetteDetails/{ricettaId}", arguments =  listOf(navArgument("ricettaId") { type = NavType.StringType   ; defaultValue = "1"})
                 ) { backStackEntry ->
@@ -111,11 +105,11 @@ fun NavigationManager (
 
 
 
-        /*
-        *
-        *   Routes Profilo
-        *
-        */
+        /**
+         *
+         * Profilo routes
+         *
+         */
 
         composable("profilo/ilTuoProfilo") {
             profileViewModel.notSaved()

@@ -10,12 +10,6 @@ data class Product(
     val icon: Int
 )
 
-object ProductRecovery {
-    fun getProduct(productId: Long): Product {
-        return products.find { productId == it.id }!!
-    }
-}
-
 val products = listOf(
     Product(
         id = 1,

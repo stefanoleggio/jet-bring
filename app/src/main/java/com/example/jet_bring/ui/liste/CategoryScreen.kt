@@ -18,15 +18,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.jet_bring.model.Category
-import com.example.jet_bring.model.CategoryRecovery
 import com.example.jet_bring.model.Product
-import com.example.jet_bring.model.ProductRecovery
 import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
-import com.example.jet_bring.ui.liste.ListeViewModel
 
 @ExperimentalFoundationApi
 @Composable
@@ -36,7 +32,7 @@ fun CategoryScreen(
     listeViewModel: ListeViewModel
 )
 {
-    val category: Category = CategoryRecovery.getCategory(categoryId)
+    val category: Category = listeViewModel.getCategory(categoryId)
     LazyVerticalGrid(
         cells = GridCells.Adaptive(minSize = 120.dp),
         modifier = Modifier
@@ -69,13 +65,13 @@ fun ProductButton(
             .clickable {
 
                 if(removeSelectedProduct) {
-                    listeViewModel.removeProduct(product)
+                    listeViewModel.removeSelectedProduct(product)
                 }
                 else {
                     if(!isProductSelected.value)
-                        listeViewModel.addProduct(product)
+                        listeViewModel.addSelectedProduct(product)
                     else
-                        listeViewModel.removeProduct(product)
+                        listeViewModel.removeSelectedProduct(product)
                 }
                 isProductSelected.value = !isProductSelected.value
 
