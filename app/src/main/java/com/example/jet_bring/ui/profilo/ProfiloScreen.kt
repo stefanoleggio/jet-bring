@@ -60,7 +60,6 @@ fun ProfiloScreen(
                     .clickable(
                         onClick = {
                             navController.navigate("profilo/ilTuoProfilo") {
-                                popUpTo = navController.graph.startDestination
                             }
                         },
 
