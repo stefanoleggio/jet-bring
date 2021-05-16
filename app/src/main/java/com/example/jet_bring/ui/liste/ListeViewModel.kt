@@ -2,6 +2,7 @@ package com.example.jet_bring.ui.liste
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
@@ -47,6 +48,11 @@ class ListeViewModel : ViewModel() {
         val current = ArrayList(this.selectedProducts.value)
         current.remove(product)
         this.selectedProducts.value = current
+    }
+
+    fun containsSelectedProduct(product: Product): Boolean {
+        val current = ArrayList(this.selectedProducts.value)
+        return current.contains(product)
     }
 
     fun getSelectedProducts(): List<Product> {

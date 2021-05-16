@@ -41,7 +41,7 @@ fun CategoryScreen(
     ) {
         items(category.products) { product ->
             val isProductSelected = rememberSaveable { mutableStateOf(false) }
-            ProductButton(product, isProductSelected, removeSelectedProduct = false, listeViewModel)
+            ProductButton(product, removeSelectedProduct = false, listeViewModel)
         }
     }
 }
@@ -49,12 +49,13 @@ fun CategoryScreen(
 @Composable
 fun ProductButton(
     product: Product,
-    isProductSelected: MutableState<Boolean>,
     removeSelectedProduct: Boolean,
     listeViewModel: ListeViewModel
 ) {
 
-    val color = if(removeSelectedProduct) { if(!isProductSelected.value) Roman else BreakerBay } else { if(!isProductSelected.value) BreakerBay else Roman }
+    val selected = listeViewModel.containsSelectedProduct(product)
+
+    val color = if(selected) Roman else BreakerBay
 
     Column(
         modifier = Modifier
@@ -68,13 +69,11 @@ fun ProductButton(
                     listeViewModel.removeSelectedProduct(product)
                 }
                 else {
-                    if(!isProductSelected.value)
-                        listeViewModel.addSelectedProduct(product)
-                    else
+                    if(selected)
                         listeViewModel.removeSelectedProduct(product)
+                    else
+                        listeViewModel.addSelectedProduct(product)
                 }
-                isProductSelected.value = !isProductSelected.value
-
             },
     ) {
         Column(

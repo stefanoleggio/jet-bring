@@ -70,8 +70,7 @@ fun MyProductsCard(listeViewModel: ListeViewModel) {
 
                 ) {
                     items(listeViewModel.getSelectedProducts()) { product ->
-                        val onButtonClick = rememberSaveable { mutableStateOf(false) }
-                        ProductButton(product, onButtonClick, removeSelectedProduct = true, listeViewModel)
+                        ProductButton(product, removeSelectedProduct = true, listeViewModel)
                     }
                 }
             }
