@@ -62,17 +62,20 @@ fun MyProductsCard(listeViewModel: ListeViewModel) {
                     text = "Aggiungi qualcosa!",
                     fontSize = 25.sp
                 )
-            } else {
+            } else {/*
                 LazyVerticalGrid(
                     cells = GridCells.Adaptive(minSize = 100.dp),
                     modifier = Modifier
                         .padding(10.dp)
 
-                ) {
+                )
+                
+                {
                     items(listeViewModel.getSelectedProducts()) { product ->
                         ProductButton(product, removeSelectedProduct = true, listeViewModel)
                     }
-                }
+                }*/
+                ProductColumnMode(listeViewModel = listeViewModel)
             }
         }
     }
