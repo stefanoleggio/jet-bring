@@ -78,51 +78,5 @@ fun MyProductsCard(listeViewModel: ListeViewModel) {
     }
 }
 
-@Composable
-fun CategoryCard(navController: NavHostController, category: Category) {
-    Card(
-        shape = MaterialTheme.shapes.small,
-        modifier = Modifier
-            .padding(
-                top = 4.dp,
-                start = 10.dp,
-                end = 10.dp
-            )
-            .clickable {
-                navController.navigate("liste/" + category.id.toString()) {
-                    //popUpTo = navController.graph.startDestination
-                }
-            }
-            .fillMaxWidth(),
-        elevation = 8.dp,
-    ) {
-        Column(
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Row() {
-                Column(
-                ) {
-                    Text(
-                        text = category.name,
-                        Modifier.padding(10.dp),
-                        style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 25.sp),
-                    )
-                }
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentSize(Alignment.CenterEnd)
-                ) {
-                    Icon(
-                        Icons.Rounded.KeyboardArrowRight,
-                        contentDescription = "Expand",
-                        modifier = Modifier
-                            .size(60.dp)
-                            .padding(5.dp)
-                    )
-                }
-            }
-        }
-    }
-}
+
 
