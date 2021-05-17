@@ -1,12 +1,13 @@
 package com.example.jet_bring.ui.liste
 
+import android.content.res.Resources
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.categories
+import com.example.jet_bring.model.products
 
 class ListeViewModel : ViewModel() {
 
@@ -31,6 +32,29 @@ class ListeViewModel : ViewModel() {
         val category: Category = categories.find { categoryId == it.id }!!
         return category.name
     }
+
+    /**
+     *
+     * Product model methods
+     *
+     */
+
+    fun getProduct(productId: Int): Product {
+        return products.get(productId)
+    }
+
+    /**
+     *
+     * Custom grid
+     *
+     */
+
+    fun calculateColumnsNumber(): Int {
+        var width = Resources.getSystem().displayMetrics.densityDpi
+        var minsize = 120
+        return width/minsize
+    }
+
 
     /**
      *

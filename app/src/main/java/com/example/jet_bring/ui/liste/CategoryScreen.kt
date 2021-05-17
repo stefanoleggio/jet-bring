@@ -1,9 +1,6 @@
 package com.example.jet_bring.ui.liste
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,20 +26,27 @@ import com.example.jet_bring.ui.theme.Roman
 fun CategoryScreen(
     navController: NavHostController,
     categoryId: Long,
+    scafPaddingValues: PaddingValues,
     listeViewModel: ListeViewModel
 )
 {
     val category: Category = listeViewModel.getCategory(categoryId)
-    LazyVerticalGrid(
-        cells = GridCells.Adaptive(minSize = 120.dp),
-        modifier = Modifier
-            .padding(10.dp)
+    val productsPerRow = category.products.chunked(listeViewModel.calculateColumnsNumber())
 
+    Column(
+        Modifier.verticalScroll(rememberScrollState())
+            .padding(top = 40.dp, bottom = 40.dp, start = 10.dp, end = 10.dp)
+            .wrapContentSize(Alignment.CenterEnd)
     ) {
-        items(category.products) { product ->
-            val isProductSelected = rememberSaveable { mutableStateOf(false) }
-            ProductButton(product, removeSelectedProduct = false, listeViewModel)
+        Column {
+            for (products in productsPerRow) {
+                Row() {
+                    for (product in products) {
+                        ProductButton(product, removeSelectedProduct = false, listeViewModel)
+                    }
+                }
+            }
         }
+        Spacer(modifier = Modifier.height(scafPaddingValues.calculateBottomPadding()))
     }
 }
-
