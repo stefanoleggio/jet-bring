@@ -26,14 +26,15 @@ import com.example.jet_bring.model.*
 
 @ExperimentalFoundationApi
 @Composable
-fun ListeScreen(navController: NavHostController, listeViewModel: ListeViewModel) {
+fun ListeScreen(navController: NavHostController, scafPaddingValues: PaddingValues, listeViewModel: ListeViewModel) {
     Column() {
         MyProductsCard(listeViewModel)
         LazyColumn {
-            items(listeViewModel.getCategories()) { category->
+            items(listeViewModel.getCategories()) { category ->
                 CategoryCard(navController, category)
             }
         }
+        Spacer(modifier = Modifier.height(scafPaddingValues.calculateBottomPadding()))
     }
 }
 

@@ -54,7 +54,7 @@ fun NavigationManager (
          */
 
         composable("liste") {
-            ListeScreen(navController, listeViewModel)
+            ListeScreen(navController, screenPadding, listeViewModel)
             topBarTitle.value = "Liste"
             backArrow.value = false
         }
@@ -84,7 +84,7 @@ fun NavigationManager (
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
-            CategoryScreen(navController, categoryId, listeViewModel)
+            CategoryScreen(navController, categoryId, screenPadding, listeViewModel)
             topBarTitle.value = listeViewModel.getCategoryName(categoryId)
             backArrow.value = true
         }

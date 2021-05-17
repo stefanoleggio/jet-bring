@@ -30,5 +30,4 @@ val categories = listOf(
         name = "Carne e pesce",
         products = products.subList(23, 28)
     ),
-
 )
