@@ -1,4 +1,6 @@
 package com.example.jet_bring.ui.liste
+import android.util.Log
+import android.util.Log.DEBUG
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -40,6 +42,11 @@ fun ListeScreen(navController: NavHostController, listeViewModel: ListeViewModel
 @ExperimentalFoundationApi
 @Composable
 fun MyProductsCard(listeViewModel: ListeViewModel) {
+    listeViewModel.getSelectedProducts().forEach() {
+        Log.println(DEBUG,null, "obj: ${it.name}")
+    }
+
+
     Card(
         modifier = Modifier
             .padding(

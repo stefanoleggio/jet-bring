@@ -12,7 +12,7 @@ class ListeViewModel : ViewModel() {
 
 
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
-
+    val columnMode: MutableState<boolean> = mutableStateOf()
     /**
      *
      * Category model methods

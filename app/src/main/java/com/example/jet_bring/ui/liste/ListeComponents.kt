@@ -187,21 +187,23 @@ fun ProductRow(
                     listeViewModel.addSelectedProduct(product)
             }
         },
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
-        Image(
+        /*Image(
             painter = painterResource(product.icon),
             contentDescription = null,
             //contentScale = ContentScale.Inside,
-            modifier = Modifier.weight(1f)
-        )
+            modifier = Modifier.weight(2f)
+        )*/
         Spacer(modifier = Modifier.padding(4.dp))
         Text(
             text = product.name,
-            Modifier.weight(9f),
+            Modifier.weight(8f),
             color = MaterialTheme.colors.onSurface
             )
     }
+
+
 }
 
 /**
@@ -214,7 +216,11 @@ fun ProductGridMode() {}
  * funzione di scelta fra griglia e colonna
  */
 @Composable
-fun ProductModeSwitcher() {}
+fun ProductModeSwitcher(listeViewModel: ListeViewModel) {
+    if(listeViewModel.isColumnMode()) {
+
+    }
+}
 
 @Composable
 @Preview
