@@ -1,6 +1,7 @@
 package com.example.jet_bring.ui.liste
 
 import android.content.res.Resources
+import android.util.DisplayMetrics
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,11 +9,13 @@ import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.categories
 import com.example.jet_bring.model.products
+import java.lang.Math.ceil
+import java.lang.Math.floor
 
 class ListeViewModel : ViewModel() {
 
 
-    val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
+    private val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
 
     /**
      *
@@ -50,9 +53,14 @@ class ListeViewModel : ViewModel() {
      */
 
     fun calculateColumnsNumber(): Int {
-        var width = Resources.getSystem().displayMetrics.densityDpi
-        var minsize = 120
-        return width/minsize
+        val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
+        val minSize = 120
+        val paddingSide = 20
+        return (width - paddingSide) / minSize
+    }
+
+    private fun getDp(valInPx: Int):Int {
+        return (valInPx * 160/ (Resources.getSystem().displayMetrics.densityDpi))
     }
 
 

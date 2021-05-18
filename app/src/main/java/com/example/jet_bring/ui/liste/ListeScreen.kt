@@ -16,12 +16,13 @@ import androidx.navigation.NavHostController
 fun ListeScreen(
     navController: NavHostController,
     scafPaddingValues: PaddingValues,
-    listeViewModel: ListeViewModel)
+    listeViewModel: ListeViewModel )
 {
     Column(
-        Modifier.verticalScroll(rememberScrollState())
-        .padding(top = 40.dp, bottom = 40.dp, start = 10.dp, end = 10.dp)
-        .wrapContentSize(Alignment.CenterEnd)
+        Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(top = 40.dp, bottom = 40.dp, start = 10.dp, end = 10.dp)
+            .wrapContentSize(Alignment.CenterEnd)
     ) {
         MyProductsCard(listeViewModel)
         Column {
@@ -37,7 +38,7 @@ fun ListeScreen(
 fun MyProductsCard(listeViewModel: ListeViewModel) {
     Column(
         modifier = Modifier
-            .padding(bottom = 20.dp)
+            .padding(bottom = 20.dp),
     ) {
         if (listeViewModel.isSelectedProductsEmpty()) {
             Card(
@@ -64,11 +65,21 @@ fun MyProductsCard(listeViewModel: ListeViewModel) {
             }
         } else {
             val selectedProducts = listeViewModel.getSelectedProducts()
-            val productsPerRow = selectedProducts.chunked(listeViewModel.calculateColumnsNumber())
-            for (products in productsPerRow) {
-                Row() {
-                    for (product in products) {
-                        ProductButton(product, removeSelectedProduct = true, listeViewModel)
+            val columnsNumber = listeViewModel.calculateColumnsNumber()
+            val productsPerRow = selectedProducts.chunked(columnsNumber)
+            Column(
+                Modifier.fillMaxWidth(),
+                horizontalAlignment = if(selectedProducts.size < columnsNumber) Alignment.Start else Alignment.CenterHorizontally
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    for (products in productsPerRow) {
+                        Row() {
+                            for (product in products) {
+                                ProductButton(product, removeSelectedProduct = true, listeViewModel)
+                            }
+                        }
                     }
                 }
             }
