@@ -28,13 +28,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.R
+import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.theme.JetbringTheme
 val padding = 16.dp
 @Composable
 fun ProfiloScreen(
     navController: NavHostController,
     scafPaddingValues: PaddingValues,
-    profiloViewModel: ProfiloViewModel
+    profiloViewModel: ProfiloViewModel,
+    listeViewModel: ListeViewModel,
 ) {
     val fontSize = 24.sp
     JetbringTheme() {
@@ -89,7 +91,7 @@ fun ProfiloScreen(
             }
             item {Spacer(Modifier.size(padding))}
 
-            item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController)
+            item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController,listeViewModel = listeViewModel,profiloViewModel)
 
             }
             item{Spacer(Modifier.padding(padding))}
@@ -116,7 +118,9 @@ fun ProfiloScreen(
 fun SettingsTable(
     title: String,
     iconTitle: ImageVector,
-    navController: NavHostController
+    navController: NavHostController,
+    listeViewModel: ListeViewModel,
+    profiloViewModel: ProfiloViewModel
 )   {
     Surface(
         modifier = Modifier
@@ -159,7 +163,14 @@ fun SettingsTable(
                 navController = rememberNavController(),
                 route = "casatua"
             )
-
+            TwoButtonsRow(
+                "Column Mode",
+                "Grid Mode",
+                {profiloViewModel.columnMode()},
+                {profiloViewModel.gridMode()},
+                Icons.Default.ShoppingCart,
+                Icons.Default.ShoppingCart
+            )
         }
     }
 }
@@ -168,7 +179,7 @@ fun SettingsTable(
 @Preview
 fun ProfiloScreenPreview() {
     ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),
-        ProfiloViewModel()
+        ProfiloViewModel(), ListeViewModel()
     )
 }
 
@@ -178,7 +189,9 @@ fun SettingsTablePreview() {
     SettingsTable(
         title = "Impostazioni",
         iconTitle = Icons.Default.Settings,
-        navController = rememberNavController()
+        navController = rememberNavController(),
+        ListeViewModel(),
+        ProfiloViewModel()
     )
 }
 

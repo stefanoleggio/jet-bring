@@ -1,5 +1,6 @@
 package com.example.jet_bring.ui.liste
 
+import android.content.res.Resources
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -15,7 +16,6 @@ class ListeViewModel : ViewModel() {
 
 
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
-    val columnMode: MutableState<boolean> = mutableStateOf()
     /**
      *
      * Category model methods
@@ -43,6 +43,15 @@ class ListeViewModel : ViewModel() {
 
     fun getProduct(productId: Int): Product {
         return products.get(productId)
+    }
+
+    /*TODO per stefano: ho fatto questa funzione che a seconda del valore passato decide se passare la lista di selezionati o quella della categoria
+    *  non è bello lo so però funziona, se ti viene un metodo migliore fammi sapere */
+    /**
+     *
+     */
+    fun getProducts(category: Category?=null): List<Product> {
+        if (category== null) return getSelectedProducts() else return category.products
     }
 
     /**
@@ -93,4 +102,5 @@ class ListeViewModel : ViewModel() {
     fun isSelectedProductsEmpty(): Boolean {
         return ArrayList(this.selectedProducts.value).size == 0
     }
+
 }

@@ -7,16 +7,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
@@ -26,9 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.products
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.profilo.padding
 import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
@@ -132,37 +132,37 @@ fun CategoryCard(navController: NavHostController, category: Category) {
  * funzione per istanziare prodotti su riga singola
  */
 @Composable
-fun ProductColumnMode(listeViewModel: ListeViewModel) {
+fun ProductColumnMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,category: Category?=null) {
+    val productList = listeViewModel.getProducts(category)
     Surface(shape= RoundedCornerShape(10.dp),) {
-        LazyColumn() {
-            items(items = listeViewModel.getSelectedProducts().subList(0,listeViewModel.getSelectedProducts().lastIndex-1)) { item ->
+        Column() {
+            var i = 0
+            productList.forEach() {
+                item ->
                 ProductRow(
                     product = item,
                     removeSelectedProduct = true,
-                    listeViewModel = listeViewModel
+                    listeViewModel = listeViewModel,
+                    isSelectedMode
                 )
-                Spacer(
-                    modifier = Modifier
-                        .padding(2.dp)
-                        .background(MaterialTheme.colors.background)
-                )
+                if((i < productList.size - 1) && (i>=0)) {
+                    Spacer(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .background(MaterialTheme.colors.background)
+                    )
+                }
+                i++
             }
-            item{
-                ProductRow(
-                    product = listeViewModel.getSelectedProducts()
-                        .get(listeViewModel.getSelectedProducts().size-1),
-                    removeSelectedProduct = true,
-                    listeViewModel = listeViewModel
-                    )}
         }
     }
 }
-
+/*TODO sistemare altezza riga, aggiungere bottone per modificare item*/
 @Composable
 fun ProductRow(
     product: Product,
-    removeSelectedProduct: Boolean,
-    listeViewModel: ListeViewModel
+    listeViewModel: ListeViewModel,
+    isSelectedMode: Boolean
 ) {
     val selected = listeViewModel.containsSelectedProduct(product)
     val color = if(selected) Roman else BreakerBay
@@ -173,7 +173,7 @@ fun ProductRow(
         .padding(2.dp)
         .clickable {
 
-            if (removeSelectedProduct) {
+            if (isSelectedMode) {
                 listeViewModel.removeSelectedProduct(product)
             } else {
                 if (selected)
@@ -184,12 +184,12 @@ fun ProductRow(
         },
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        /*Image(
+        Image(
             painter = painterResource(product.icon),
             contentDescription = null,
-            //contentScale = ContentScale.Inside,
-            modifier = Modifier.weight(2f)
-        )*/
+            contentScale = ContentScale.Inside,
+            modifier = Modifier.size(64.dp) /*TODO sostituire con valore fissato in layout class*/
+        )
         Spacer(modifier = Modifier.padding(4.dp))
         Text(
             text = product.name,
@@ -205,13 +205,40 @@ fun ProductRow(
  * funzione per istanziare prodotti su griglia
  */
 @Composable
-fun ProductGridMode() {}
+fun ProductGridMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,category: Category?=null) {
+    val productsPerRow = listeViewModel.getProducts(category).chunked(listeViewModel.calculateColumnsNumber())
+    Column(
+        Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally /*TODO per stefano: non ho capito cosa fosse sta cosa quindi lascio a te */
+        /*if(listeViewModel.getSelectedProducts().size < listeViewModel.calculateColumnsNumber())
+            Alignment.Start
+        else Alignment.CenterHorizontally*/
+    ) {
+        Column(
+            horizontalAlignment = Alignment.Start
+        ) {
+            for (products in productsPerRow) {
+                Row() {
+                    for (product in products) {
+                        ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
+                    }
+                }
+            }
+        }
+    }
+}
 
 /**
  * funzione di scelta fra griglia e colonna
  */
 @Composable
-fun productModeSwitcher() {}
+fun ProductModeSwitcher(listeViewModel: ListeViewModel,profiloViewModel: ProfiloViewModel,isSelectedMode: Boolean,category: Category?=null) {
+    if (profiloViewModel.isColumnMode()){
+        ProductColumnMode(listeViewModel = listeViewModel,isSelectedMode,category)
+    } else {
+        ProductGridMode(listeViewModel = listeViewModel,isSelectedMode,category)
+    }
+}
 
 @Preview
 @Composable
@@ -226,4 +253,17 @@ fun ProductButtonPreview() {
 @Composable
 fun CategoryCardPreview() {
     CategoryCard(rememberNavController(), ListeViewModel().getCategory(1))
+}
+
+@Preview
+@Composable
+fun ProductRowPreview() {
+    ProductRow(product = products[0], removeSelectedProduct = false, listeViewModel = ListeViewModel(),false)
+}
+
+@Preview
+@Composable
+fun ProductColumnModePreview() {
+
+    ProductColumnMode(ListeViewModel(),true)
 }
