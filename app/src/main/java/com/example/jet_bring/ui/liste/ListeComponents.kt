@@ -141,7 +141,6 @@ fun ProductColumnMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,cat
                 item ->
                 ProductRow(
                     product = item,
-                    removeSelectedProduct = true,
                     listeViewModel = listeViewModel,
                     isSelectedMode
                 )
@@ -258,7 +257,7 @@ fun CategoryCardPreview() {
 @Preview
 @Composable
 fun ProductRowPreview() {
-    ProductRow(product = products[0], removeSelectedProduct = false, listeViewModel = ListeViewModel(),false)
+    ProductRow(product = products[0], listeViewModel = ListeViewModel(),false)
 }
 
 @Preview
