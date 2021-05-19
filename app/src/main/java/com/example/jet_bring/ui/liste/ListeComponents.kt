@@ -7,7 +7,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
@@ -45,7 +48,7 @@ fun ProductButton(
         modifier = Modifier
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
-            .defaultMinSize(minHeight = 120.dp)
+            .size(width = 120.dp, height = 120.dp)
             .background(color)
             .clickable {
 
@@ -57,31 +60,23 @@ fun ProductButton(
                     else
                         listeViewModel.addSelectedProduct(product)
                 }
-            },
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(10.dp)
-        ) {
-            Row() {
-                Image(
-                    painter = painterResource(product.icon),
-                    contentDescription = null,
-                    contentScale = ContentScale.Inside,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                )
             }
-            Row(
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .align(Alignment.CenterHorizontally)
-            ) {
-                Text(product.name)
+            .padding(7.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
 
-            }
-        }
+    ) {
+        Image(
+            painter = painterResource(product.icon),
+            contentDescription = null,
+            modifier = Modifier
+                .height(80.dp),
+        )
+        Text(
+            modifier = Modifier
+                .padding(top = 5.dp),
+            text = product.name,
+            color = Color.White
+        )
     }
 }
 
@@ -216,20 +211,19 @@ fun ProductGridMode() {}
  * funzione di scelta fra griglia e colonna
  */
 @Composable
-fun ProductModeSwitcher(listeViewModel: ListeViewModel) {
-    if(listeViewModel.isColumnMode()) {
+fun productModeSwitcher() {}
 
-    }
+@Preview
+@Composable
+fun ProductButtonPreview() {
+
+    val listeViewModel = ListeViewModel()
+
+    ProductButton(listeViewModel.getProduct(1), false, listeViewModel)
 }
 
-@Composable
 @Preview
-fun productRowPreview() {
-    ProductRow(product = products.get(2),true, ListeViewModel())
-}
-
 @Composable
-@Preview
-fun productColumnModePreview() {
-    ProductColumnMode(listeViewModel = ListeViewModel())
+fun CategoryCardPreview() {
+    CategoryCard(rememberNavController(), ListeViewModel().getCategory(1))
 }

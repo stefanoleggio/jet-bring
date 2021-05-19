@@ -1,8 +1,4 @@
 package com.example.jet_bring.ui.liste
-import android.util.Log
-import android.util.Log.DEBUG
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,11 +24,20 @@ import com.example.jet_bring.model.*
 
 @ExperimentalFoundationApi
 @Composable
-fun ListeScreen(navController: NavHostController, listeViewModel: ListeViewModel) {
-    Column() {
+fun ListeScreen(
+    navController: NavHostController,
+    scafPaddingValues: PaddingValues,
+    listeViewModel: ListeViewModel )
+{
+    Column(
+        Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(top = 40.dp, bottom = 40.dp, start = 10.dp, end = 10.dp)
+            .wrapContentSize(Alignment.CenterEnd)
+    ) {
         MyProductsCard(listeViewModel)
-        LazyColumn {
-            items(listeViewModel.getCategories()) { category->
+        Column {
+            for(category in listeViewModel.getCategories()) {
                 CategoryCard(navController, category)
             }
         }
@@ -42,47 +47,52 @@ fun ListeScreen(navController: NavHostController, listeViewModel: ListeViewModel
 @ExperimentalFoundationApi
 @Composable
 fun MyProductsCard(listeViewModel: ListeViewModel) {
-    listeViewModel.getSelectedProducts().forEach() {
-        Log.println(DEBUG,null, "obj: ${it.name}")
-    }
-
-
-    Card(
+    Column(
         modifier = Modifier
-            .padding(
-                top = 30.dp,
-                start = 10.dp,
-                end = 10.dp,
-                bottom = 15.dp
-            )
-            .fillMaxWidth()
-            .defaultMinSize(minHeight = 100.dp),
-        backgroundColor = MaterialTheme.colors.background,
-        elevation = 0.dp
+            .padding(bottom = 20.dp),
     ) {
-        Column(
-            modifier = Modifier
-                .wrapContentSize(Alignment.Center)
-        ) {
-            if(listeViewModel.isSelectedProductsEmpty()) {
-                Text(
-                    text = "Aggiungi qualcosa!",
-                    fontSize = 25.sp
-                )
-            } else {/*
-                LazyVerticalGrid(
-                    cells = GridCells.Adaptive(minSize = 100.dp),
-                    modifier = Modifier
-                        .padding(10.dp)
+        if (listeViewModel.isSelectedProductsEmpty()) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .defaultMinSize(minHeight = 100.dp),
+                backgroundColor = MaterialTheme.colors.background,
+                elevation = 0.dp
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(top = 20.dp)
+                ) {
+                    Text(
+                        text = "Niente da comprare",
+                        fontSize = 25.sp
+                    )
+                    Text(
+                        text = "Sfoglia il nostro catalogo",
+                        fontSize = 15.sp
+                    )
+                }
 
-                )
-                
-                {
-                    items(listeViewModel.getSelectedProducts()) { product ->
-                        ProductButton(product, removeSelectedProduct = true, listeViewModel)
+            }
+        } else {
+            val selectedProducts = listeViewModel.getSelectedProducts()
+            val columnsNumber = listeViewModel.calculateColumnsNumber()
+            val productsPerRow = selectedProducts.chunked(columnsNumber)
+            Column(
+                Modifier.fillMaxWidth(),
+                horizontalAlignment = if(selectedProducts.size < columnsNumber) Alignment.Start else Alignment.CenterHorizontally
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.Start
+                ) {
+                    for (products in productsPerRow) {
+                        Row() {
+                            for (product in products) {
+                                ProductButton(product, removeSelectedProduct = true, listeViewModel)
+                            }
+                        }
                     }
-                }*/
-                ProductColumnMode(listeViewModel = listeViewModel)
+                }
             }
         }
     }

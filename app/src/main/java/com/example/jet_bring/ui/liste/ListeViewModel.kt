@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.categories
+import com.example.jet_bring.model.products
+import java.lang.Math.ceil
+import java.lang.Math.floor
 
 class ListeViewModel : ViewModel() {
 
@@ -31,6 +34,34 @@ class ListeViewModel : ViewModel() {
         val category: Category = categories.find { categoryId == it.id }!!
         return category.name
     }
+
+    /**
+     *
+     * Product model methods
+     *
+     */
+
+    fun getProduct(productId: Int): Product {
+        return products.get(productId)
+    }
+
+    /**
+     *
+     * Custom grid
+     *
+     */
+
+    fun calculateColumnsNumber(): Int {
+        val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
+        val minSize = 120
+        val paddingSide = 20
+        return (width - paddingSide) / minSize
+    }
+
+    private fun getDp(valInPx: Int):Int {
+        return (valInPx * 160/ (Resources.getSystem().displayMetrics.densityDpi))
+    }
+
 
     /**
      *
