@@ -39,6 +39,7 @@ fun ListeScreen(
             .verticalScroll(rememberScrollState())
             .padding(top = 40.dp, bottom = 40.dp, start = 10.dp, end = 10.dp)
             .wrapContentSize(Alignment.CenterEnd)
+            .padding(scafPaddingValues)
     ) {
         MyProductsCard(listeViewModel,profiloViewModel)
         Column {
