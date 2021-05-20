@@ -1,5 +1,6 @@
 package com.example.jet_bring.ui.profilo
 
+import android.content.res.Resources
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,5 +45,16 @@ class ProfiloViewModel : ViewModel() {
 
     fun gridMode() {
         columnMode = mutableStateOf(false)
+    }
+
+    fun calculateColumnsNumber(): Int {
+        val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
+        val minSize = 120
+        val paddingSide = 20
+        return (width - paddingSide) / minSize
+    }
+
+    private fun getDp(valInPx: Int):Int {
+        return (valInPx * 160/ (Resources.getSystem().displayMetrics.densityDpi))
     }
 }

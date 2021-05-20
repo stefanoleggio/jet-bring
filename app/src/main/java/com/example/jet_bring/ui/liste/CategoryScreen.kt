@@ -37,6 +37,11 @@ fun CategoryScreen(
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ProductModeSwitcher(listeViewModel,profiloViewModel,false,category)
+        ProductModeSwitcher(
+            category.products,
+            profiloViewModel,
+            listeViewModel::addSelectedProduct,
+            listeViewModel::containsSelectedProduct
+        )
     }
 }

@@ -59,18 +59,18 @@ class ListeViewModel : ViewModel() {
      * Custom grid
      *
      */
-
-    fun calculateColumnsNumber(): Int {
-        val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
-        val minSize = 120
-        val paddingSide = 20
-        return (width - paddingSide) / minSize
+    /*
+    fun onClickProductButton() {
+        if (removeSelectedProduct) {
+            listeViewModel.removeSelectedProduct(product)
+        } else {
+            if (selected)
+                listeViewModel.removeSelectedProduct(product)
+            else
+                listeViewModel.addSelectedProduct(product)
+        }
     }
-
-    private fun getDp(valInPx: Int):Int {
-        return (valInPx * 160/ (Resources.getSystem().displayMetrics.densityDpi))
-    }
-
+*/
 
     /**
      *

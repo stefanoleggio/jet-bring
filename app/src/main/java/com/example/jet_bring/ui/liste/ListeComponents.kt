@@ -32,13 +32,17 @@ import com.example.jet_bring.ui.theme.Roman
 @Composable
 fun ProductButton(
     product: Product,
+    onButtonClick:(Product) -> Unit,
+    isSelected: (Product) -> Boolean
+    /*
     removeSelectedProduct: Boolean,
     listeViewModel: ListeViewModel
+     */
 ) {
 
-    val selected = listeViewModel.containsSelectedProduct(product)
+    //val selected = listeViewModel.containsSelectedProduct(product)
 
-    val color = if(selected) Roman else BreakerBay
+    val color = if(isSelected(product)) Roman else BreakerBay
 
     Column(
         modifier = Modifier
@@ -47,7 +51,8 @@ fun ProductButton(
             .size(width = 120.dp, height = 120.dp)
             .background(color)
             .clickable {
-
+                onButtonClick(product)
+                /*
                 if (removeSelectedProduct) {
                     listeViewModel.removeSelectedProduct(product)
                 } else {
@@ -56,6 +61,8 @@ fun ProductButton(
                     else
                         listeViewModel.addSelectedProduct(product)
                 }
+
+                 */
             }
             .padding(7.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -128,19 +135,22 @@ fun CategoryCard(navController: NavHostController, category: Category) {
  * funzione per istanziare prodotti su riga singola
  */
 @Composable
-fun ProductColumnMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,category: Category?=null) {
-    val productList = listeViewModel.getProducts(category)
+fun ProductColumnMode(
+    productsList: List<Product>,
+    onButtonClick:(Product) -> Unit,
+    isSelected: (Product) -> Boolean
+) {
     Surface(shape= RoundedCornerShape(10.dp),) {
         Column() {
             var i = 0
-            productList.forEach() {
+            productsList.forEach() {
                 item ->
                 ProductRow(
                     product = item,
-                    listeViewModel = listeViewModel,
-                    isSelectedMode
+                    onButtonClick = onButtonClick,
+                    isSelected = isSelected
                 )
-                if((i < productList.size - 1) && (i>=0)) {
+                if((i < productsList.size - 1) && (i>=0)) {
                     Spacer(
                         modifier = Modifier
                             .padding(2.dp)
@@ -156,18 +166,18 @@ fun ProductColumnMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,cat
 @Composable
 fun ProductRow(
     product: Product,
-    listeViewModel: ListeViewModel,
-    isSelectedMode: Boolean
+    onButtonClick: (Product) -> Unit,
+    isSelected: (Product) -> Boolean
 ) {
-    val selected = listeViewModel.containsSelectedProduct(product)
-    val color = if(selected) Roman else BreakerBay
+    val color = if(isSelected(product)) Roman else BreakerBay
 
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color)
         .padding(2.dp)
         .clickable {
-
+            onButtonClick(product)
+            /*
             if (isSelectedMode) {
                 listeViewModel.removeSelectedProduct(product)
             } else {
@@ -176,6 +186,7 @@ fun ProductRow(
                 else
                     listeViewModel.addSelectedProduct(product)
             }
+             */
         },
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -200,9 +211,14 @@ fun ProductRow(
  * funzione per istanziare prodotti su griglia
  */
 @Composable
-fun ProductGridMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,category: Category?=null) {
-    val productsPerRow = listeViewModel.getProducts(category).chunked(listeViewModel.calculateColumnsNumber())
+fun ProductGridMode(productsList: List<Product>,
+                    numOfColumns: Int,
+                    onButtonClick:(Product) -> Unit,
+                    isSelected: (Product) -> Boolean
+) {
+    val productsPerRow = productsList.chunked(numOfColumns)
     Column(
+
         Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
         /*if(listeViewModel.getSelectedProducts().size < listeViewModel.calculateColumnsNumber())
@@ -215,7 +231,7 @@ fun ProductGridMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,categ
             for (products in productsPerRow) {
                 Row() {
                     for (product in products) {
-                        ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
+                       ProductButton(product,onButtonClick,isSelected) //ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
                     }
                 }
             }
@@ -227,11 +243,24 @@ fun ProductGridMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,categ
  * funzione di scelta fra griglia e colonna
  */
 @Composable
-fun ProductModeSwitcher(listeViewModel: ListeViewModel,profiloViewModel: ProfiloViewModel,isSelectedMode: Boolean,category: Category?=null) {
+fun ProductModeSwitcher(productsList: List<Product>,
+                        profiloViewModel: ProfiloViewModel,
+                        onButtonClick: (Product) -> Unit,
+                        isSelected: (Product) -> Boolean
+) {
     if (profiloViewModel.isColumnMode()){
-        ProductColumnMode(listeViewModel = listeViewModel,isSelectedMode,category)
+        ProductColumnMode(
+            productsList = productsList,
+            onButtonClick = onButtonClick,
+            isSelected = isSelected
+        )
     } else {
-        ProductGridMode(listeViewModel = listeViewModel,isSelectedMode,category)
+        ProductGridMode(
+            productsList = productsList,
+            numOfColumns = profiloViewModel.calculateColumnsNumber(),
+            onButtonClick = onButtonClick,
+            isSelected = isSelected
+        )
     }
 }
 
@@ -241,7 +270,7 @@ fun ProductButtonPreview() {
 
     val listeViewModel = ListeViewModel()
 
-    ProductButton(listeViewModel.getProduct(1), false, listeViewModel)
+    ProductButton(listeViewModel.getProduct(1), {}, {true })
 }
 
 @Preview
@@ -253,12 +282,16 @@ fun CategoryCardPreview() {
 @Preview
 @Composable
 fun ProductRowPreview() {
-    ProductRow(product = products[0], listeViewModel = ListeViewModel(),false)
+    ProductRow(product = products[0],{},{false})
 }
 
 @Preview
 @Composable
 fun ProductColumnModePreview() {
-
-    ProductColumnMode(ListeViewModel(),true)
+    val list =
+        listOf<Product>(
+        products[1],
+        products[6],
+    )
+    ProductColumnMode(list,{},{true})
 }

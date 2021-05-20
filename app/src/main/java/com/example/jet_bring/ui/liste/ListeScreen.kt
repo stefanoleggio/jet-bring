@@ -74,7 +74,12 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
 
             }
         } else {
-            ProductModeSwitcher(listeViewModel,profiloViewModel,true,null)
+            ProductModeSwitcher(
+                listeViewModel.getSelectedProducts(),
+                profiloViewModel,
+                listeViewModel::removeSelectedProduct,
+                listeViewModel::containsSelectedProduct
+            )
         }
     }
 }
