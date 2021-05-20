@@ -40,8 +40,16 @@ fun CategoryScreen(
         ProductModeSwitcher(
             category.products,
             profiloViewModel,
-            listeViewModel::addSelectedProduct,
+            onButtonClick = {
+                    product ->
+                        if (listeViewModel.containsSelectedProduct(product)) {
+                            listeViewModel.removeSelectedProduct(product)
+                        } else {
+                            listeViewModel.addSelectedProduct(product)
+                        }
+            },
             listeViewModel::containsSelectedProduct
         )
     }
+
 }
