@@ -4,8 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -16,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.VerticalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +26,6 @@ import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.products
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
-import com.example.jet_bring.ui.profilo.padding
 import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
 
@@ -208,7 +204,7 @@ fun ProductGridMode(listeViewModel: ListeViewModel,isSelectedMode: Boolean,categ
     val productsPerRow = listeViewModel.getProducts(category).chunked(listeViewModel.calculateColumnsNumber())
     Column(
         Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally /*TODO per stefano: non ho capito cosa fosse sta cosa quindi lascio a te */
+        horizontalAlignment = Alignment.CenterHorizontally
         /*if(listeViewModel.getSelectedProducts().size < listeViewModel.calculateColumnsNumber())
             Alignment.Start
         else Alignment.CenterHorizontally*/

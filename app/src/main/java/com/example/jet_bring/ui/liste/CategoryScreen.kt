@@ -40,27 +40,3 @@ fun CategoryScreen(
         ProductModeSwitcher(listeViewModel,profiloViewModel,false,category)
     }
 }
-/*
-@Composable
-fun CategoryGridMode(productsPerRow: List<List<Product>>,listeViewModel: ListeViewModel, scafpaddingValues: PaddingValues) {
-
-        Column(
-            Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Column(
-                horizontalAlignment = Alignment.Start
-            ) {
-                for (products in productsPerRow) {
-                    Row(
-                    ) {
-                        for (product in products) {
-                            ProductButton(product, removeSelectedProduct = false, listeViewModel)
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-}*/

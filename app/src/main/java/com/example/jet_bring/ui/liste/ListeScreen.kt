@@ -1,32 +1,21 @@
 package com.example.jet_bring.ui.liste
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.*
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.navigate
-import com.example.jet_bring.model.*
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.R
 
-@ExperimentalFoundationApi
 @Composable
 fun ListeScreen(
     navController: NavHostController,
@@ -50,7 +39,6 @@ fun ListeScreen(
     }
 }
 
-@ExperimentalFoundationApi
 @Composable
 fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
     Column(
@@ -69,6 +57,11 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier.padding(top = 20.dp)
                 ) {
+                    Image(
+                        painter = painterResource(R.drawable.liste_box),
+                        contentDescription = null,
+                        modifier = Modifier.size(85.dp)
+                    )
                     Text(
                         text = "Niente da comprare",
                         fontSize = 25.sp
@@ -81,10 +74,9 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
 
             }
         } else {
-            ProductModeSwitcher(listeViewModel = listeViewModel,profiloViewModel,true,null)
+            ProductModeSwitcher(listeViewModel,profiloViewModel,true,null)
         }
     }
 }
-
 
 
