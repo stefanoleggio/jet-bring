@@ -185,6 +185,23 @@ fun InputText(
     )
 }
 
+@Composable
+fun ChoosingTab() {
+    Column {
+        RadioButtonRow("Ciao")
+    }
+}
+@Composable
+fun RadioButtonRow(title: String) {
+    Row(Modifier
+        .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(onClick = {},selected = true)
+        Spacer(Modifier.padding())
+        Text(text = title,)
+    }
+}
 
 @Composable
 @Preview
@@ -218,4 +235,10 @@ fun ClickableBoxIconPreview() {
 @Preview
 fun TwoButtonsRowPreview() {
     TwoButtonsRow("Aspetto della lista", "miao", {},{},Icons.Default.Add,Icons.Default.Settings)
+}
+
+@Composable
+@Preview
+fun ChoosingTabPreview() {
+    ChoosingTab()
 }

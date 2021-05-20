@@ -1,5 +1,6 @@
 package com.example.jet_bring.ui.liste
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,7 +44,7 @@ fun ProductButton(
 
     //val selected = listeViewModel.containsSelectedProduct(product)
 
-    val color = if(isSelected(product)) Roman else BreakerBay
+    val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)
 
     Column(
         modifier = Modifier
@@ -169,7 +171,7 @@ fun ProductRow(
     onButtonClick: (Product) -> Unit,
     isSelected: (Product) -> Boolean
 ) {
-    val color = if(isSelected(product)) Roman else BreakerBay
+    val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)//
 
     Row(modifier = Modifier
         .fillMaxWidth()
