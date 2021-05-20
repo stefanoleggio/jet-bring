@@ -1,5 +1,7 @@
 package com.example.jet_bring.ui.profilo
 
+import android.content.res.Resources
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -9,6 +11,7 @@ class ProfiloViewModel : ViewModel() {
 
     var user by mutableStateOf(UserData())
     var temp by mutableStateOf(UserData())
+    private var columnMode: MutableState<Boolean> = mutableStateOf(false)
 
 
     fun editProfileName(userName:String) {
@@ -29,4 +32,29 @@ class ProfiloViewModel : ViewModel() {
         temp = user
     }
 
+    /**
+     * columnMode handling
+     */
+    fun isColumnMode(): Boolean {
+        return columnMode.component1()
+    }
+
+    fun columnMode() {
+        columnMode = mutableStateOf<Boolean>(true)
+    }
+
+    fun gridMode() {
+        columnMode = mutableStateOf(false)
+    }
+
+    fun calculateColumnsNumber(): Int {
+        val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
+        val minSize = 120
+        val paddingSide = 20
+        return (width - paddingSide) / minSize
+    }
+
+    private fun getDp(valInPx: Int):Int {
+        return (valInPx * 160/ (Resources.getSystem().displayMetrics.densityDpi))
+    }
 }

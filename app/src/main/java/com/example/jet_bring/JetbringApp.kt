@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -39,11 +40,12 @@ fun JetbringApp() {
         Screen.Ispirazione,
         Screen.Profilo,
     )
+    val backgroundColor = MaterialTheme.colors.secondaryVariant
     Scaffold(
         topBar = {
             if(backArrow.value) {
                 TopAppBar(title = { Text(text = title.value) },
-                    backgroundColor = MaterialTheme.colors.primaryVariant,
+                    backgroundColor = backgroundColor,
                     actions = {
                         IconButton(onClick = {}) {
                             Icon(Icons.Rounded.Email, contentDescription = "Localized description")
@@ -61,7 +63,7 @@ fun JetbringApp() {
                 )
             } else if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
                 TopAppBar(title = { Text(text = title.value) },
-                    backgroundColor = MaterialTheme.colors.primaryVariant,
+                    backgroundColor = backgroundColor,
                     actions = {
                         IconButton(onClick = {}) {
                             Icon(Icons.Rounded.Email, contentDescription = "Localized description")
@@ -69,7 +71,7 @@ fun JetbringApp() {
                     })
             } else {
                 TopAppBar(title = { Text(text = title.value) },
-                    backgroundColor = MaterialTheme.colors.primaryVariant,
+                    backgroundColor = backgroundColor,
                     actions = {
                         IconButton(onClick = {}) {
                             Icon(Icons.Rounded.Email, contentDescription = "Localized description")
@@ -106,7 +108,8 @@ fun JetbringApp() {
                 }
             }
 
-        }
+        },
+        //backgroundColor = Color.Cyan
     )
 
 
@@ -116,6 +119,7 @@ public fun currentRoute(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }
+
 
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi

@@ -1,9 +1,9 @@
 package com.example.jet_bring.ui.liste
 
 import android.content.res.Resources
-import android.util.DisplayMetrics
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
@@ -15,8 +15,7 @@ import java.lang.Math.floor
 class ListeViewModel : ViewModel() {
 
 
-    private val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
-
+    val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
     /**
      *
      * Category model methods
@@ -46,23 +45,32 @@ class ListeViewModel : ViewModel() {
         return products.get(productId)
     }
 
+    /*TODO per stefano: ho fatto questa funzione che a seconda del valore passato decide se passare la lista di selezionati o quella della categoria
+    *  non è bello lo so però funziona, se ti viene un metodo migliore fammi sapere */
+    /**
+     *
+     */
+    fun getProducts(category: Category?=null): List<Product> {
+        if (category== null) return getSelectedProducts() else return category.products
+    }
+
     /**
      *
      * Custom grid
      *
      */
-
-    fun calculateColumnsNumber(): Int {
-        val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
-        val minSize = 120
-        val paddingSide = 20
-        return (width - paddingSide) / minSize
+    /*
+    fun onClickProductButton() {
+        if (removeSelectedProduct) {
+            listeViewModel.removeSelectedProduct(product)
+        } else {
+            if (selected)
+                listeViewModel.removeSelectedProduct(product)
+            else
+                listeViewModel.addSelectedProduct(product)
+        }
     }
-
-    private fun getDp(valInPx: Int):Int {
-        return (valInPx * 160/ (Resources.getSystem().displayMetrics.densityDpi))
-    }
-
+*/
 
     /**
      *
@@ -94,4 +102,5 @@ class ListeViewModel : ViewModel() {
     fun isSelectedProductsEmpty(): Boolean {
         return ArrayList(this.selectedProducts.value).size == 0
     }
+
 }
