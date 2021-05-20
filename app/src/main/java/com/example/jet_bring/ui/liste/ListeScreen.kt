@@ -15,6 +15,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.R
+import com.example.jet_bring.ui.theme.PADDING_BOTTOM
+import com.example.jet_bring.ui.theme.PADDING_END
+import com.example.jet_bring.ui.theme.PADDING_START
+import com.example.jet_bring.ui.theme.PADDING_TOP
 
 @Composable
 fun ListeScreen(
@@ -26,7 +30,7 @@ fun ListeScreen(
     Column(
         Modifier
             .verticalScroll(rememberScrollState())
-            .padding(top = 40.dp, bottom = 40.dp, start = 10.dp, end = 10.dp)
+            .padding(top = PADDING_TOP, bottom = PADDING_BOTTOM, start = PADDING_START, end = PADDING_END)
             .wrapContentSize(Alignment.CenterEnd)
             .padding(scafPaddingValues)
     ) {

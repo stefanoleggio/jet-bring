@@ -48,23 +48,12 @@ fun ProductButton(
 
     Column(
         modifier = Modifier
+            .size(width = 120.dp, height = 120.dp)
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
-            .size(width = 120.dp, height = 120.dp)
             .background(color)
             .clickable {
                 onButtonClick(product)
-                /*
-                if (removeSelectedProduct) {
-                    listeViewModel.removeSelectedProduct(product)
-                } else {
-                    if (selected)
-                        listeViewModel.removeSelectedProduct(product)
-                    else
-                        listeViewModel.addSelectedProduct(product)
-                }
-
-                 */
             }
             .padding(7.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -179,16 +168,6 @@ fun ProductRow(
         .padding(2.dp)
         .clickable {
             onButtonClick(product)
-            /*
-            if (isSelectedMode) {
-                listeViewModel.removeSelectedProduct(product)
-            } else {
-                if (selected)
-                    listeViewModel.removeSelectedProduct(product)
-                else
-                    listeViewModel.addSelectedProduct(product)
-            }
-             */
         },
         verticalAlignment = Alignment.CenterVertically,
     ) {

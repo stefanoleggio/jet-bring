@@ -50,7 +50,7 @@ class ProfiloViewModel : ViewModel() {
     fun calculateColumnsNumber(): Int {
         val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
         val minSize = 120
-        val paddingSide = 20
+        val paddingSide = 32
         return (width - paddingSide) / minSize
     }
 

@@ -11,6 +11,10 @@ import androidx.navigation.NavHostController
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.ui.theme.PADDING_BOTTOM
+import com.example.jet_bring.ui.theme.PADDING_END
+import com.example.jet_bring.ui.theme.PADDING_START
+import com.example.jet_bring.ui.theme.PADDING_TOP
 
 @ExperimentalFoundationApi
 @Composable
@@ -27,12 +31,12 @@ fun CategoryScreen(
     Column(
         Modifier
             .verticalScroll(rememberScrollState())
-            .padding(top = 40.dp,
+            .padding(top = PADDING_TOP,
                 bottom = scafPaddingValues
                     .calculateBottomPadding()
-                    .plus(40.dp),
-                start = 10.dp,
-                end = 10.dp
+                    .plus(PADDING_BOTTOM),
+                start = PADDING_START,
+                end = PADDING_END
             )
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
