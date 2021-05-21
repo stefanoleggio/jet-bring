@@ -1,5 +1,9 @@
 package com.example.jet_bring.ui.liste
 
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -31,6 +35,7 @@ import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
 
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun ProductButton(
     product: Product,
@@ -41,7 +46,7 @@ fun ProductButton(
 
     Column(
         modifier = Modifier
-            .size(width = 130.dp, height = 130.dp)
+            .size(width = 120.dp, height = 120.dp)
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
             .background(color)
@@ -71,12 +76,12 @@ fun ProductButton(
                 painter = painterResource(product.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .height(75.dp),
+                    .height(60.dp),
             )
 
             Text(
                 modifier = Modifier
-                    .padding(top = 2.dp, bottom = 0.dp),
+                    .padding(top = 5.dp, bottom = 0.dp),
                 text = product.name,
                 color = Color.White
             )
