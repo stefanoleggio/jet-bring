@@ -1,5 +1,6 @@
 package com.example.jet_bring
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.*
@@ -27,6 +28,7 @@ import com.example.jet_bring.navigation.Screen
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.profilo.UserData
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
@@ -115,12 +117,13 @@ fun JetbringApp() {
 
 }
 @Composable
-public fun currentRoute(navController: NavHostController): String? {
+fun currentRoute(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }
 
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable

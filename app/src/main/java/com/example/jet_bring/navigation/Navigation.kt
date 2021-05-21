@@ -26,6 +26,7 @@ import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 
+@ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
@@ -66,12 +67,15 @@ fun NavigationManager (
         }
 
         composable("profilo") {
-            ProfiloScreen(
-                navController,
-                screenPadding,
-                profileViewModel,
-                listeViewModel
-            )
+            EnterAnimation {
+
+                ProfiloScreen(
+                    navController,
+                    screenPadding,
+                    profileViewModel,
+                    listeViewModel
+                )
+            }
             topBarTitle.value = "Profilo"
             backArrow.value = false
         }
@@ -166,4 +170,19 @@ fun AppBottomNavigation(
 private fun currentRoute(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun EnterAnimation(content: @Composable () -> Unit) {
+    AnimatedVisibility(
+        visible = true,
+        enter = slideInHorizontally(
+            initialOffsetX = { 40 }
+            //initialOffsetX = { -40 }
+        ) /*+ fadeIn(initialAlpha = 0.3f)*/,
+        exit = slideOutHorizontally() + shrinkHorizontally() + fadeOut(),
+        content = content,
+        initiallyVisible = false
+    )
 }

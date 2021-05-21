@@ -16,7 +16,7 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 
 class MainActivity : AppCompatActivity() {
 
-    @SuppressLint("WrongConstant")
+    @ExperimentalAnimationApi
     @ExperimentalFoundationApi
     @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
