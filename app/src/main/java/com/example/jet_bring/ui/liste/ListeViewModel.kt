@@ -16,6 +16,7 @@ class ListeViewModel : ViewModel() {
 
 
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
+
     /**
      *
      * Category model methods
@@ -45,32 +46,6 @@ class ListeViewModel : ViewModel() {
         return products.get(productId)
     }
 
-    /*TODO per stefano: ho fatto questa funzione che a seconda del valore passato decide se passare la lista di selezionati o quella della categoria
-    *  non è bello lo so però funziona, se ti viene un metodo migliore fammi sapere */
-    /**
-     *
-     */
-    fun getProducts(category: Category?=null): List<Product> {
-        if (category== null) return getSelectedProducts() else return category.products
-    }
-
-    /**
-     *
-     * Custom grid
-     *
-     */
-    /*
-    fun onClickProductButton() {
-        if (removeSelectedProduct) {
-            listeViewModel.removeSelectedProduct(product)
-        } else {
-            if (selected)
-                listeViewModel.removeSelectedProduct(product)
-            else
-                listeViewModel.addSelectedProduct(product)
-        }
-    }
-*/
 
     /**
      *

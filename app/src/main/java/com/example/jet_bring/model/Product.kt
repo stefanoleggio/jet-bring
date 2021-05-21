@@ -7,7 +7,8 @@ import com.example.jet_bring.R
 data class Product(
     val id : Long,
     val name: String,
-    val icon: Int
+    val icon: Int,
+    val description: String?=null
 )
 
 val products = listOf(
@@ -19,7 +20,8 @@ val products = listOf(
     Product(
         id = 1,
         name = "Mela",
-        icon = R.drawable.product_apple
+        icon = R.drawable.product_apple,
+        description = "test"
     ),
     Product(
         id = 2,

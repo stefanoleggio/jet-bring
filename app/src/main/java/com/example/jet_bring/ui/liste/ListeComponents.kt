@@ -36,19 +36,12 @@ fun ProductButton(
     product: Product,
     onButtonClick:(Product) -> Unit,
     isSelected: (Product) -> Boolean
-    /*
-    removeSelectedProduct: Boolean,
-    listeViewModel: ListeViewModel
-     */
 ) {
-
-    //val selected = listeViewModel.containsSelectedProduct(product)
-
     val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)
 
     Column(
         modifier = Modifier
-            .size(width = 120.dp, height = 120.dp)
+            .size(width = 130.dp, height = 130.dp)
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
             .background(color)
@@ -59,18 +52,42 @@ fun ProductButton(
             horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
-        Image(
-            painter = painterResource(product.icon),
-            contentDescription = null,
-            modifier = Modifier
-                .height(80.dp),
-        )
-        Text(
-            modifier = Modifier
-                .padding(top = 5.dp),
-            text = product.name,
-            color = Color.White
-        )
+
+        if(product.description == null) {
+            Image(
+                painter = painterResource(product.icon),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(80.dp),
+            )
+            Text(
+                modifier = Modifier
+                    .padding(top = 5.dp),
+                text = product.name,
+                color = Color.White
+            )
+        } else {
+            Image(
+                painter = painterResource(product.icon),
+                contentDescription = null,
+                modifier = Modifier
+                    .height(75.dp),
+            )
+
+            Text(
+                modifier = Modifier
+                    .padding(top = 2.dp, bottom = 0.dp),
+                text = product.name,
+                color = Color.White
+            )
+            Text(
+                modifier = Modifier
+                    .padding(top = 0.dp),
+                text = product.description,
+                fontSize = 12.sp,
+                color = Color.White
+            )
+        }
     }
 }
 
@@ -251,7 +268,7 @@ fun ProductButtonPreview() {
 
     val listeViewModel = ListeViewModel()
 
-    ProductButton(listeViewModel.getProduct(1), {}, {true })
+    ProductButton(listeViewModel.getProduct(0), {}, {true })
 }
 
 @Preview
