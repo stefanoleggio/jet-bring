@@ -59,7 +59,6 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.padding(top = 20.dp)
                 ) {
                     Image(
                         painter = painterResource(R.drawable.liste_box),

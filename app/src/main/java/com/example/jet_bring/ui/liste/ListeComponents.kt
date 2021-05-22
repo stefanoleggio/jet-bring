@@ -102,9 +102,7 @@ fun CategoryCard(navController: NavHostController, category: Category) {
         shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .padding(
-                top = 4.dp,
-                start = 10.dp,
-                end = 10.dp
+                top = 4.dp
             )
             .clickable {
                 navController.navigate("liste/" + category.id.toString()) {
