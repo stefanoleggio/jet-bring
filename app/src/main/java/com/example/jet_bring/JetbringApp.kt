@@ -1,5 +1,7 @@
 package com.example.jet_bring
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -28,6 +30,7 @@ import com.example.jet_bring.navigation.Screen
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.profilo.UserData
 
+@RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
@@ -49,10 +52,7 @@ fun JetbringApp() {
                 TopAppBar(title = { Text(text = title.value) },
                     backgroundColor = backgroundColor,
                     actions = {
-                        IconButton(onClick = {}) {
-                            Icon(Icons.Rounded.Email, contentDescription = "Localized description")
 
-                        }
                     },
                     navigationIcon = {
                         IconButton(onClick = { navController.popBackStack() }) {
@@ -66,20 +66,11 @@ fun JetbringApp() {
             } else if (currentRoute(navController) != "ispirazione/ricetteDetails/{ricettaId}") {
                 TopAppBar(title = { Text(text = title.value) },
                     backgroundColor = backgroundColor,
-                    actions = {
-                        IconButton(onClick = {}) {
-                            Icon(Icons.Rounded.Email, contentDescription = "Localized description")
-                        }
-                    })
+                   )
             } else {
                 TopAppBar(title = { Text(text = title.value) },
                     backgroundColor = backgroundColor,
-                    actions = {
-                        IconButton(onClick = {}) {
-                            Icon(Icons.Rounded.Email, contentDescription = "Localized description")
 
-                        }
-                    }
                 )
             }
         },
@@ -123,6 +114,7 @@ fun currentRoute(navController: NavHostController): String? {
 }
 
 
+@RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi

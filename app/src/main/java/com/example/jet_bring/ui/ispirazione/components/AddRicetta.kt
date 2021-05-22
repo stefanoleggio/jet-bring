@@ -1,8 +1,8 @@
 package com.example.jet_bring.ui.ispirazione.components
 
 
-import android.content.Intent
-import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -25,18 +25,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.jet_bring.model.Ricetta
+import com.example.jet_bring.model.products
+import com.example.jet_bring.model.ricette
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
+import com.example.jet_bring.ui.liste.ProductModeSwitcher
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
 
 
+@RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+fun AddRicettePreview() {
+    AddRicetta(
+        rememberNavController(),
+        AddRicettaViewModel()
+    )
+}
+
+
+@RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
 fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicettaViewModel) {
 
     val scrollState = rememberScrollState()
+
+    val profileViewModel  = ProfiloViewModel()
+
 
         Column(
             modifier = Modifier
@@ -55,8 +75,7 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                     .height(380.dp)
                     .noRippleClickable {
                         //navController.navigate("$route/${ricetta.id}")
-                        {
-                        }
+
                     }
                     .alpha(min(1f, 1 - (scrollState.value / 400f))),
                 elevation = 0.dp,
@@ -75,10 +94,6 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                                 .align(CenterHorizontally)
                         )
                         Spacer(modifier = Modifier.height(100.dp))
-                        // Input Text
-                        // Input Text
-                        val inputNome = remember { mutableStateOf(TextFieldValue()) }
-                        val inputDescrione = remember { mutableStateOf(TextFieldValue()) }
 
 
                         addRicettaViewModel.ricetta.titolo?.let { InputText(text = it, addRicettaViewModel::onTitoloChange, modifier = Modifier.fillMaxWidth()) }
@@ -100,39 +115,50 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
             ){
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(25.dp))
-                    Button(onClick = { /*TODO*/ }) {
+                    Button(onClick = {
+
+                        addRicettaViewModel.addRicetta()
+                        navController.popBackStack()
+
+
+                    }) {
                         Icon(
-                            Icons.Rounded.Add,
+                            Icons.Rounded.Save,
                             contentDescription = "Add image",
                             tint = MaterialTheme.colors.onBackground,
                             modifier = Modifier
                                 .size(60.dp)
                                 .align(CenterVertically)
                         )
-                        Text(text = "Aggiungi articoli", )
+                        Text(text = "Salva", )
                     }
-                    Row( Modifier.align(CenterHorizontally)) {
-                        Icon(
-                            Icons.Rounded.Add,
-                            contentDescription = "Add image",
-                            tint = MaterialTheme.colors.onBackground,
-                            modifier = Modifier
-                                .size(60.dp)
-                                .align(CenterVertically)
-                        )
-                        Text(text = "Aggiungi articoli", )
-                    }
+
 
                     Spacer(modifier = Modifier.height(25.dp))
                 }
 
+
+
             }
+            ProductModeSwitcher(
+                products,
+                profileViewModel,
+                onButtonClick = {
+                        product ->
+                    if (addRicettaViewModel.listeViewModel.containsSelectedProduct(product)) {
+                        addRicettaViewModel.listeViewModel.removeSelectedProduct(product)
+                    } else {
+                        addRicettaViewModel.listeViewModel.addSelectedProduct(product)
+                    }
+                },
+                addRicettaViewModel.listeViewModel::containsSelectedProduct
+            )
+            Spacer(modifier = Modifier.height(25.dp))
 
-
-
-            Spacer(modifier = Modifier.height(700.dp))
 
         }
+
+
         Button(
             onClick = { navController.popBackStack() },
             colors = ButtonDefaults.textButtonColors(

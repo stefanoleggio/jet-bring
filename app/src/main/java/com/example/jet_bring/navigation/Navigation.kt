@@ -1,5 +1,7 @@
 package com.example.jet_bring.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,7 +17,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.example.jet_bring.ui.ispirazione.IspirazioneScreen
 import com.example.jet_bring.ui.ispirazione.components.AddRicetta
-import com.example.jet_bring.ui.ispirazione.components.Ricetta
 import com.example.jet_bring.ui.ispirazione.components.RicetteDetails
 import com.example.jet_bring.ui.liste.CategoryScreen
 import com.example.jet_bring.ui.liste.ListeScreen
@@ -27,6 +28,7 @@ import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 
+@RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
@@ -46,6 +48,7 @@ fun NavigationManager (
     val listeViewModel = ListeViewModel()
     val profileViewModel  = ProfiloViewModel()
     val addRicettaViewModel = AddRicettaViewModel()
+    addRicettaViewModel.inizialize()
 
     NavHost(navController, startDestination = "liste") {
 
@@ -62,7 +65,7 @@ fun NavigationManager (
         }
 
         composable("ispirazione") {
-            IspirazioneScreen(navController, screenPadding)
+            IspirazioneScreen(navController, screenPadding, addRicettaViewModel)
             topBarTitle.value = "Ispirazione"
             backArrow.value = false
         }
@@ -101,9 +104,9 @@ fun NavigationManager (
          *
          */
 
-        composable("ispirazione/ricetteDetails/{ricettaId}", arguments =  listOf(navArgument("ricettaId") { type = NavType.StringType   ; defaultValue = "1"})
+        composable("ispirazione/ricetteDetails/{ricettaId}", arguments =  listOf(navArgument("ricettaId") { type = NavType.StringType   ; defaultValue = "0"})
                 ) { backStackEntry ->
-            RicetteDetails(navController, backStackEntry.arguments!!.getString("ricettaId"))
+            RicetteDetails(navController, backStackEntry.arguments!!.getString("ricettaId"), addRicettaViewModel,listeViewModel, profileViewModel)
             topBarTitle.value = "Ricetta"
         }
         composable("ispirazione/addRicetta") {

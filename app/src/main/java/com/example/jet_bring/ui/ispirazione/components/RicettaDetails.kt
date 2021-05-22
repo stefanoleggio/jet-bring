@@ -1,5 +1,7 @@
 package com.example.jet_bring.ui.ispirazione.components
 
+import android.os.Build
+import android.telecom.Call
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -30,26 +32,69 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import com.example.jet_bring.R
-import com.example.jet_bring.ui.ispirazione.ricette
 import kotlin.math.min
 import android.view.View
 import android.view.Window
+import com.example.jet_bring.ui.theme.BreakerBay
 
 import androidx.core.content.ContextCompat
 
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.compose.rememberNavController
+import com.example.jet_bring.model.Product
+import com.example.jet_bring.model.ricette
+import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
+import com.example.jet_bring.ui.liste.ListeViewModel
+import com.example.jet_bring.ui.liste.ProductColumnMode
+import com.example.jet_bring.ui.liste.ProductGridMode
+import com.example.jet_bring.ui.liste.ProductModeSwitcher
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import kotlinx.coroutines.launch
+
+/*
+@RequiresApi(Build.VERSION_CODES.R)
+@Preview
+@Composable
+fun DetailsPreview() {
+    val listeViewModel = ListeViewModel()
+    val profileViewModel  = ProfiloViewModel()
+    RicetteDetails(
+        rememberNavController(),
+        "0",
+        listeViewModel,
+        profileViewModel
+    )
+}
 
 
+ */
+
+
+@RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
+fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRicettaViewModel: AddRicettaViewModel,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
 
-    val ricetta = ricette[ricettaId?.toInt()!!]
+    val ricetta = addRicettaViewModel.getricetteList()[ricettaId?.toInt()!!]
     val scrollState = rememberScrollState()
+    var aggiunti = false
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+
 
 
 
@@ -66,38 +111,50 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
 
         ) {
 
-            Image(
-                painter = painterResource(id  = R.drawable.photo_1),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .alpha(min(1f, 1 - (scrollState.value / 400f)))
-                    .height(300.dp),
-                contentScale = ContentScale.Crop,
-                //contentScale = ContentScale.Crop,
-                contentDescription = "",
 
-                )
+            ricetta.immagine?.let {
+                Image(
+                    painter = painterResource(id  = ricetta.immagine!!),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .alpha(min(1f, 1 - (scrollState.value / 400f)))
+                        .height(300.dp),
+                    contentScale = ContentScale.Crop,
+                    //contentScale = ContentScale.Crop,
+                    contentDescription = "",
+
+                    )
+            }
+
             ricetta.pubblicatore?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.h6
+                    style = MaterialTheme.typography.h6,
+                    modifier = Modifier
+                        .padding(start = 5.dp, end = 5.dp, top = 15.dp, bottom = 5.dp),
                 )
             }
             ricetta.titolo?.let {
                 Text(
                     text = it,
-                    style = MaterialTheme.typography.h4
+                    style = MaterialTheme.typography.h4,
+                    modifier = Modifier
+
+                        .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 15.dp),
+                    fontWeight = FontWeight.Bold,
                 )
+
             }
             AlignInRow(ricetta)
+            Spacer(modifier = Modifier.height(16.dp))
             Card(
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .padding(
-                        bottom = 6.dp,
+                        bottom = 20.dp,
                         top = 6.dp,
-                        start = 16.dp,
-                        end = 16.dp
+                        start = 5.dp,
+                        end = 5.dp
 
                     )
                     .fillMaxWidth()
@@ -112,16 +169,23 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
-                    horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
+
                     Text(
-                        text = "2 Persone",
+                        text = "${ricetta.persone} Persone",
                         color = MaterialTheme.colors.onBackground,
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                            .padding(start = 5.dp)
+
 
                     )
+
+                    /*
                     Button(
-                        onClick = { /* Do something! */ },
+                        onClick = {},
                         colors = ButtonDefaults.textButtonColors(
                             backgroundColor = MaterialTheme.colors.background
                         ),
@@ -130,14 +194,21 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
                             pressedElevation = 0.dp,
                             disabledElevation = 0.dp
                         ),
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.End)
                         //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
                     ) {
-                        Icon(Icons.Rounded.AddCircle, contentDescription = "Localized description", tint = MaterialTheme.colors.onBackground )
+                        Icon(
+                            Icons.Rounded.RemoveCircleOutline,
+                            contentDescription = "Localized description",
+                            tint = MaterialTheme.colors.onBackground,
+
+                        )
 
                     }
                     Button(
-                        onClick = { /* Do something! */ },
+                        onClick = { ricetta.persone = ricetta.persone?.plus(1) },
                         colors = ButtonDefaults.textButtonColors(
                             backgroundColor = MaterialTheme.colors.background
                         ),
@@ -146,18 +217,93 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
                             pressedElevation = 0.dp,
                             disabledElevation = 0.dp
                         ),
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.End)
                         //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
                     ) {
-                        Icon(Icons.Rounded.Delete, contentDescription = "Localized description", tint = MaterialTheme.colors.onBackground )
+                        Icon(
+                            Icons.Rounded.AddCircleOutline
+                            , contentDescription = "Localized description",
+                            tint = MaterialTheme.colors.onBackground,
+
+                        )
 
                     }
+                    */
 
                 }
 
 
             }
-            Spacer(modifier = Modifier.height(700.dp))
+
+
+
+
+
+            ProductModeSwitcher(
+                ricetta.ingredienti,
+                profiloViewModel,
+                listeViewModel::removeSelectedProduct,
+                listeViewModel::containsSelectedProduct
+            )
+
+
+            Spacer(modifier = Modifier.height(150.dp))
+
+            SnackbarHost(
+                hostState = snackbarHostState,
+                Modifier.wrapContentWidth(Alignment.CenterHorizontally)
+            )
+            Button(
+                shape = MaterialTheme.shapes.medium,
+                onClick = {
+                    if(aggiunti == false) {
+                        for (ingrediente in ricetta.ingredienti) {
+                            listeViewModel.addSelectedProduct(ingrediente)
+                        }
+                        aggiunti = true
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
+                        }
+                    }else{
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(message = "Prodotti già inseriti")
+                        }
+                    }
+
+                          },
+                colors = ButtonDefaults.textButtonColors(
+                    backgroundColor = BreakerBay
+                ),
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 3.dp,
+                    pressedElevation = 3.dp,
+                    disabledElevation = 3.dp
+                ),
+                modifier = Modifier
+                    .padding(
+                        bottom = 6.dp,
+                        top = 6.dp,
+                        start = 6.dp,
+                        end = 6.dp
+
+                    )
+                    .fillMaxWidth()
+                    .height(70.dp)
+
+                //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
+
+            ) {
+                Text(
+                    text = "Aggiungi ${ricetta.ingredienti.size.toString()} ingredienti",
+                    color = MaterialTheme.colors.onBackground
+
+                )
+
+            }
+
+            Spacer(modifier = Modifier.height(50.dp))
         }
 
         Button(
@@ -165,6 +311,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?) {
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent
             ),
+
             elevation = ButtonDefaults.elevation(
                 defaultElevation = 0.dp,
                 pressedElevation = 0.dp,

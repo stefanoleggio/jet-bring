@@ -213,6 +213,7 @@ fun ProductRow(
 /**
  * funzione per istanziare prodotti su griglia
  */
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun ProductGridMode(productsList: List<Product>,
                     numOfColumns: Int,
@@ -245,6 +246,7 @@ fun ProductGridMode(productsList: List<Product>,
 /**
  * funzione di scelta fra griglia e colonna
  */
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun ProductModeSwitcher(productsList: List<Product>,
                         profiloViewModel: ProfiloViewModel,
@@ -267,8 +269,9 @@ fun ProductModeSwitcher(productsList: List<Product>,
     }
 }
 
-@Preview
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
+@Preview
 fun ProductButtonPreview() {
 
     val listeViewModel = ListeViewModel()

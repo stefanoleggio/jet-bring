@@ -11,6 +11,16 @@ data class Product(
     val description: String?=null
 )
 
+fun getProduct(productName : String, description : String) : Product {
+    val tmp = Product(0, "", R.drawable.product_apple, "")
+    for (item in products) {
+        if(item.name == productName){
+            return Product(item.id, item.name, item.icon, description)
+        }
+    }
+    return tmp
+}
+
 val products = listOf(
     /**
      *
@@ -98,6 +108,7 @@ val products = listOf(
      * Panetteria
      *
      */
+
     Product(
         id = 16,
         name = "Toast",

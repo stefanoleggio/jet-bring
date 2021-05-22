@@ -1,5 +1,7 @@
 package com.example.jet_bring.ui.liste
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -16,6 +18,7 @@ import com.example.jet_bring.ui.theme.PADDING_END
 import com.example.jet_bring.ui.theme.PADDING_START
 import com.example.jet_bring.ui.theme.PADDING_TOP
 
+@RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalFoundationApi
 @Composable
 fun CategoryScreen(

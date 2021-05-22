@@ -5,6 +5,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
+import com.example.jet_bring.R
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.categories

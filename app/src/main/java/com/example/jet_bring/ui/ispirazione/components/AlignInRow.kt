@@ -1,5 +1,7 @@
 package com.example.jet_bring.ui.ispirazione.components
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -7,12 +9,14 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Link
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.example.jet_bring.model.Ricetta
 
 @Composable
 fun AlignInRow(ricetta: Ricetta,) {
@@ -23,11 +27,12 @@ fun AlignInRow(ricetta: Ricetta,) {
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-
+        val context = LocalContext.current
+        val intent = remember { Intent(Intent.ACTION_VIEW, Uri.parse(ricetta.sourceUrl)) }
 
 
         Button(
-            onClick = { /* Do something! */ },
+            onClick ={ context.startActivity(intent) },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = MaterialTheme.colors.background,
             ),

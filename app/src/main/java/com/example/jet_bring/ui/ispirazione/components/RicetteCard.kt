@@ -13,27 +13,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.jet_bring.R
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.remember
 import androidx.compose.ui.composed
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
-import com.example.jet_bring.ui.ispirazione.ricette
-import com.example.jet_bring.ui.liste.ListeScreen
-import kotlin.math.min
+import com.example.jet_bring.model.Ricetta
+import com.example.jet_bring.model.getProduct
 
 /**Sezione di navigazione*/
 object MainDestinations {
@@ -50,11 +44,28 @@ inline fun Modifier.noRippleClickable(crossinline onClick: ()->Unit): Modifier =
     }
 }
 
+
+
+
+/*
+@Preview
+@Composable
+fun CardPreview() {
+    RicetteCard(    Ricetta(0,"Pasta", "Carlotta e il bassotto",
+        R.drawable.crostoni_pancetta_funghi, "", 5, 4,  "Sano e delizioso", listOf(
+        getProduct("Pera", "2")
+    ), "2/2/2010"),
+        rememberNavController(),
+        "ispirazione/ricetteDetails"
+
+    )
+}
+
+ */
 /**
  * Funzione che ritorna una card delle ricette
  *
  * */
-
 
 @Composable
 fun RicetteCard (
@@ -63,7 +74,6 @@ fun RicetteCard (
     route: String
 ) {
 
-    val interactionSource = remember { MutableInteractionSource() }
     Card(
         shape = MaterialTheme.shapes.medium,
         modifier = Modifier
@@ -93,7 +103,8 @@ fun RicetteCard (
                     text = titolo,
                     modifier = Modifier
                         .fillMaxWidth(0.85f)
-                        .wrapContentWidth(Alignment.Start),
+                        .wrapContentWidth(Alignment.Start)
+                        .padding(start = 5.dp, end = 5.dp),
                     fontSize = 15.sp
                 )
 
@@ -103,7 +114,8 @@ fun RicetteCard (
                 Text(
                     text = descrizione,
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .padding(start = 5.dp, end = 5.dp),
                     fontSize = 15.sp
 
                 )
@@ -115,24 +127,23 @@ fun RicetteCard (
                     text = titolo,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentWidth(Alignment.Start),
+                        .wrapContentWidth(Alignment.Start)
+                        .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 3.dp),
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp
                 )
 
             }
 
-            val image = "R.drawable." + ricetta.immagine
             ricetta.immagine?.let { url ->
+
                 Image(
                     painter = painterResource(id = ricetta.immagine!!),
                     modifier = Modifier
                         .fillMaxWidth(0.97F)
                         .clip(shape = RoundedCornerShape(16.dp))
-                        .height(265.dp)
-                        .padding(top = 5.dp)
-                        .align( Alignment.CenterHorizontally ),
-
+                        .height(275.dp)
+                        .align(Alignment.CenterHorizontally),
                     contentScale = ContentScale.Crop,
                     contentDescription = ""
                 )
@@ -140,6 +151,32 @@ fun RicetteCard (
             AlignInRow(ricetta)
 
         }
+
+
+        Canvas(
+            //Rettangolo grigio
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 6.dp, top = 98.dp)){
+            drawRect(
+                color = Color.LightGray,
+                size = androidx.compose.ui.geometry.Size(130F, 60F)
+            )
+            //Cerchio grigio con parametri del centro
+            val canvasWidth = size.width
+            val canvasHeight = size.height
+            drawCircle(
+                color = Color.LightGray,
+                center = Offset(x = canvasWidth / 8 , y = canvasHeight + 30),
+                radius = size.maxDimension / 32
+            )
+        }
+        Text(text = "Ricetta" ,modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 8.dp, top = 99.dp),
+            color = Color.Black,
+            fontFamily = FontFamily.Cursive
+        )
 
     }
 }
