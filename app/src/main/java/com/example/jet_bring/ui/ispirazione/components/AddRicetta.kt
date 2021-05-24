@@ -20,17 +20,12 @@ import androidx.navigation.NavHostController
 import kotlin.math.min
 
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
-import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.model.products
-import com.example.jet_bring.model.ricette
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
@@ -150,6 +145,10 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                     } else {
                         addRicettaViewModel.listeViewModel.addSelectedProduct(product)
                     }
+                },
+                onDescriptionChange = {
+                        product, description ->
+                    addRicettaViewModel.listeViewModel.setDescription(product, description)
                 },
                 addRicettaViewModel.listeViewModel::containsSelectedProduct
             )

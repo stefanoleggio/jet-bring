@@ -46,6 +46,7 @@ import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
@@ -83,6 +84,7 @@ fun DetailsPreview() {
  */
 
 
+@ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -245,6 +247,10 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
                 ricetta.ingredienti,
                 profiloViewModel,
                 listeViewModel::removeSelectedProduct,
+                onDescriptionChange = {
+                        product, description ->
+                    addRicettaViewModel.listeViewModel.setDescription(product, description)
+                },
                 listeViewModel::containsSelectedProduct
             )
 

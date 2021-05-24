@@ -1,24 +1,24 @@
 package com.example.jet_bring.ui.liste
 
 import android.os.Build
-import android.os.VibrationEffect
-import android.os.Vibrator
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -34,15 +34,29 @@ import com.example.jet_bring.model.products
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
+import com.example.jet_bring.ui.utils.MainInputText
+import com.example.jet_bring.ui.utils.MainTextButton
 
+@ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun ProductButton(
     product: Product,
     onButtonClick:(Product) -> Unit,
+    onDescriptionChange: (Product, String) -> Unit,
     isSelected: (Product) -> Boolean
 ) {
     val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)
+    val openDescriptionAlert = remember { mutableStateOf(false)}
+    val description: String = if(product.description == null) " " else product.description!!
+    val descriptionText = remember { mutableStateOf(description) }
+
+    if(openDescriptionAlert.value) {
+        DescriptionAlert(openDescriptionAlert,
+            descriptionText,
+            onDescriptionChange = onDescriptionChange,
+            product = product)
+    }
 
     Column(
         modifier = Modifier
@@ -50,20 +64,23 @@ fun ProductButton(
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
             .background(color)
-            .clickable {
-                onButtonClick(product)
+            .pointerInput(onButtonClick) {
+                detectTapGestures(
+                    onTap = { onButtonClick(product) },
+                    onLongPress = { openDescriptionAlert.value = true }
+                )
             }
             .padding(7.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 
     ) {
 
-        if(product.description == null) {
+        if(product.description == null || product.description == "") {
             Image(
                 painter = painterResource(product.icon),
                 contentDescription = null,
                 modifier = Modifier
-                    .height(80.dp),
+                    .height(75.dp),
             )
             Text(
                 modifier = Modifier
@@ -88,12 +105,59 @@ fun ProductButton(
             Text(
                 modifier = Modifier
                     .padding(top = 0.dp),
-                text = product.description,
+                text = product.description!!,
                 fontSize = 12.sp,
                 color = Color.White
             )
         }
     }
+}
+
+
+@ExperimentalComposeUiApi
+@Composable
+fun DescriptionAlert(
+    openDescriptionAlert: MutableState<Boolean>,
+    descriptionText: MutableState<String>,
+    onDescriptionChange: (Product, String) -> Unit,
+    product: Product
+) {
+    AlertDialog(
+        onDismissRequest = {
+            openDescriptionAlert.value = false
+        },
+        title = {
+            Text("Modifica")
+        },
+        text = {
+            Spacer(modifier = Modifier.height(2.dp))
+            MainInputText(
+                onTextChange = {
+                    run { descriptionText.value = it }
+                },
+                text = descriptionText.value,
+                label = "Descrizione")
+        },
+        confirmButton = {
+            MainTextButton(
+                onClick = {
+                    openDescriptionAlert.value = false
+                    onDescriptionChange(product, descriptionText.value)
+                },
+                isBackgroundSecondary = true,
+                text = "Conferma"
+            )
+        },
+        dismissButton = {
+            MainTextButton(
+                onClick = {
+                    openDescriptionAlert.value = false
+                },
+                isBackgroundSecondary = false,
+                text = "Chiudi"
+            )
+        }
+    )
 }
 
 @Composable
@@ -149,6 +213,7 @@ fun CategoryCard(navController: NavHostController, category: Category) {
 fun ProductColumnMode(
     productsList: List<Product>,
     onButtonClick:(Product) -> Unit,
+    onDescriptionChange: (Product, String) -> Unit,
     isSelected: (Product) -> Boolean
 ) {
     Surface(shape= RoundedCornerShape(10.dp),) {
@@ -159,6 +224,7 @@ fun ProductColumnMode(
                 ProductRow(
                     product = item,
                     onButtonClick = onButtonClick,
+                    onDescriptionChange = onDescriptionChange,
                     isSelected = isSelected
                 )
                 if((i < productsList.size - 1) && (i>=0)) {
@@ -178,6 +244,7 @@ fun ProductColumnMode(
 fun ProductRow(
     product: Product,
     onButtonClick: (Product) -> Unit,
+    onDescriptionChange: (Product, String) -> Unit,
     isSelected: (Product) -> Boolean
 ) {
     val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)//
@@ -212,10 +279,12 @@ fun ProductRow(
  * funzione per istanziare prodotti su griglia
  */
 @RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
 @Composable
 fun ProductGridMode(productsList: List<Product>,
                     numOfColumns: Int,
                     onButtonClick:(Product) -> Unit,
+                    onDescriptionChange: (Product, String) -> Unit,
                     isSelected: (Product) -> Boolean
 ) {
     val productsPerRow = productsList.chunked(numOfColumns)
@@ -233,7 +302,7 @@ fun ProductGridMode(productsList: List<Product>,
             for (products in productsPerRow) {
                 Row() {
                     for (product in products) {
-                       ProductButton(product,onButtonClick,isSelected) //ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
+                       ProductButton(product,onButtonClick, onDescriptionChange, isSelected) //ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
                     }
                 }
             }
@@ -245,16 +314,19 @@ fun ProductGridMode(productsList: List<Product>,
  * funzione di scelta fra griglia e colonna
  */
 @RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
 @Composable
 fun ProductModeSwitcher(productsList: List<Product>,
                         profiloViewModel: ProfiloViewModel,
                         onButtonClick: (Product) -> Unit,
+                        onDescriptionChange: (Product, String) -> Unit,
                         isSelected: (Product) -> Boolean
 ) {
     if (profiloViewModel.isColumnMode()){
         ProductColumnMode(
             productsList = productsList,
             onButtonClick = onButtonClick,
+            onDescriptionChange = onDescriptionChange,
             isSelected = isSelected
         )
     } else {
@@ -262,19 +334,21 @@ fun ProductModeSwitcher(productsList: List<Product>,
             productsList = productsList,
             numOfColumns = profiloViewModel.calculateColumnsNumber(),
             onButtonClick = onButtonClick,
+            onDescriptionChange = onDescriptionChange,
             isSelected = isSelected
         )
     }
 }
 
 @RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
 @Composable
 @Preview
 fun ProductButtonPreview() {
 
     val listeViewModel = ListeViewModel()
 
-    ProductButton(listeViewModel.getProduct(0), {}, {true })
+    ProductButton(listeViewModel.getProduct(0), {},{product, string ->  }, {true })
 }
 
 @Preview
@@ -286,7 +360,7 @@ fun CategoryCardPreview() {
 @Preview
 @Composable
 fun ProductRowPreview() {
-    ProductRow(product = products[0],{},{false})
+    ProductRow(product = products[0],{},{product, string ->  }, {false})
 }
 
 @Preview
@@ -297,5 +371,5 @@ fun ProductColumnModePreview() {
         products[1],
         products[6],
     )
-    ProductColumnMode(list,{},{true})
+    ProductColumnMode(list,{},{product, string ->  },{true})
 }

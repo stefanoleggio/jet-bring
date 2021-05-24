@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -18,6 +19,7 @@ import com.example.jet_bring.ui.theme.PADDING_END
 import com.example.jet_bring.ui.theme.PADDING_START
 import com.example.jet_bring.ui.theme.PADDING_TOP
 
+@ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalFoundationApi
 @Composable
@@ -48,12 +50,16 @@ fun CategoryScreen(
             category.products,
             profiloViewModel,
             onButtonClick = {
-                    product ->
-                        if (listeViewModel.containsSelectedProduct(product)) {
-                            listeViewModel.removeSelectedProduct(product)
-                        } else {
-                            listeViewModel.addSelectedProduct(product)
-                        }
+                product ->
+                    if (listeViewModel.containsSelectedProduct(product)) {
+                        listeViewModel.removeSelectedProduct(product)
+                    } else {
+                        listeViewModel.addSelectedProduct(product)
+                    }
+            },
+            onDescriptionChange = {
+                    product, description ->
+                listeViewModel.setDescription(product, description)
             },
             listeViewModel::containsSelectedProduct
         )

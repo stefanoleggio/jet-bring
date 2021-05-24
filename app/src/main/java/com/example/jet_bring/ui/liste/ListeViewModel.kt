@@ -47,6 +47,10 @@ class ListeViewModel : ViewModel() {
         return products.get(productId)
     }
 
+    fun setDescription(product: Product, description: String) {
+        product.description = description
+    }
+
 
     /**
      *

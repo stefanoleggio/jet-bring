@@ -8,7 +8,7 @@ data class Product(
     val id : Long,
     val name: String,
     val icon: Int,
-    val description: String?=null
+    var description: String?=null
 )
 
 fun getProduct(productName : String, description : String) : Product {

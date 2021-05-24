@@ -1,4 +1,6 @@
 package com.example.jet_bring.ui.liste
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -8,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -20,6 +23,8 @@ import com.example.jet_bring.ui.theme.PADDING_END
 import com.example.jet_bring.ui.theme.PADDING_START
 import com.example.jet_bring.ui.theme.PADDING_TOP
 
+@RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
 @Composable
 fun ListeScreen(
     navController: NavHostController,
@@ -30,7 +35,12 @@ fun ListeScreen(
     Column(
         Modifier
             .verticalScroll(rememberScrollState())
-            .padding(top = PADDING_TOP, bottom = PADDING_BOTTOM, start = PADDING_START, end = PADDING_END)
+            .padding(
+                top = PADDING_TOP,
+                bottom = PADDING_BOTTOM,
+                start = PADDING_START,
+                end = PADDING_END
+            )
             .wrapContentSize(Alignment.CenterEnd)
             .padding(scafPaddingValues)
     ) {
@@ -43,6 +53,8 @@ fun ListeScreen(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
 @Composable
 fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
     Column(
@@ -80,7 +92,14 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
             ProductModeSwitcher(
                 listeViewModel.getSelectedProducts(),
                 profiloViewModel,
-                listeViewModel::removeSelectedProduct,
+                onButtonClick = {
+                    product ->
+                    listeViewModel.removeSelectedProduct(product)
+                },
+                onDescriptionChange = {
+                    product, description ->
+                    listeViewModel.setDescription(product, description)
+                },
                 listeViewModel::containsSelectedProduct
             )
         }
