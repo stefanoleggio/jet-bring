@@ -40,12 +40,22 @@ class ListeViewModel : ViewModel() {
      *
      */
 
-    fun getProduct(productId: Int): Product {
-        return products.get(productId)
+    fun getProduct(productId: Long): Product? {
+        for (product in products) {
+            if(product.id == productId)
+                return product
+        }
+        return null
     }
 
-    fun setDescription(product: Product, description: String) {
-        product.description = description
+    fun setDescription(productId: Long, description: String?) {
+        val product = this.getProduct(productId)
+        product?.description = description
+    }
+
+    fun getDescription(productId: Long): String? {
+        val product = this.getProduct(productId)
+        return product?.description
     }
 
 
@@ -57,19 +67,29 @@ class ListeViewModel : ViewModel() {
 
     fun addSelectedProduct(product: Product) {
         val current = ArrayList(this.selectedProducts.value)
-        current.add(product)
+        if(!this.containsSelectedProduct(product.id))
+            current.add(product)
         this.selectedProducts.value = current
     }
 
-    fun removeSelectedProduct(product: Product) {
+    fun removeSelectedProduct(productId: Long) {
         val current = ArrayList(this.selectedProducts.value)
-        current.remove(product)
+        for(product in current) {
+            if(product.id == productId) {
+                current.remove(product)
+                break
+            }
+        }
         this.selectedProducts.value = current
     }
 
-    fun containsSelectedProduct(product: Product): Boolean {
+    fun containsSelectedProduct(productId: Long): Boolean {
         val current = ArrayList(this.selectedProducts.value)
-        return current.contains(product)
+        for(product in current) {
+            if(product.id == productId)
+                return true
+        }
+        return false
     }
 
     fun getSelectedProducts(): List<Product> {

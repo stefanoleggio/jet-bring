@@ -69,12 +69,16 @@ fun ProductButton(
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
             .background(color)
+            .clickable {
+                onButtonClick(product)
+            }
+                /*
             .pointerInput(onButtonClick) {
                 detectTapGestures(
                     onTap = { onButtonClick(product) },
-                    onLongPress = { openDescriptionAlert.value = true }
+                    onLongPress = { onButtonClick(product)/*openDescriptionAlert.value = true*/ }
                 )
-            }
+            }*/
             .padding(7.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -370,7 +374,7 @@ fun ProductButtonPreview() {
 
     val listeViewModel = ListeViewModel()
 
-    ProductButton(listeViewModel.getProduct(0), {},{product, string ->  }, {true }, Color.Blue,Color.Green)
+    listeViewModel.getProduct(0)?.let { ProductButton(it, {},{ product, string ->  }, {true }, Color.Blue,Color.Green) }
 }
 
 @Preview

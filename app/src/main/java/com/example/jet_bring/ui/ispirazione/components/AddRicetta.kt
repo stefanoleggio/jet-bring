@@ -141,19 +141,19 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                 profileViewModel,
                 onButtonClick = {
                         product ->
-                    if (addRicettaViewModel.listeViewModel.containsSelectedProduct(product)) {
-                        addRicettaViewModel.listeViewModel.removeSelectedProduct(product)
+                    if (addRicettaViewModel.listeViewModel.containsSelectedProduct(product.id)) {
+                        addRicettaViewModel.listeViewModel.removeSelectedProduct(product.id)
                     } else {
                         addRicettaViewModel.listeViewModel.addSelectedProduct(product)
                     }
                 },
                 onDescriptionChange = {
                         product, description ->
-                    addRicettaViewModel.listeViewModel.setDescription(product, description)
+                    addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                addRicettaViewModel.listeViewModel::containsSelectedProduct,
+                { product -> addRicettaViewModel.listeViewModel.containsSelectedProduct(product.id) },
+                MaterialTheme.colors.background,
                 BreakerBay,
-                MaterialTheme.colors.background
             )
             Spacer(modifier = Modifier.height(25.dp))
 

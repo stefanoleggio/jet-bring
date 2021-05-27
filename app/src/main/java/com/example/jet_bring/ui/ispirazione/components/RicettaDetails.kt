@@ -246,14 +246,14 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
             ProductModeSwitcher(
                 ricetta.ingredienti,
                 profiloViewModel,
-                listeViewModel::removeSelectedProduct,
+                { product -> listeViewModel.removeSelectedProduct(product.id) },
                 onDescriptionChange = {
                         product, description ->
-                    addRicettaViewModel.listeViewModel.setDescription(product, description)
+                    addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                listeViewModel::containsSelectedProduct,
-                BreakerBay,
+                {product -> listeViewModel.containsSelectedProduct(product.id)},
                 MaterialTheme.colors.background,
+                BreakerBay,
             )
 
 
@@ -266,8 +266,27 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
             Button(
                 shape = MaterialTheme.shapes.medium,
                 onClick = {
+
+                    /*
+
+                    * Da sistemare la modifica della descrizione
+                    *
+                    * */
+                    for (ingrediente in ricetta.ingredienti) {
+                        if(listeViewModel.containsSelectedProduct(ingrediente.id)) {
+                            var oldDescription = listeViewModel.getDescription(ingrediente.id)
+                            listeViewModel.setDescription(ingrediente.id, oldDescription + " + " + ingrediente.description)
+                        } else {
+                            listeViewModel.setDescription(ingrediente.id, ingrediente.description)
+                            listeViewModel.addSelectedProduct(ingrediente)
+                        }
+
+                    }
+                    //snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
+                    /*
                     if(aggiunti == false) {
                         for (ingrediente in ricetta.ingredienti) {
+                            listeViewModel.setDescription(ingrediente.id, ingrediente.description)
                             listeViewModel.addSelectedProduct(ingrediente)
                         }
                         aggiunti = true
@@ -276,9 +295,10 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
                         }
                     }else{
                         coroutineScope.launch {
-                            snackbarHostState.showSnackbar(message = "Prodotti già inseriti")
+                            var oldDescription = listeViewModel.getDescription(ingrediente.id)
+                            snackbarHostState.showSnackbar(message = "Descrizione aggiornata")
                         }
-                    }
+                    }*/
 
                           },
                 colors = ButtonDefaults.textButtonColors(

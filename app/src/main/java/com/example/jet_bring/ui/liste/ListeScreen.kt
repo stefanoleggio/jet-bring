@@ -91,13 +91,14 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
                 profiloViewModel,
                 onButtonClick = {
                     product ->
-                    listeViewModel.removeSelectedProduct(product)
+                    listeViewModel.removeSelectedProduct(product.id)
+
                 },
                 onDescriptionChange = {
                     product, description ->
-                    listeViewModel.setDescription(product, description)
+                    listeViewModel.setDescription(product.id, description)
                 },
-                listeViewModel::containsSelectedProduct,
+                { product-> listeViewModel.containsSelectedProduct(product.id) },
                 Roman,
                 BreakerBay
             )
