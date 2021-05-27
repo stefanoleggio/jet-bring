@@ -251,7 +251,9 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
                         product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product, description)
                 },
-                listeViewModel::containsSelectedProduct
+                listeViewModel::containsSelectedProduct,
+                BreakerBay,
+                MaterialTheme.colors.background,
             )
 
 

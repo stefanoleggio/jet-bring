@@ -29,6 +29,7 @@ import com.example.jet_bring.model.products
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.ui.theme.BreakerBay
 
 
 @RequiresApi(Build.VERSION_CODES.R)
@@ -150,7 +151,9 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                         product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product, description)
                 },
-                addRicettaViewModel.listeViewModel::containsSelectedProduct
+                addRicettaViewModel.listeViewModel::containsSelectedProduct,
+                BreakerBay,
+                MaterialTheme.colors.background
             )
             Spacer(modifier = Modifier.height(25.dp))
 

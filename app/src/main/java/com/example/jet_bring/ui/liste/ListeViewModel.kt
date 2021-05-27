@@ -6,10 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.R
-import com.example.jet_bring.model.Category
-import com.example.jet_bring.model.Product
-import com.example.jet_bring.model.categories
-import com.example.jet_bring.model.products
+import com.example.jet_bring.model.*
 import java.lang.Math.ceil
 import java.lang.Math.floor
 
@@ -82,5 +79,17 @@ class ListeViewModel : ViewModel() {
     fun isSelectedProductsEmpty(): Boolean {
         return ArrayList(this.selectedProducts.value).size == 0
     }
+
+    /**
+     * Ricette Logic
+     */
+    fun getRicette(): Array<Ricetta> {
+        return ricette
+    }
+
+    fun getRicetta(id:Int): Ricetta {
+        return ricette[id]
+    }
+
 
 }

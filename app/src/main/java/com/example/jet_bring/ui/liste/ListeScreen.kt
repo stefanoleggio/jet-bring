@@ -18,10 +18,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.R
-import com.example.jet_bring.ui.theme.PADDING_BOTTOM
-import com.example.jet_bring.ui.theme.PADDING_END
-import com.example.jet_bring.ui.theme.PADDING_START
-import com.example.jet_bring.ui.theme.PADDING_TOP
+import com.example.jet_bring.ui.theme.*
 
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
@@ -100,7 +97,9 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
                     product, description ->
                     listeViewModel.setDescription(product, description)
                 },
-                listeViewModel::containsSelectedProduct
+                listeViewModel::containsSelectedProduct,
+                Roman,
+                BreakerBay
             )
         }
     }

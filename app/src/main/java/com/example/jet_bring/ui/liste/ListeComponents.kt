@@ -44,9 +44,14 @@ fun ProductButton(
     product: Product,
     onButtonClick:(Product) -> Unit,
     onDescriptionChange: (Product, String) -> Unit,
-    isSelected: (Product) -> Boolean
+    isSelected: (Product) -> Boolean,
+    selectedColor: Color,
+    unselectedColor: Color,
+
 ) {
-    val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)
+    val color by  animateColorAsState(
+        targetValue = if(isSelected(product)) selectedColor else unselectedColor
+    )
     val openDescriptionAlert = remember { mutableStateOf(false)}
     val description: String = if(product.description == null) " " else product.description!!
     val descriptionText = remember { mutableStateOf(description) }
@@ -214,7 +219,9 @@ fun ProductColumnMode(
     productsList: List<Product>,
     onButtonClick:(Product) -> Unit,
     onDescriptionChange: (Product, String) -> Unit,
-    isSelected: (Product) -> Boolean
+    isSelected: (Product) -> Boolean,
+    selectedColor: Color,
+    unselectedColor: Color
 ) {
     Surface(shape= RoundedCornerShape(10.dp),) {
         Column() {
@@ -225,7 +232,9 @@ fun ProductColumnMode(
                     product = item,
                     onButtonClick = onButtonClick,
                     onDescriptionChange = onDescriptionChange,
-                    isSelected = isSelected
+                    isSelected = isSelected,
+                    selectedColor = selectedColor,
+                    unselectedColor = unselectedColor
                 )
                 if((i < productsList.size - 1) && (i>=0)) {
                     Spacer(
@@ -245,10 +254,13 @@ fun ProductRow(
     product: Product,
     onButtonClick: (Product) -> Unit,
     onDescriptionChange: (Product, String) -> Unit,
-    isSelected: (Product) -> Boolean
+    isSelected: (Product) -> Boolean,
+    selectedColor: Color,
+    unselectedColor: Color,
 ) {
-    val color by  animateColorAsState(targetValue = if(isSelected(product)) Roman else BreakerBay)//
-
+    val color by  animateColorAsState(
+        targetValue = if(isSelected(product)) selectedColor else unselectedColor
+    )
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color)
@@ -285,7 +297,10 @@ fun ProductGridMode(productsList: List<Product>,
                     numOfColumns: Int,
                     onButtonClick:(Product) -> Unit,
                     onDescriptionChange: (Product, String) -> Unit,
-                    isSelected: (Product) -> Boolean
+                    isSelected: (Product) -> Boolean,
+                    selectedColor: Color,
+                    unselectedColor: Color
+
 ) {
     val productsPerRow = productsList.chunked(numOfColumns)
     Column(
@@ -302,7 +317,7 @@ fun ProductGridMode(productsList: List<Product>,
             for (products in productsPerRow) {
                 Row() {
                     for (product in products) {
-                       ProductButton(product,onButtonClick, onDescriptionChange, isSelected) //ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
+                       ProductButton(product,onButtonClick, onDescriptionChange, isSelected,selectedColor,unselectedColor) //ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
                     }
                 }
             }
@@ -320,14 +335,18 @@ fun ProductModeSwitcher(productsList: List<Product>,
                         profiloViewModel: ProfiloViewModel,
                         onButtonClick: (Product) -> Unit,
                         onDescriptionChange: (Product, String) -> Unit,
-                        isSelected: (Product) -> Boolean
+                        isSelected: (Product) -> Boolean,
+                        selectedColor: Color,
+                        unselectedColor: Color
 ) {
     if (profiloViewModel.isColumnMode()){
         ProductColumnMode(
             productsList = productsList,
             onButtonClick = onButtonClick,
             onDescriptionChange = onDescriptionChange,
-            isSelected = isSelected
+            isSelected = isSelected,
+            selectedColor = selectedColor,
+            unselectedColor = unselectedColor
         )
     } else {
         ProductGridMode(
@@ -335,7 +354,10 @@ fun ProductModeSwitcher(productsList: List<Product>,
             numOfColumns = profiloViewModel.calculateColumnsNumber(),
             onButtonClick = onButtonClick,
             onDescriptionChange = onDescriptionChange,
-            isSelected = isSelected
+            isSelected = isSelected,
+            selectedColor = selectedColor,
+            unselectedColor = unselectedColor
+
         )
     }
 }
@@ -348,7 +370,7 @@ fun ProductButtonPreview() {
 
     val listeViewModel = ListeViewModel()
 
-    ProductButton(listeViewModel.getProduct(0), {},{product, string ->  }, {true })
+    ProductButton(listeViewModel.getProduct(0), {},{product, string ->  }, {true }, Color.Blue,Color.Green)
 }
 
 @Preview
@@ -360,7 +382,7 @@ fun CategoryCardPreview() {
 @Preview
 @Composable
 fun ProductRowPreview() {
-    ProductRow(product = products[0],{},{product, string ->  }, {false})
+    ProductRow(product = products[0],{},{product, string ->  }, {false},Color.Blue,Color.Green)
 }
 
 @Preview
@@ -371,5 +393,5 @@ fun ProductColumnModePreview() {
         products[1],
         products[6],
     )
-    ProductColumnMode(list,{},{product, string ->  },{true})
+    ProductColumnMode(list,{},{product, string ->  },{true},Color.Blue,Color.Green)
 }

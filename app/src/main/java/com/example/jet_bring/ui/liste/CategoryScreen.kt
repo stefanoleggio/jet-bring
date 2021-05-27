@@ -14,10 +14,7 @@ import androidx.navigation.NavHostController
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
-import com.example.jet_bring.ui.theme.PADDING_BOTTOM
-import com.example.jet_bring.ui.theme.PADDING_END
-import com.example.jet_bring.ui.theme.PADDING_START
-import com.example.jet_bring.ui.theme.PADDING_TOP
+import com.example.jet_bring.ui.theme.*
 
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
@@ -61,7 +58,9 @@ fun CategoryScreen(
                     product, description ->
                 listeViewModel.setDescription(product, description)
             },
-            listeViewModel::containsSelectedProduct
+            listeViewModel::containsSelectedProduct,
+            Roman,
+            BreakerBay
         )
     }
 
