@@ -127,14 +127,6 @@ class ListeViewModel : ViewModel() {
         }
         throw Resources.NotFoundException("ricetta non trovata")
     }
-    /*
-    fun setSelectedRicetta(ricettaId:Long): Ricetta {
-        if(ricettaId != selectedRicetta.value.id) {
-            selectedRicetta.value = getRicetta(ricettaId).copy()
-        }
-        return selectedRicetta.value
-    }
-    */
     fun getSelectedRicetta(ricettaId: Long): Ricetta {
         for(ricetta in selectedRicette.value) {
             if(ricetta.id == ricettaId)
@@ -183,5 +175,21 @@ class ListeViewModel : ViewModel() {
         }
     }
 
+    fun setRicettaProductDescription(productId: Long,ricettaId: Long,description: String?) {
+        for (product in getSelectedRicettaProducts(ricettaId)) {
+            if(product.id == productId) {
+                product.description = description
+            }
+        }
 
+    }
+
+    fun getRicettaProductDescription(productId: Long,ricettaId: Long):String? {
+        for (product in getSelectedRicettaProducts(ricettaId)) {
+            if(product.id == productId) {
+                return product.description
+            }
+        }
+        return null
+    }
 }

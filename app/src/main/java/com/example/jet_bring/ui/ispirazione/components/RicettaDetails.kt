@@ -253,7 +253,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
                 },
                 onDescriptionChange = {
                         product, description ->
-                    addRicettaViewModel.listeViewModel.setDescription(product.id, description)
+                    listeViewModel.setRicettaProductDescription(product.id, ricettaId, description)
                 },
                 {product -> listeViewModel.isInSelectedRicettaList(product.id,ricettaId)},
                 BreakerBay,
