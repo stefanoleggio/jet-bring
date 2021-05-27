@@ -3,9 +3,7 @@ package com.example.jet_bring.ui.liste
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +35,7 @@ import com.example.jet_bring.ui.theme.Roman
 import com.example.jet_bring.ui.utils.MainInputText
 import com.example.jet_bring.ui.utils.MainTextButton
 
+@ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
 @Composable
@@ -69,16 +68,10 @@ fun ProductButton(
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
             .background(color)
-            .clickable {
-                onButtonClick(product)
-            }
-                /*
-            .pointerInput(onButtonClick) {
-                detectTapGestures(
-                    onTap = { onButtonClick(product) },
-                    onLongPress = { onButtonClick(product)/*openDescriptionAlert.value = true*/ }
-                )
-            }*/
+            .combinedClickable(
+                onClick = { onButtonClick(product) },
+                onLongClick = {openDescriptionAlert.value = true}
+            )
             .padding(7.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
 
@@ -294,6 +287,7 @@ fun ProductRow(
 /**
  * funzione per istanziare prodotti su griglia
  */
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
@@ -332,6 +326,7 @@ fun ProductGridMode(productsList: List<Product>,
 /**
  * funzione di scelta fra griglia e colonna
  */
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
@@ -366,6 +361,7 @@ fun ProductModeSwitcher(productsList: List<Product>,
     }
 }
 
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable

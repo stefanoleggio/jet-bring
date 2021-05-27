@@ -277,8 +277,11 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
                             var oldDescription = listeViewModel.getDescription(ingrediente.id)
                             listeViewModel.setDescription(ingrediente.id, oldDescription + " + " + ingrediente.description)
                         } else {
+                            val product = listeViewModel.getProduct(ingrediente.id)
                             listeViewModel.setDescription(ingrediente.id, ingrediente.description)
-                            listeViewModel.addSelectedProduct(ingrediente)
+                            if (product != null) {
+                                listeViewModel.addSelectedProduct(product)
+                            }
                         }
 
                     }

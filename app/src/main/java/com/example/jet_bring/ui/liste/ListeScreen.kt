@@ -1,6 +1,7 @@
 package com.example.jet_bring.ui.liste
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -20,6 +21,7 @@ import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.theme.*
 
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
@@ -50,6 +52,7 @@ fun ListeScreen(
     }
 }
 
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
