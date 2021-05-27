@@ -104,10 +104,16 @@ fun NavigationManager (
          *
          */
 
-        composable("ispirazione/ricetteDetails/{ricettaId}", arguments =  listOf(navArgument("ricettaId") { type = NavType.StringType   ; defaultValue = "0"})
-                ) { backStackEntry ->
-            RicetteDetails(navController, backStackEntry.arguments!!.getString("ricettaId"), addRicettaViewModel,listeViewModel, profileViewModel)
+        composable(
+            "ispirazione/ricetteDetails/{ricettaId}",
+            arguments =  listOf(navArgument("ricettaId") { type = NavType.StringType;defaultValue = "0" }
+        )
+        ) { backStackEntry ->
+            val ricettaId : Long = backStackEntry.arguments?.getString("ricettaId")!!.toLong()
+
+            RicetteDetails(navController, ricettaId, addRicettaViewModel,listeViewModel, profileViewModel)
             topBarTitle.value = "Ricetta"
+
         }
         composable("ispirazione/addRicetta") {
             AddRicetta(navController, addRicettaViewModel, )

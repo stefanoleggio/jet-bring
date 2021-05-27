@@ -8,7 +8,7 @@ import com.example.jet_bring.R
  * Data class usata per memorizzare le informazioni delle ricette
  */
 data class Ricetta(
-    var id: Int? = 1,
+    var id: Long? = -1,
     var titolo: String? = "Nome Modello",
     var pubblicatore: String? = "Io",
     var immagine: Int? = null,

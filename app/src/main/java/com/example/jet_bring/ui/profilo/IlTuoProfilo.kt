@@ -19,6 +19,7 @@ import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -32,13 +33,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.theme.JetbringTheme
+import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
 @Composable
 fun IlTuoProfilo(
                 profiloViewModel: ProfiloViewModel
 ) {
-
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
     JetbringTheme() {
         Column {
             //Spacer(modifier = Modifier.padding(padding))
@@ -76,6 +79,10 @@ fun IlTuoProfilo(
                 text = profiloViewModel.temp.email,
                 onModifiedText = profiloViewModel::editProfileEmail
             )
+            SnackbarHost(
+                hostState = snackbarHostState,
+                Modifier.wrapContentWidth(Alignment.CenterHorizontally)
+            )
             Row(
                 Modifier
                     .padding(padding)
@@ -83,7 +90,12 @@ fun IlTuoProfilo(
                 horizontalArrangement = Arrangement.End,
             ) {
                 Button(
-                    onClick = { profiloViewModel.onSaveDone() },
+                    onClick = {
+                        profiloViewModel.onSaveDone()
+                        coroutineScope.launch {
+                            snackbarHostState.showSnackbar(message = "Salvataggio Dati")
+                        }
+                              },
                     Modifier,
                     colors = outlinedButtonColors(
                         backgroundColor = MaterialTheme.colors.secondary,

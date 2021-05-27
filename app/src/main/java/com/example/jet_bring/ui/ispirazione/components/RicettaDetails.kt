@@ -88,9 +88,8 @@ fun DetailsPreview() {
 @RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRicettaViewModel: AddRicettaViewModel,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
-
-    val ricetta = addRicettaViewModel.getricetteList()[ricettaId?.toInt()!!]
+fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicettaViewModel: AddRicettaViewModel,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
+    val ricetta = listeViewModel.setSelectedRicetta(ricettaId)
     val scrollState = rememberScrollState()
     var aggiunti = false
 
@@ -244,16 +243,21 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
 
 
             ProductModeSwitcher(
-                ricetta.ingredienti,
+                listeViewModel.getRicetta(ricettaId).ingredienti,
                 profiloViewModel,
-                { product -> listeViewModel.removeSelectedProduct(product.id) },
+                {product ->
+                    if(listeViewModel.isInSelectedRicettaList(product.id))
+                        listeViewModel.removeFromSelectedRicetta(product.id)
+                    else
+                        listeViewModel.addToSelectedRicetta(product.id)
+                },
                 onDescriptionChange = {
                         product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                {product -> listeViewModel.containsSelectedProduct(product.id)},
-                MaterialTheme.colors.background,
+                {product -> listeViewModel.isInSelectedRicettaList(product.id)},
                 BreakerBay,
+                MaterialTheme.colors.background,
             )
 
 
@@ -268,23 +272,12 @@ fun RicetteDetails(navController: NavHostController, ricettaId: String?, addRice
                 onClick = {
 
                     /*
-
                     * Da sistemare la modifica della descrizione
                     *
-                    * */
-                    for (ingrediente in ricetta.ingredienti) {
-                        if(listeViewModel.containsSelectedProduct(ingrediente.id)) {
-                            var oldDescription = listeViewModel.getDescription(ingrediente.id)
-                            listeViewModel.setDescription(ingrediente.id, oldDescription + " + " + ingrediente.description)
-                        } else {
-                            val product = listeViewModel.getProduct(ingrediente.id)
-                            listeViewModel.setDescription(ingrediente.id, ingrediente.description)
-                            if (product != null) {
-                                listeViewModel.addSelectedProduct(product)
-                            }
-                        }
-
-                    }
+                    *
+                    */
+                    listeViewModel.addselectedRicettaListToSelectedProducts()
+                    //navController.popBackStack()
                     //snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
                     /*
                     if(aggiunti == false) {

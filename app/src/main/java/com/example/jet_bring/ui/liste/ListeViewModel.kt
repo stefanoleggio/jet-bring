@@ -1,6 +1,7 @@
 package com.example.jet_bring.ui.liste
 
 import android.content.res.Resources
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -14,6 +15,7 @@ class ListeViewModel : ViewModel() {
 
 
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
+    val selectedRicetta: MutableState<Ricetta> = mutableStateOf(Ricetta())
 
     /**
      *
@@ -107,8 +109,63 @@ class ListeViewModel : ViewModel() {
         return ricette
     }
 
-    fun getRicetta(id:Int): Ricetta {
-        return ricette[id]
+    fun getRicetta(ricettaId:Long): Ricetta {
+        for (ricetta in ricette) {
+            if(ricetta.id==ricettaId ) {
+                return ricetta
+            }
+        }
+        throw Resources.NotFoundException("ricetta non trovata")
+    }
+    fun setSelectedRicetta(ricettaId:Long): Ricetta {
+        if(ricettaId != selectedRicetta.value.id) {
+            selectedRicetta.value = getRicetta(ricettaId).copy()
+        }
+        return selectedRicetta.value
+    }
+
+    fun getSelectedRicetta(): Ricetta {
+        return selectedRicetta.value
+    }
+    fun isInSelectedRicettaList(productId: Long): Boolean {
+        for(product in selectedRicetta.value.ingredienti) {
+            if(product.id == productId)
+                return true
+        }
+        return false
+    }
+    fun getSelectedRicettaProducts(): List<Product> {
+        return ArrayList(selectedRicetta.value.ingredienti)
+    }
+
+    fun addToSelectedRicetta(productId:Long) {
+        val current = ArrayList(selectedRicetta.value.ingredienti)
+        for(ricetta in getRicette()) {
+            if(ricetta.id == selectedRicetta.value.id) {
+                for(product in ricetta.ingredienti) {
+                    if(product.id == productId) {
+                        current.add(product)
+                    }
+                }
+            }
+        }
+        selectedRicetta.value.ingredienti = current
+    }
+    fun removeFromSelectedRicetta(productId:Long) {
+        val current = ArrayList(selectedRicetta.value.ingredienti)
+        for(product in current) {
+            if(product.id == productId) {
+                current.remove(product)
+                break
+            }
+        }
+        selectedRicetta.value.ingredienti = current
+    }
+
+    fun addselectedRicettaListToSelectedProducts() {
+        for(product in selectedRicetta.value.ingredienti) {
+            addSelectedProduct(product)
+        }
     }
 
 
