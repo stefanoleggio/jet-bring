@@ -15,7 +15,8 @@ class ListeViewModel : ViewModel() {
 
 
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
-    val selectedRicetta: MutableState<Ricetta> = mutableStateOf(Ricetta())
+
+    val selectedRicette: MutableState<List<Ricetta>> = mutableStateOf(ArrayList(setSelectedRicette()))
 
     /**
      *
@@ -105,7 +106,16 @@ class ListeViewModel : ViewModel() {
     /**
      * Ricette Logic
      */
-    fun getRicette(): Array<Ricetta> {
+
+    fun setSelectedRicette(): ArrayList<Ricetta> {
+        val toRet = ArrayList<Ricetta>()
+        for (ricetta in ricette) {
+            toRet.add(ricetta.copy())
+        }
+        return toRet
+    }
+
+    fun getRicette(): ArrayList<Ricetta> {
         return ricette
     }
 
@@ -117,31 +127,36 @@ class ListeViewModel : ViewModel() {
         }
         throw Resources.NotFoundException("ricetta non trovata")
     }
+    /*
     fun setSelectedRicetta(ricettaId:Long): Ricetta {
         if(ricettaId != selectedRicetta.value.id) {
             selectedRicetta.value = getRicetta(ricettaId).copy()
         }
         return selectedRicetta.value
     }
-
-    fun getSelectedRicetta(): Ricetta {
-        return selectedRicetta.value
+    */
+    fun getSelectedRicetta(ricettaId: Long): Ricetta {
+        for(ricetta in selectedRicette.value) {
+            if(ricetta.id == ricettaId)
+               return ricetta
+        }
+        throw Resources.NotFoundException("Ricetta non trovata")
     }
-    fun isInSelectedRicettaList(productId: Long): Boolean {
-        for(product in selectedRicetta.value.ingredienti) {
+    fun isInSelectedRicettaList(productId: Long,ricettaId: Long): Boolean {
+        for(product in getSelectedRicetta(ricettaId).ingredienti) {
             if(product.id == productId)
                 return true
         }
         return false
     }
-    fun getSelectedRicettaProducts(): List<Product> {
-        return ArrayList(selectedRicetta.value.ingredienti)
+    fun getSelectedRicettaProducts(ricettaId:Long): List<Product> {
+        return ArrayList(getSelectedRicetta(ricettaId).ingredienti)
     }
 
-    fun addToSelectedRicetta(productId:Long) {
-        val current = ArrayList(selectedRicetta.value.ingredienti)
+    fun addToSelectedRicetta(productId:Long,ricettaId: Long) {
+        val current = ArrayList(getSelectedRicetta(ricettaId).ingredienti)
         for(ricetta in getRicette()) {
-            if(ricetta.id == selectedRicetta.value.id) {
+            if(ricetta.id == getSelectedRicetta(ricettaId).id) {
                 for(product in ricetta.ingredienti) {
                     if(product.id == productId) {
                         current.add(product)
@@ -149,21 +164,21 @@ class ListeViewModel : ViewModel() {
                 }
             }
         }
-        selectedRicetta.value.ingredienti = current
+        getSelectedRicetta(ricettaId).ingredienti = current
     }
-    fun removeFromSelectedRicetta(productId:Long) {
-        val current = ArrayList(selectedRicetta.value.ingredienti)
+    fun removeFromSelectedRicetta(productId:Long,ricettaId: Long) {
+        val current = ArrayList(getSelectedRicetta(ricettaId).ingredienti)
         for(product in current) {
             if(product.id == productId) {
                 current.remove(product)
                 break
             }
         }
-        selectedRicetta.value.ingredienti = current
+        getSelectedRicetta(ricettaId).ingredienti = current
     }
 
-    fun addselectedRicettaListToSelectedProducts() {
-        for(product in selectedRicetta.value.ingredienti) {
+    fun addselectedRicettaListToSelectedProducts(ricettaId: Long) {
+        for(product in getSelectedRicetta(ricettaId).ingredienti) {
             addSelectedProduct(product)
         }
     }

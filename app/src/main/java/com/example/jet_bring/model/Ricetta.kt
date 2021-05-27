@@ -21,7 +21,7 @@ data class Ricetta(
 )
 
 
-val ricette = arrayOf(
+val ricette = arrayListOf(
 
     Ricetta(
         0,

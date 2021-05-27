@@ -4,6 +4,7 @@ package com.example.jet_bring.ui.ispirazione.components
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -32,6 +33,7 @@ import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.BreakerBay
 
 
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Preview
@@ -44,6 +46,7 @@ fun AddRicettePreview() {
 }
 
 
+@ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable

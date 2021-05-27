@@ -89,7 +89,7 @@ fun DetailsPreview() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicettaViewModel: AddRicettaViewModel,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
-    val ricetta = listeViewModel.setSelectedRicetta(ricettaId)
+    val ricetta = listeViewModel.getRicetta(ricettaId)
     val scrollState = rememberScrollState()
     var aggiunti = false
 
@@ -246,16 +246,16 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
                 listeViewModel.getRicetta(ricettaId).ingredienti,
                 profiloViewModel,
                 {product ->
-                    if(listeViewModel.isInSelectedRicettaList(product.id))
-                        listeViewModel.removeFromSelectedRicetta(product.id)
+                    if(listeViewModel.isInSelectedRicettaList(product.id,ricettaId))
+                        listeViewModel.removeFromSelectedRicetta(product.id,ricettaId)
                     else
-                        listeViewModel.addToSelectedRicetta(product.id)
+                        listeViewModel.addToSelectedRicetta(product.id,ricettaId)
                 },
                 onDescriptionChange = {
                         product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                {product -> listeViewModel.isInSelectedRicettaList(product.id)},
+                {product -> listeViewModel.isInSelectedRicettaList(product.id,ricettaId)},
                 BreakerBay,
                 MaterialTheme.colors.background,
             )
@@ -276,7 +276,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
                     *
                     *
                     */
-                    listeViewModel.addselectedRicettaListToSelectedProducts()
+                    listeViewModel.addselectedRicettaListToSelectedProducts(ricettaId)
                     //navController.popBackStack()
                     //snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
                     /*
@@ -320,7 +320,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
 
             ) {
                 Text(
-                    text = "Aggiungi ${ricetta.ingredienti.size.toString()} ingredienti",
+                    text = "Aggiungi ${listeViewModel.getSelectedRicetta(ricettaId).ingredienti.size.toString()} ingredienti",
                     color = MaterialTheme.colors.onBackground
 
                 )
