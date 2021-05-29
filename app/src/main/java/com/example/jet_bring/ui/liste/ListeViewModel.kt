@@ -44,17 +44,27 @@ class ListeViewModel : ViewModel() {
      *
      */
 
-    fun getProduct(productId: Long): Product? {
+    fun getProduct(productId: Long): Product {
         for (product in products) {
             if(product.id == productId)
                 return product
         }
-        return null
+        throw Resources.NotFoundException("prodotto non trovato")
     }
-
+    fun getSelectedProduct(productId: Long): Product {
+        for (product in selectedProducts.value) {
+            if(product.id == productId)
+                return product
+        }
+        throw Resources.NotFoundException("Prodotto non presente nella lista di prodotti selezionati")
+    }
     fun setDescription(productId: Long, description: String?) {
-        val product = this.getProduct(productId)
-        product?.description = description
+        if(isInSelectedProduct(productId)) {
+            val product = getSelectedProduct(productId)
+            product?.description = description
+        }
+            val product = getProduct(productId)
+            product?.description = description
     }
 
     fun getDescription(productId: Long): String? {
@@ -71,7 +81,7 @@ class ListeViewModel : ViewModel() {
 
     fun addSelectedProduct(product: Product) {
         val current = ArrayList(this.selectedProducts.value)
-        if(!this.containsSelectedProduct(product.id))
+        if(!this.isInSelectedProduct(product.id))
             current.add(product)
         this.selectedProducts.value = current
     }
@@ -87,7 +97,7 @@ class ListeViewModel : ViewModel() {
         this.selectedProducts.value = current
     }
 
-    fun containsSelectedProduct(productId: Long): Boolean {
+    fun isInSelectedProduct(productId: Long): Boolean {
         val current = ArrayList(this.selectedProducts.value)
         for(product in current) {
             if(product.id == productId)
@@ -194,8 +204,12 @@ class ListeViewModel : ViewModel() {
 
     fun addselectedRicettaListToSelectedProducts(ricettaId: Long) {
         for(product in getSelectedRicetta(ricettaId).ingredienti) {
+            var prodDesc = product.description
+            if(isInSelectedProduct(product.id)) {
+                prodDesc = "${getSelectedProduct(product.id).description} + $prodDesc"
+            }
             addSelectedProduct(product)
-            setDescription(product.id,product.description)
+            setDescription(product.id,prodDesc)
         }
     }
 

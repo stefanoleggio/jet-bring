@@ -48,7 +48,7 @@ fun CategoryScreen(
             profiloViewModel,
             onButtonClick = {
                 product ->
-                    if (listeViewModel.containsSelectedProduct(product.id)) {
+                    if (listeViewModel.isInSelectedProduct(product.id)) {
                         listeViewModel.removeSelectedProduct(product.id)
                     } else {
                         listeViewModel.addSelectedProduct(product)
@@ -58,7 +58,7 @@ fun CategoryScreen(
                     product, description ->
                 listeViewModel.setDescription(product.id, description)
             },
-            { product-> listeViewModel.containsSelectedProduct(product.id) },
+            { product-> listeViewModel.isInSelectedProduct(product.id) },
             Roman,
             BreakerBay
         )

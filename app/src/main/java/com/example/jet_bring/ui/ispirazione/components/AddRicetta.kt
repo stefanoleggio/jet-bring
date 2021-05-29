@@ -144,7 +144,7 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                 profileViewModel,
                 onButtonClick = {
                         product ->
-                    if (addRicettaViewModel.listeViewModel.containsSelectedProduct(product.id)) {
+                    if (addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
                         addRicettaViewModel.listeViewModel.removeSelectedProduct(product.id)
                     } else {
                         addRicettaViewModel.listeViewModel.addSelectedProduct(product)
@@ -154,7 +154,7 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                         product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                { product -> addRicettaViewModel.listeViewModel.containsSelectedProduct(product.id) },
+                { product -> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
                 MaterialTheme.colors.background,
                 BreakerBay,
             )

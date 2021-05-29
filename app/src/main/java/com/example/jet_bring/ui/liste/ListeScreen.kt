@@ -101,7 +101,7 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
                     product, description ->
                     listeViewModel.setDescription(product.id, description)
                 },
-                { product-> listeViewModel.containsSelectedProduct(product.id) },
+                { product-> listeViewModel.isInSelectedProduct(product.id) },
                 Roman,
                 BreakerBay
             )
