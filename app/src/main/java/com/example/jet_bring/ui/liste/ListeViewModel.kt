@@ -136,7 +136,14 @@ class ListeViewModel : ViewModel() {
         throw Resources.NotFoundException("Ricetta non trovata")
     }
 
-
+    fun resetRicetta(ricettaId: Long) {
+        val ricettaToAdd = getRicetta(ricettaId)
+        val tempSels = ArrayList(selectedRicette.value)
+        val toRemove = getSelectedRicetta(ricettaId)
+        tempSels.remove(toRemove)
+        tempSels.add(ricettaToAdd)
+        selectedRicette.value = tempSels
+    }
     fun isInSelectedRicettaList(productId: Long,ricettaId: Long): Boolean {
         for(product in getSelectedRicetta(ricettaId).ingredienti) {
             if(product.id == productId)
@@ -188,6 +195,7 @@ class ListeViewModel : ViewModel() {
     fun addselectedRicettaListToSelectedProducts(ricettaId: Long) {
         for(product in getSelectedRicetta(ricettaId).ingredienti) {
             addSelectedProduct(product)
+            setDescription(product.id,product.description)
         }
     }
 

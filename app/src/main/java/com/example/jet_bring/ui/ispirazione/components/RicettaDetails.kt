@@ -56,6 +56,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.rememberNavController
+import androidx.ui.graphics.BlendMode
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.ricette
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
@@ -92,8 +93,6 @@ fun DetailsPreview() {
 fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicettaViewModel: AddRicettaViewModel,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
     val ricetta = listeViewModel.getRicetta(ricettaId)
     val scrollState = rememberScrollState()
-    var aggiunti = false
-
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -279,6 +278,12 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
                     *
                     */
                     listeViewModel.addselectedRicettaListToSelectedProducts(ricettaId)
+                    getBack(ricettaId,
+                        listeViewModel::resetRicetta,
+                        { navController.navigate("liste") {
+                            popUpTo = navController.graph.startDestination
+                            launchSingleTop = true
+                        }})
                     //navController.popBackStack()
                     //snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
                     /*
@@ -333,7 +338,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
         }
 
         Button(
-            onClick = { navController.popBackStack() },
+            onClick = { getBack(ricettaId,listeViewModel::resetRicetta,navController::popBackStack) },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = Color.Transparent
             ),
@@ -350,4 +355,9 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
 
         }
     }
+}
+
+fun getBack(ricettaId: Long, resetRicetta: (ricettaId: Long) -> Unit,goto: () -> Unit) {
+    resetRicetta(ricettaId)
+    goto()
 }
