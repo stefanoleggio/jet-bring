@@ -18,6 +18,7 @@ data class Ricetta(
     var descrizione: String? = "descrizione",
     var ingredienti: List<Product> = listOf(),
     var dateAdded: String? = null,
+    var changedList: Int = 0
 )
 
 

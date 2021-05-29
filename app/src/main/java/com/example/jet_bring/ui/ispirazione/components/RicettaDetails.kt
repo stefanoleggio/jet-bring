@@ -2,6 +2,7 @@ package com.example.jet_bring.ui.ispirazione.components
 
 import android.os.Build
 import android.telecom.Call
+import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -245,11 +246,12 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
             ProductModeSwitcher(
                 listeViewModel.getRicetta(ricettaId).ingredienti,
                 profiloViewModel,
-                {product ->
+                onButtonClick = {product ->
                     if(listeViewModel.isInSelectedRicettaList(product.id,ricettaId))
                         listeViewModel.removeFromSelectedRicetta(product.id,ricettaId)
                     else
                         listeViewModel.addToSelectedRicetta(product.id,ricettaId)
+                    Log.d(null,"${listeViewModel.getSelectedRicetta(ricettaId).ingredienti}")
                 },
                 onDescriptionChange = {
                         product, description ->

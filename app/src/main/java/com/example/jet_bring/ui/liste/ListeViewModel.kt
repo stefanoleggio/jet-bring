@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.R
+import com.example.jet_bring.currentRoute
 import com.example.jet_bring.model.*
 import java.lang.Math.ceil
 import java.lang.Math.floor
@@ -134,6 +135,8 @@ class ListeViewModel : ViewModel() {
         }
         throw Resources.NotFoundException("Ricetta non trovata")
     }
+
+
     fun isInSelectedRicettaList(productId: Long,ricettaId: Long): Boolean {
         for(product in getSelectedRicetta(ricettaId).ingredienti) {
             if(product.id == productId)
@@ -146,27 +149,40 @@ class ListeViewModel : ViewModel() {
     }
 
     fun addToSelectedRicetta(productId:Long,ricettaId: Long) {
-        val current = ArrayList(getSelectedRicetta(ricettaId).ingredienti)
+        val ricettaToAdd = getSelectedRicetta(ricettaId).copy()
         for(ricetta in getRicette()) {
             if(ricetta.id == getSelectedRicetta(ricettaId).id) {
                 for(product in ricetta.ingredienti) {
                     if(product.id == productId) {
-                        current.add(product)
+                        val tempList = ArrayList(ricettaToAdd.ingredienti)
+                        tempList.add(product)
+                        ricettaToAdd.ingredienti = tempList
+                        break
                     }
                 }
             }
         }
-        getSelectedRicetta(ricettaId).ingredienti = current
+        val tempSels = ArrayList(selectedRicette.value)
+        val toRemove = getSelectedRicetta(ricettaId)
+        tempSels.remove(toRemove)
+        tempSels.add(ricettaToAdd)
+        selectedRicette.value = tempSels
     }
     fun removeFromSelectedRicetta(productId:Long,ricettaId: Long) {
-        val current = ArrayList(getSelectedRicetta(ricettaId).ingredienti)
-        for(product in current) {
+        val ricettaToAdd = getSelectedRicetta(ricettaId).copy()
+        for(product in ricettaToAdd.ingredienti) {
             if(product.id == productId) {
-                current.remove(product)
+                val tempList = ArrayList(ricettaToAdd.ingredienti)
+                tempList.remove(product)
+                ricettaToAdd.ingredienti = tempList
                 break
             }
         }
-        getSelectedRicetta(ricettaId).ingredienti = current
+        val tempSels = ArrayList(selectedRicette.value)
+        val toRemove = getSelectedRicetta(ricettaId)
+        tempSels.remove(toRemove)
+        tempSels.add(ricettaToAdd)
+        selectedRicette.value = tempSels
     }
 
     fun addselectedRicettaListToSelectedProducts(ricettaId: Long) {
