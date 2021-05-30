@@ -206,7 +206,8 @@ class ListeViewModel : ViewModel() {
         for(product in getSelectedRicetta(ricettaId).ingredienti) {
             var prodDesc = product.description
             if(isInSelectedProduct(product.id)) {
-                prodDesc = "${getSelectedProduct(product.id).description} + $prodDesc"
+                val currentDesc = getSelectedProduct(product.id).description
+                prodDesc = "${if(currentDesc == null) "1" else currentDesc} + $prodDesc"
             }
             addSelectedProduct(product)
             setDescription(product.id,prodDesc)

@@ -107,10 +107,13 @@ fun ProductButton(
                 text = product.name,
                 color = Color.White
             )
+            var currentDescription = product.description!!
+            if(currentDescription.length > 10)
+                currentDescription = currentDescription.substring(0, 10) + "..."
             Text(
                 modifier = Modifier
                     .padding(top = 0.dp),
-                text = product.description!!,
+                text = currentDescription,
                 fontSize = 12.sp,
                 color = Color.White
             )
