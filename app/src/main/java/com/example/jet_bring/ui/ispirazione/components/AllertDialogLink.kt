@@ -83,11 +83,13 @@ fun InputText(
     text: String,
     onTextChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    onImeAction: () -> Unit = {}
+    onImeAction: () -> Unit = {},
+    label: String? = null
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     TextField(
         value = text,
+        label = { label?.let { Text(it) } },
         onValueChange = onTextChange,
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
         maxLines = 1,

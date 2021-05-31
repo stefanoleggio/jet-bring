@@ -17,7 +17,7 @@ class ListeViewModel : ViewModel() {
 
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
 
-    val selectedRicette: MutableState<List<Ricetta>> = mutableStateOf(ArrayList(setSelectedRicette()))
+    var selectedRicette: MutableState<List<Ricetta>> = mutableStateOf(ArrayList(setSelectedRicette()))
 
     /**
      *
