@@ -31,7 +31,6 @@ val products = listOf(
         id = 1,
         name = "Mela",
         icon = R.drawable.product_apple,
-        description = "test"
     ),
     Product(
         id = 2,

@@ -10,11 +10,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
@@ -34,6 +36,9 @@ import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
 import com.example.jet_bring.ui.utils.MainInputText
 import com.example.jet_bring.ui.utils.MainTextButton
+import org.intellij.lang.annotations.JdkConstants
+import androidx.compose.material.icons.*
+import androidx.compose.material.icons.rounded.MoreVert
 
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
@@ -72,8 +77,8 @@ fun ProductButton(
             .combinedClickable(
                 onClick = {
                     onButtonClick(product)
-                          },
-                onLongClick = {openDescriptionAlert.value = true}
+                },
+                onLongClick = { openDescriptionAlert.value = true }
             )
             .padding(7.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -268,7 +273,7 @@ fun ProductRow(
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color)
-        .padding(2.dp)
+        .padding(10.dp)
         .clickable {
             onButtonClick(product)
         },
@@ -278,14 +283,36 @@ fun ProductRow(
             painter = painterResource(product.icon),
             contentDescription = null,
             contentScale = ContentScale.Inside,
-            modifier = Modifier.size(64.dp) /*TODO sostituire con valore fissato in layout class*/
+            modifier = Modifier.size(60.dp) /*TODO sostituire con valore fissato in layout class*/
         )
-        Spacer(modifier = Modifier.padding(4.dp))
-        Text(
-            text = product.name,
-            Modifier.weight(8f),
-            color = MaterialTheme.colors.onSurface
+        Column() {
+            Text(
+                text = product.name,
+                Modifier.padding(start= 20.dp),
+                color = MaterialTheme.colors.onSurface
             )
+            var currentDescription = product.description
+            if(currentDescription == null)
+                currentDescription = ""
+            else {
+                if(currentDescription.length > 15)
+                    currentDescription = currentDescription.substring(0, 15) + "..."
+            }
+
+            Text(
+                text = currentDescription,
+                Modifier.padding(start= 20.dp),
+                color = MaterialTheme.colors.onSurface
+            )
+        }
+        Column(modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.End) {
+            Icon(Icons.Rounded.MoreVert, contentDescription = "Localized description",
+                modifier = Modifier.clickable {  })
+
+        }
+
+
     }
 
 

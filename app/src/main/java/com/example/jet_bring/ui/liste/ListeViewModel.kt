@@ -203,14 +203,18 @@ class ListeViewModel : ViewModel() {
     }
 
     fun addselectedRicettaListToSelectedProducts(ricettaId: Long) {
-        for(product in getSelectedRicetta(ricettaId).ingredienti) {
-            var prodDesc = product.description
-            if(isInSelectedProduct(product.id)) {
-                val currentDesc = getSelectedProduct(product.id).description
-                prodDesc = "${if(currentDesc == null) "1" else currentDesc} + $prodDesc"
+        for(ingrediente in getSelectedRicetta(ricettaId).ingredienti) {
+            val product = getProduct(ingrediente.id)
+            val ingDesc = ingrediente.description
+            if(product.description == null || product.description == "") {
+                if(isInSelectedProduct(product.id))
+                    setDescription(product.id,"1 + $ingDesc")
+                else
+                    setDescription(product.id, ingDesc)
+            } else {
+                setDescription(product.id, product.description + " + " + ingDesc)
             }
             addSelectedProduct(product)
-            setDescription(product.id,prodDesc)
         }
     }
 
