@@ -1,6 +1,9 @@
 package com.example.jet_bring.ui.profilo
 
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -13,7 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -27,10 +30,16 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
+import androidx.ui.layout.Expanded
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.theme.JetbringTheme
+import com.example.jet_bring.ui.theme.PADDING_END
+import com.example.jet_bring.ui.theme.PADDING_START
+import com.example.jet_bring.ui.theme.themes
+
 val padding = 16.dp
+@ExperimentalAnimationApi
 @Composable
 fun ProfiloScreen(
     navController: NavHostController,
@@ -38,8 +47,8 @@ fun ProfiloScreen(
     profiloViewModel: ProfiloViewModel,
     listeViewModel: ListeViewModel,
 ) {
+
     val fontSize = 24.sp
-    JetbringTheme() {
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(
@@ -101,10 +110,9 @@ fun ProfiloScreen(
             }
 
         }
-
-    }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun SettingsTable(
     title: String,
@@ -113,6 +121,7 @@ fun SettingsTable(
     listeViewModel: ListeViewModel,
     profiloViewModel: ProfiloViewModel
 )   {
+    var expandedChoice by remember { mutableStateOf<String?>(null) }
     Surface(
         modifier = Modifier
             .fillMaxWidth(),
@@ -120,14 +129,14 @@ fun SettingsTable(
         color = MaterialTheme.colors.surface
 
     ) {
-        Column {
+        Column(Modifier.animateContentSize() ) {
             HeaderBox(title = title, icon = iconTitle)
             Spacer(modifier = Modifier.padding(padding/4))
             Surface(
                 Modifier
                     .padding(PaddingValues(
-                        start = padding,
-                        end = padding/4
+                        start = PADDING_START,
+                        end = PADDING_END/4
                     )),
                 color = MaterialTheme.colors.background
             ){
@@ -140,17 +149,34 @@ fun SettingsTable(
             TwoButtonsRow(
                 "Aspetto della lista",
                 "Tema",
-                {},
-                {},
+                {
+                    if(expandedChoice.equals("aspettoDellaLista")) expandedChoice = null
+                    else   expandedChoice = "aspettoDellaLista"
+                },
+                {
+                    if(expandedChoice.equals("tema")) expandedChoice = null
+                    else   expandedChoice = "tema"
+                },
                 Icons.Default.ShoppingCart,
                 Icons.Default.ShoppingCart
             ) /*TODO aggiungere azioni bottoni e icone corrette*/
-            ChoosingTab(
-                selectedState = if(profiloViewModel.isColumnMode()) 1 else 0,
-                onStateChange = profiloViewModel::setMode,
-                states = listOf("Grid Mode","Column Mode"),
-                modifier = Modifier.padding(padding)
-                )
+            AnimatedVisibility(visible = (expandedChoice != null)) {
+                if(expandedChoice == "aspettoDellaLista") {
+                    ChoosingTab(
+                        selectedState = if (profiloViewModel.isColumnMode()) 1 else 0,
+                        onStateChange = profiloViewModel::setMode,
+                        states = listOf("Grid Mode", "Column Mode"),
+                        modifier = Modifier.padding(start = PADDING_START, end = PADDING_END)
+                    )
+                } else if (expandedChoice == "tema") {
+                    ChoosingTab(
+                        selectedState = themes.indexOf(profiloViewModel.getTheme()),
+                        onStateChange = profiloViewModel::setTheme,
+                        states = listOf(themes.toString()),
+                        modifier = Modifier.padding(start = PADDING_START, end = PADDING_END)
+                    )
+                }
+            }
             ClickableBox(title = "Impostazioni Lista",
                 navController = rememberNavController(),
                 route = "casamia",
@@ -160,6 +186,7 @@ fun SettingsTable(
                 navController = rememberNavController(),
                 route = "casatua"
             )
+            /*
             TwoButtonsRow(
                 "Column Mode",
                 "Grid Mode",
@@ -168,10 +195,12 @@ fun SettingsTable(
                 Icons.Default.ShoppingCart,
                 Icons.Default.ShoppingCart
             )
+             */
         }
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 @Preview
 fun ProfiloScreenPreview() {
@@ -180,6 +209,7 @@ fun ProfiloScreenPreview() {
     )
 }
 
+@ExperimentalAnimationApi
 @Composable
 @Preview
 fun SettingsTablePreview() {

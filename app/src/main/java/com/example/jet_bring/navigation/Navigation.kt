@@ -37,17 +37,16 @@ fun NavigationManager (
     navController: NavHostController,
     topBarTitle: MutableState<String>,
     screenPadding: PaddingValues = PaddingValues(0.dp),
-    backArrow: MutableState<Boolean>
+    backArrow: MutableState<Boolean>,
 ){
     /**
      *
      * ViewModels
      *
      */
-
     val listeViewModel = ListeViewModel()
-    val profileViewModel  = ProfiloViewModel()
     val addRicettaViewModel = AddRicettaViewModel()
+    val profiloViewModel  = ProfiloViewModel()
     addRicettaViewModel.inizialize()
 
     NavHost(navController, startDestination = "liste") {
@@ -59,7 +58,7 @@ fun NavigationManager (
          */
 
         composable("liste") {
-            ListeScreen(navController, screenPadding, listeViewModel,profileViewModel)
+            ListeScreen(navController, screenPadding, listeViewModel,profiloViewModel)
             topBarTitle.value = "Liste"
             backArrow.value = false
         }
@@ -76,7 +75,7 @@ fun NavigationManager (
                 ProfiloScreen(
                     navController,
                     screenPadding,
-                    profileViewModel,
+                    profiloViewModel,
                     listeViewModel
                 )
             }
@@ -93,7 +92,7 @@ fun NavigationManager (
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
-            CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profileViewModel)
+            CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profiloViewModel)
             topBarTitle.value = listeViewModel.getCategoryName(categoryId)
             backArrow.value = true
         }
@@ -111,7 +110,7 @@ fun NavigationManager (
         ) { backStackEntry ->
             val ricettaId : Long = backStackEntry.arguments?.getString("ricettaId")!!.toLong()
 
-            RicetteDetails(navController, ricettaId, addRicettaViewModel,listeViewModel, profileViewModel)
+            RicetteDetails(navController, ricettaId, addRicettaViewModel,listeViewModel, profiloViewModel)
             topBarTitle.value = "Ricetta"
 
         }
@@ -129,9 +128,9 @@ fun NavigationManager (
          */
 
         composable("profilo/ilTuoProfilo") {
-            profileViewModel.notSaved()
+            profiloViewModel.notSaved()
             IlTuoProfilo(
-                profileViewModel
+                profiloViewModel
             )
             topBarTitle.value = "Il tuo Profilo"
             backArrow.value = true

@@ -283,7 +283,9 @@ fun ProductRow(
             painter = painterResource(product.icon),
             contentDescription = null,
             contentScale = ContentScale.Inside,
-            modifier = Modifier.size(60.dp) /*TODO sostituire con valore fissato in layout class*/
+            modifier = Modifier
+                .size(60.dp)
+                //.padding(start = 10.dp,top = 10.dp,bottom = 10.dp) /*TODO sostituire con valore fissato in layout class*/
         )
         Column() {
             Text(

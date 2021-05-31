@@ -1,18 +1,20 @@
 package com.example.jet_bring.ui.profilo
 
 import android.content.res.Resources
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
+import com.example.jet_bring.ui.theme.Theme
+import com.example.jet_bring.ui.theme.themes
+
 
 class ProfiloViewModel : ViewModel() {
 
     var user by mutableStateOf(UserData())
     var temp by mutableStateOf(UserData())
     private var columnMode: MutableState<Boolean> = mutableStateOf(false)
-
+    private var theme: MutableState<Theme> = mutableStateOf(Theme.DARK_THEME)
+    private var themeSet: MutableState<Boolean> = mutableStateOf(false)
 
     fun editProfileName(userName:String) {
         temp = UserData(userName,user.email,user.profileIcon)
@@ -49,6 +51,20 @@ class ProfiloViewModel : ViewModel() {
 
     fun gridMode() {
         columnMode.value = false
+    }
+
+    /**
+     * theme choice
+     */
+    fun setTheme(index:Int) {
+        theme.value= themes.get(index)
+        themeSet.value = true
+    }
+    fun getTheme():Theme {
+        return theme.value
+    }
+    fun isSet():Boolean {
+        return themeSet.value
     }
     fun calculateColumnsNumber(): Int {
         val width = getDp(Resources.getSystem().displayMetrics.widthPixels)

@@ -34,8 +34,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.ui.theme.JetbringTheme
-
-
+import com.example.jet_bring.ui.theme.LINE_SPACE
 
 
 @Composable
@@ -196,6 +195,9 @@ fun ChoosingTab(
     Column(modifier) {
         states.forEachIndexed() { index, it ->
             RadioButtonRow((selectedState == index),onStateChange,it,index)
+            if(index != states.size-1) {
+                Spacer(modifier = Modifier.padding(LINE_SPACE))
+            }
         }
         }
 }
@@ -214,7 +216,7 @@ fun RadioButtonRow(
             onClick = { onStateChange(index)},
             selected = selected
         )
-        Spacer(Modifier.padding())
+        Spacer(Modifier.padding(LINE_SPACE))
         Text(text = description)
     }
 }
