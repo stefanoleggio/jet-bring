@@ -36,17 +36,20 @@ class ProfiloViewModel : ViewModel() {
      * columnMode handling
      */
     fun isColumnMode(): Boolean {
-        return columnMode.component1()
+        return columnMode.value
     }
-
+    fun setMode(state: Int) {
+        if(state == 1) columnMode()
+        else if(state ==0) gridMode()
+        else throw ArrayIndexOutOfBoundsException( "Il valore $state non è 0 o 1 come richiesto da setMode")
+    }
     fun columnMode() {
-        columnMode = mutableStateOf<Boolean>(true)
+        columnMode.value = true
     }
 
     fun gridMode() {
-        columnMode = mutableStateOf(false)
+        columnMode.value = false
     }
-
     fun calculateColumnsNumber(): Int {
         val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
         val minSize = 120

@@ -101,16 +101,7 @@ fun ProfiloScreen(
             }
 
         }
-        /*
-    Text(
-        text = "Profilo",
-        style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 36.sp),
-        textAlign = TextAlign.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colors.background)
-    )
-     */
+
     }
 }
 
@@ -154,6 +145,12 @@ fun SettingsTable(
                 Icons.Default.ShoppingCart,
                 Icons.Default.ShoppingCart
             ) /*TODO aggiungere azioni bottoni e icone corrette*/
+            ChoosingTab(
+                selectedState = if(profiloViewModel.isColumnMode()) 1 else 0,
+                onStateChange = profiloViewModel::setMode,
+                states = listOf("Grid Mode","Column Mode"),
+                modifier = Modifier.padding(padding)
+                )
             ClickableBox(title = "Impostazioni Lista",
                 navController = rememberNavController(),
                 route = "casamia",
