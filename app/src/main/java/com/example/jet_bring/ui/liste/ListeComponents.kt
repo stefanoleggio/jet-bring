@@ -53,10 +53,10 @@ fun ProductButton(
     unselectedColor: Color,
 
 ) {
-    /*
+
     val color by animateColorAsState(
         targetValue = if (isSelected(product)) selectedColor else unselectedColor
-    )*/
+    )
     val openDescriptionAlert = remember { mutableStateOf(false)}
     val descriptionText = remember { mutableStateOf(if(product.description == null) " " else product.description!!) }
 
@@ -73,7 +73,7 @@ fun ProductButton(
             .size(width = 120.dp, height = 120.dp)
             .padding(2.dp)
             .clip(shape = RoundedCornerShape(5.dp))
-            .background(if (isSelected(product)) selectedColor else unselectedColor /*color*/)
+            .background(/*if (isSelected(product)) selectedColor else unselectedColor*/ color)
             .combinedClickable(
                 onClick = {
                     onButtonClick(product)
