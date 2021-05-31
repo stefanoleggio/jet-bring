@@ -37,10 +37,11 @@ private val LightColorPalette = lightColors(
 )
 
 private val DreamColorPalette = lightColors(
-    primary = Mirage,
+    primary = Roman,
+    onPrimary = Yellow,
     secondary = Mediumspringgreen,
     primaryVariant = Springgreen,
-    secondaryVariant = TePapaGreen,
+    secondaryVariant = Magenta,
     surface = Lightseagreen,
     onSecondary = White,
     background = Darkgreen,
@@ -67,8 +68,8 @@ fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable() () -> Unit)
     }
      */
     if(isSet == false) {
-        if(isSystemInDarkTheme()) theme = Theme.DARK_THEME
-        else theme = Theme.LIGHT_THEME
+        if(isSystemInDarkTheme()) theme = themes.get(0)
+        else theme = themes.get(1)
     }
     MaterialTheme(
         colors = theme.colors,
@@ -78,15 +79,17 @@ fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable() () -> Unit)
 
     )
 }
-
-enum class Theme(val colors: Colors) {
-    DARK_THEME(DarkColorPalette),
-    LIGHT_THEME(LightColorPalette),
-    DREAM_THEME(DreamColorPalette)
+/*
+enum class Theme(val colors: Colors,val description:String) {
+    DARK_THEME(DarkColorPalette,"Dark Theme"),
+    LIGHT_THEME(LightColorPalette,"Light Theme"),
+    DREAM_THEME(DreamColorPalette,"Dream Theme")
 }
+*/
+data class Theme(val colors: Colors, val description:String)
 
-val themes = listOf(
-    Theme.DARK_THEME,
-    Theme.LIGHT_THEME,
-    Theme.DREAM_THEME
-)
+val themes = arrayListOf(
+    Theme(DarkColorPalette,"Dark Theme"),
+    Theme(LightColorPalette,"Light Theme"),
+    Theme(DreamColorPalette,"Dream Theme")
+    )

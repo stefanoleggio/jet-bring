@@ -28,9 +28,6 @@ fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: Paddi
             RicetteCard(ricetta = ricetta, navController,"ispirazione/ricetteDetails")
         }
         Spacer(modifier = Modifier.height(scafPaddingValues.calculateBottomPadding()))
-
-
-
     }
 
 }

@@ -38,6 +38,7 @@ fun NavigationManager (
     topBarTitle: MutableState<String>,
     screenPadding: PaddingValues = PaddingValues(0.dp),
     backArrow: MutableState<Boolean>,
+    profiloViewModel: ProfiloViewModel
 ){
     /**
      *
@@ -46,7 +47,7 @@ fun NavigationManager (
      */
     val listeViewModel = ListeViewModel()
     val addRicettaViewModel = AddRicettaViewModel()
-    val profiloViewModel  = ProfiloViewModel()
+
     addRicettaViewModel.inizialize()
 
     NavHost(navController, startDestination = "liste") {

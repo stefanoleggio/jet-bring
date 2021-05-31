@@ -21,7 +21,7 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 import com.example.jet_bring.ui.theme.Theme
 
 class MainActivity : AppCompatActivity() {
-
+    val profiloViewModel  = ProfiloViewModel()
     @RequiresApi(Build.VERSION_CODES.R)
     @ExperimentalAnimationApi
     @ExperimentalFoundationApi
@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            JetbringTheme(Theme.LIGHT_THEME,true) {
-                JetbringApp()
+            JetbringTheme(profiloViewModel.getSelectedTheme(),profiloViewModel.isSet()) {
+                JetbringApp(profiloViewModel)
             }
         }
     }

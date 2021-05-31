@@ -13,7 +13,7 @@ class ProfiloViewModel : ViewModel() {
     var user by mutableStateOf(UserData())
     var temp by mutableStateOf(UserData())
     private var columnMode: MutableState<Boolean> = mutableStateOf(false)
-    private var theme: MutableState<Theme> = mutableStateOf(Theme.DARK_THEME)
+    private var theme: MutableState<Theme> = mutableStateOf(themes.get(0))
     private var themeSet: MutableState<Boolean> = mutableStateOf(false)
 
     fun editProfileName(userName:String) {
@@ -60,12 +60,22 @@ class ProfiloViewModel : ViewModel() {
         theme.value= themes.get(index)
         themeSet.value = true
     }
-    fun getTheme():Theme {
+    fun getSelectedTheme():Theme {
         return theme.value
     }
     fun isSet():Boolean {
         return themeSet.value
     }
+    fun getThemeList(): List<String> {
+        val toRet = ArrayList<String>()
+        themes.forEach {
+            toRet.add(it.description)
+        }
+        return toRet
+    }
+
+
+
     fun calculateColumnsNumber(): Int {
         val width = getDp(Resources.getSystem().displayMetrics.widthPixels)
         val minSize = 120

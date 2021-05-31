@@ -38,7 +38,7 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
-fun JetbringApp()
+fun JetbringApp(profiloViewModel: ProfiloViewModel)
 {
 
 
@@ -96,6 +96,7 @@ fun JetbringApp()
                     title,
                     itemPadding,
                     backArrow,
+                    profiloViewModel
                 )
             },
             floatingActionButton = {
@@ -134,5 +135,5 @@ fun currentRoute(navController: NavHostController): String? {
 @Composable
 @Preview
 fun JetBringAppPreview() {
-    JetbringApp()
+    JetbringApp(ProfiloViewModel())
 }

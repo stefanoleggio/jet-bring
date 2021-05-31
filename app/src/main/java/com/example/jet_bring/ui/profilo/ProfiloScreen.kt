@@ -170,9 +170,9 @@ fun SettingsTable(
                     )
                 } else if (expandedChoice == "tema") {
                     ChoosingTab(
-                        selectedState = themes.indexOf(profiloViewModel.getTheme()),
+                        selectedState = themes.indexOf(profiloViewModel.getSelectedTheme()),
                         onStateChange = profiloViewModel::setTheme,
-                        states = listOf(themes.toString()),
+                        states = profiloViewModel.getThemeList(),
                         modifier = Modifier.padding(start = PADDING_START, end = PADDING_END)
                     )
                 }
