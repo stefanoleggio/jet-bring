@@ -58,10 +58,10 @@ fun ProductButton(
         targetValue = if (isSelected(product)) selectedColor else unselectedColor
     )*/
     val openDescriptionAlert = remember { mutableStateOf(false)}
-    val description: String = if(product.description == null) " " else product.description!!
-    val descriptionText = remember { mutableStateOf(description) }
+    val descriptionText = remember { mutableStateOf(if(product.description == null) " " else product.description!!) }
 
     if(openDescriptionAlert.value) {
+        descriptionText.value = if(product.description == null) " " else product.description!!
         DescriptionAlert(openDescriptionAlert,
             descriptionText,
             onDescriptionChange = onDescriptionChange,
