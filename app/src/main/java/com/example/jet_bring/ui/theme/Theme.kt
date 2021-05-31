@@ -26,11 +26,12 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = Mirage,
+    onPrimary = White,
     secondary = Paradiso,
+    onSecondary = White,
     primaryVariant = BlueBayoux,
     secondaryVariant = TePapaGreen,
     surface = EbonyClay,
-    onSecondary = White,
     background = LimedSpruce,
     onBackground = Ceramic,
     onSurface = Ceramic,
