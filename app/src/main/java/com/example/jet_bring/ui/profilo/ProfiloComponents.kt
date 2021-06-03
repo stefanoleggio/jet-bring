@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,8 +34,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.ui.theme.JetbringTheme
-
-
+import com.example.jet_bring.ui.theme.LINE_SPACE
 
 
 @Composable
@@ -186,20 +186,38 @@ fun InputText(
 }
 
 @Composable
-fun ChoosingTab() {
-    Column {
-        RadioButtonRow("Ciao")
-    }
+fun ChoosingTab(
+    selectedState: Int,
+    onStateChange: (Int) -> Unit,
+    states: List<String>,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier) {
+        states.forEachIndexed() { index, it ->
+            RadioButtonRow((selectedState == index),onStateChange,it,index)
+            if(index != states.size-1) {
+                Spacer(modifier = Modifier.padding(LINE_SPACE))
+            }
+        }
+        }
 }
 @Composable
-fun RadioButtonRow(title: String) {
+fun RadioButtonRow(
+    selected: Boolean,
+    onStateChange: (Int) -> Unit,
+    description: String,
+    index: Int
+) {
     Row(Modifier
         .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        RadioButton(onClick = {},selected = true)
-        Spacer(Modifier.padding())
-        Text(text = title,)
+        RadioButton(
+            onClick = { onStateChange(index)},
+            selected = selected
+        )
+        Spacer(Modifier.padding(LINE_SPACE))
+        Text(text = description)
     }
 }
 
@@ -240,5 +258,5 @@ fun TwoButtonsRowPreview() {
 @Composable
 @Preview
 fun ChoosingTabPreview() {
-    ChoosingTab()
+    ChoosingTab(3,{}, listOf("verde","giallo","azzurro","blu"),)
 }

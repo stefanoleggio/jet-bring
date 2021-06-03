@@ -42,7 +42,6 @@ fun IlTuoProfilo(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-    JetbringTheme() {
         Column {
             //Spacer(modifier = Modifier.padding(padding))
             Row(
@@ -107,7 +106,6 @@ fun IlTuoProfilo(
                 }
             }
         }
-    }
 }
 
 @ExperimentalComposeUiApi

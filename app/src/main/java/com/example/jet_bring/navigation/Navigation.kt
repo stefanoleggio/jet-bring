@@ -38,7 +38,8 @@ fun NavigationManager (
     navController: NavHostController,
     topBarTitle: MutableState<String>,
     screenPadding: PaddingValues = PaddingValues(0.dp),
-    backArrow: MutableState<Boolean>
+    backArrow: MutableState<Boolean>,
+    profiloViewModel: ProfiloViewModel
 ){
     /**
      *
@@ -79,7 +80,7 @@ fun NavigationManager (
                 ProfiloScreen(
                     navController,
                     screenPadding,
-                    profileViewModel,
+                    profiloViewModel,
                     listeViewModel
                 )
             }
@@ -96,7 +97,7 @@ fun NavigationManager (
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
-            CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profileViewModel)
+            CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profiloViewModel)
             topBarTitle.value = listeViewModel.getCategoryName(categoryId)
             backArrow.value = true
         }
@@ -134,9 +135,9 @@ fun NavigationManager (
          */
 
         composable("profilo/ilTuoProfilo") {
-            profileViewModel.notSaved()
+            profiloViewModel.notSaved()
             IlTuoProfilo(
-                profileViewModel
+                profiloViewModel
             )
             topBarTitle.value = "Il tuo Profilo"
             backArrow.value = true
