@@ -141,16 +141,19 @@ fun DescriptionAlert(
             openDescriptionAlert.value = false
         },
         title = {
-            Text("Modifica")
+            Text(product.name)
         },
         text = {
-            Spacer(modifier = Modifier.height(2.dp))
-            MainInputText(
-                onTextChange = {
-                    run { descriptionText.value = it }
-                },
-                text = descriptionText.value,
-                label = "Descrizione")
+            Column(
+            ) {
+                MainInputText(
+                    onTextChange = {
+                        run { descriptionText.value = it }
+                    },
+                    text = descriptionText.value,
+                    label = "Descrizione")
+            }
+
         },
         confirmButton = {
             MainTextButton(
@@ -223,6 +226,7 @@ fun CategoryCard(navController: NavHostController, category: Category) {
 /**
  * funzione per istanziare prodotti su riga singola
  */
+@ExperimentalComposeUiApi
 @Composable
 fun ProductColumnMode(
     productsList: List<Product>,
@@ -258,6 +262,7 @@ fun ProductColumnMode(
     }
 }
 /*TODO sistemare altezza riga, aggiungere bottone per modificare item*/
+@ExperimentalComposeUiApi
 @Composable
 fun ProductRow(
     product: Product,
@@ -270,13 +275,24 @@ fun ProductRow(
     val color by  animateColorAsState(
         targetValue = if(isSelected(product)) selectedColor else unselectedColor
     )
+    val openDescriptionAlert = remember { mutableStateOf(false)}
+    val descriptionText = remember { mutableStateOf(if(product.description == null) " " else product.description!!) }
+
+    if(openDescriptionAlert.value) {
+        descriptionText.value = if(product.description == null) " " else product.description!!
+        DescriptionAlert(openDescriptionAlert,
+            descriptionText,
+            onDescriptionChange = onDescriptionChange,
+            product = product)
+    }
+
     Row(modifier = Modifier
         .fillMaxWidth()
         .background(color)
-        .padding(10.dp)
         .clickable {
             onButtonClick(product)
-        },
+        }
+        .padding(10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Image(
@@ -308,7 +324,9 @@ fun ProductRow(
         Column(modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.End) {
             Icon(Icons.Rounded.MoreVert, contentDescription = "Localized description",
-                modifier = Modifier.clickable {  })
+                modifier = Modifier.clickable {
+                    openDescriptionAlert.value = true
+                })
 
         }
 
@@ -413,12 +431,14 @@ fun CategoryCardPreview() {
     CategoryCard(rememberNavController(), ListeViewModel().getCategory(1))
 }
 
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 fun ProductRowPreview() {
     ProductRow(product = products[0],{},{product, string ->  }, {false},Color.Blue,Color.Green)
 }
 
+@ExperimentalComposeUiApi
 @Preview
 @Composable
 fun ProductColumnModePreview() {
