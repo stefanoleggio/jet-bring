@@ -24,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.products
@@ -80,7 +81,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
                     },
                 elevation = 0.dp,
-                backgroundColor = MaterialTheme.colors.background
+                //backgroundColor = MaterialTheme.colors.background
             ){
 
 
@@ -108,7 +109,91 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
             }
             Spacer(modifier = Modifier.height(15.dp))
-            Text(text = "Articoli")
+
+
+            Card(
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier
+                    .padding(
+                        bottom = 20.dp,
+                        top = 6.dp,
+                        start = 15.dp,
+                        end = 15.dp
+
+                    )
+                    .fillMaxWidth()
+                    .noRippleClickable {
+                        null
+                    },
+
+                elevation = 0.dp,
+                //backgroundColor = MaterialTheme.colors.background
+            ){
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "${addRicettaViewModel.ricetta.persone} Persone",
+                        color = MaterialTheme.colors.onBackground,
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.CenterHorizontally)
+                            .padding(start = 15.dp)
+                    )
+                    Spacer(modifier = Modifier.padding(80.dp))
+                    Button(
+                        onClick = {
+                                  addRicettaViewModel.onPersonChange("minus")
+                        },
+                        colors = ButtonDefaults.textButtonColors(
+                            backgroundColor = MaterialTheme.colors.background
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.End)
+
+                    ) {
+                        Icon(
+                            Icons.Rounded.RemoveCircleOutline,
+                            contentDescription = "Localized description",
+                            tint = MaterialTheme.colors.onBackground,
+
+                        )
+
+                    }
+                    Button(
+                        onClick = {
+                            addRicettaViewModel.onPersonChange("plus")
+                        },
+                        colors = ButtonDefaults.textButtonColors(
+                            backgroundColor = MaterialTheme.colors.background
+                        ),
+                        elevation = ButtonDefaults.elevation(
+                            defaultElevation = 0.dp,
+                            pressedElevation = 0.dp,
+                            disabledElevation = 0.dp
+                        ),
+                        modifier = Modifier
+                            .wrapContentWidth(Alignment.End)
+                        //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
+
+                    ) {
+                        Icon(
+                            Icons.Rounded.AddCircleOutline
+                            , contentDescription = "Localized description",
+                            tint = MaterialTheme.colors.onBackground,
+
+                        )
+
+                    }
+
+
+                }
+
+
+            }
+
             Spacer(modifier = Modifier.height(15.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(0.50f),
@@ -143,6 +228,9 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
 
             }
+
+            Text(text = "Articoli")
+            Spacer(modifier = Modifier.height(15.dp))
             // Mostra la griglia di tutti i prodotti disponibili
             // Smoothly scroll
             Spacer(modifier = Modifier.height(20.dp))

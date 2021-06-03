@@ -66,6 +66,7 @@ import com.example.jet_bring.ui.liste.ProductColumnMode
 import com.example.jet_bring.ui.liste.ProductGridMode
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.ui.theme.Roman
 import kotlinx.coroutines.launch
 
 /*
@@ -91,7 +92,7 @@ fun DetailsPreview() {
 @RequiresApi(Build.VERSION_CODES.R)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicettaViewModel: AddRicettaViewModel,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
+fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
     val ricetta = listeViewModel.getRicetta(ricettaId)
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -184,64 +185,12 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
 
 
                     )
-
-                    /*
-                    Button(
-                        onClick = {},
-                        colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = MaterialTheme.colors.background
-                        ),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp,
-                            disabledElevation = 0.dp
-                        ),
-                        modifier = Modifier
-                            .wrapContentWidth(Alignment.End)
-                        //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
-
-                    ) {
-                        Icon(
-                            Icons.Rounded.RemoveCircleOutline,
-                            contentDescription = "Localized description",
-                            tint = MaterialTheme.colors.onBackground,
-
-                        )
-
-                    }
-                    Button(
-                        onClick = { ricetta.persone = ricetta.persone?.plus(1) },
-                        colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = MaterialTheme.colors.background
-                        ),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp,
-                            disabledElevation = 0.dp
-                        ),
-                        modifier = Modifier
-                            .wrapContentWidth(Alignment.End)
-                        //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
-
-                    ) {
-                        Icon(
-                            Icons.Rounded.AddCircleOutline
-                            , contentDescription = "Localized description",
-                            tint = MaterialTheme.colors.onBackground,
-
-                        )
-
-                    }
-                    */
-
                 }
 
 
             }
 
 
-
-            //Text(text = listeViewModel.getRicetta(ricettaId).ingredienti.toString())
 
             ProductModeSwitcher(
                 listeViewModel.getRicetta(ricettaId).ingredienti,

@@ -3,9 +3,11 @@ package com.example.jet_bring.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.*
+import androidx.compose.material.MaterialTheme.colors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.List
@@ -24,7 +26,10 @@ import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.ui.graphics.BlendMode
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
@@ -48,7 +53,6 @@ fun NavigationManager (
      */
 
     val listeViewModel = ListeViewModel()
-    val profileViewModel  = ProfiloViewModel()
     val addRicettaViewModel = AddRicettaViewModel()
 
     NavHost(navController, startDestination = "liste") {
@@ -61,21 +65,24 @@ fun NavigationManager (
 
         composable("liste") {
 
-            EnterAnimation2 {
-                ListeScreen(navController, screenPadding, listeViewModel,profileViewModel)
+            EnterAnimation3 {
+                ListeScreen(navController, screenPadding, listeViewModel,profiloViewModel)
             }
             topBarTitle.value = "Liste"
             backArrow.value = false
         }
 
         composable("ispirazione") {
-            IspirazioneScreen(navController, screenPadding, addRicettaViewModel)
+            EnterAnimation3 {
+                IspirazioneScreen(navController, screenPadding, addRicettaViewModel)
+            }
+
             topBarTitle.value = "Ispirazione"
             backArrow.value = false
         }
 
         composable("profilo") {
-            EnterAnimation {
+            EnterAnimation3 {
 
                 ProfiloScreen(
                     navController,
@@ -97,7 +104,9 @@ fun NavigationManager (
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
-            CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profiloViewModel)
+            EnterAnimation {
+                CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profiloViewModel)
+            }
             topBarTitle.value = listeViewModel.getCategoryName(categoryId)
             backArrow.value = true
         }
@@ -115,14 +124,16 @@ fun NavigationManager (
         ) { backStackEntry ->
             val ricettaId : Long = backStackEntry.arguments?.getString("ricettaId")!!.toLong()
             EnterAnimation {
-                RicetteDetails(navController, ricettaId, addRicettaViewModel,listeViewModel, profileViewModel)
+                RicetteDetails(navController, ricettaId,listeViewModel, profiloViewModel)
             }
-
             topBarTitle.value = "Ricetta"
 
         }
         composable("ispirazione/addRicetta") {
-            AddRicetta(navController, listeViewModel, addRicettaViewModel, profileViewModel)
+            EnterAnimation2 {
+                AddRicetta(navController, listeViewModel, addRicettaViewModel, profiloViewModel)
+            }
+
             topBarTitle.value = "Aggiungi ricetta"
         }
 
@@ -136,19 +147,32 @@ fun NavigationManager (
 
         composable("profilo/ilTuoProfilo") {
             profiloViewModel.notSaved()
-            IlTuoProfilo(
-                profiloViewModel
-            )
+
+            EnterAnimation {
+                IlTuoProfilo(
+                    profiloViewModel
+                )
+            }
+
+
             topBarTitle.value = "Il tuo Profilo"
+
+
             backArrow.value = true
+
+
         }
+
+
+
+
     }
 }
 
 sealed class Screen(val route: String, val label: String, val icon: ImageVector) {
-    object Liste: Screen("Liste", "Liste", Icons.Default.List)
-    object Ispirazione: Screen("Ispirazione", "Ispirazione", Icons.Default.Create)
-    object Profilo: Screen("Profilo", "Profilo", Icons.Default.Person)
+    object Liste: Screen("liste", "Liste", Icons.Default.List)
+    object Ispirazione: Screen("ispirazione", "Ispirazione", Icons.Default.Create)
+    object Profilo: Screen("profilo", "Profilo", Icons.Default.Person)
 }
 
 
@@ -161,13 +185,18 @@ fun AppBottomNavigation(
         val currentRoute = currentRoute(navController)
         items.forEach { screen ->
             BottomNavigationItem(
+
+
                 icon = {
                     Icon(
                         screen.icon,
+                        tint = if(screen.route == currentRoute) colors.onBackground else colors.background,
                         contentDescription = ""
                     )
                 },
-                label = { Text(text = screen.label) },
+                label = {
+                    Text(text = screen.label )
+                },
                 selected = currentRoute == screen.route,
                 onClick = {
                     if (currentRoute != screen.route) {
@@ -194,10 +223,14 @@ fun EnterAnimation(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visible = true,
         enter = slideInHorizontally(
-            initialOffsetX = { 40 }
-            //initialOffsetX = { -40 }
-        ) /*+ fadeIn(initialAlpha = 0.3f)*/,
-        exit = slideOutHorizontally() + shrinkHorizontally() + fadeOut(),
+            // Offsets the content by 1/3 of its width to the left, and slide towards right
+            initialOffsetX = { fullWidth -> fullWidth },
+            // Overwrites the default animation with tween for this slide animation.
+            animationSpec = tween(durationMillis = 100)
+        ) + fadeIn(
+            // Overwrites the default animation with tween
+            animationSpec = tween(durationMillis = 100)
+        ) ,
         content = content,
         initiallyVisible = false
     )
@@ -209,11 +242,23 @@ fun EnterAnimation2(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visible = true,
         enter = slideInVertically(
-            initialOffsetY = { +400 }
-        ) + expandVertically(
-            expandFrom = Alignment.Top
-        ) + fadeIn(initialAlpha = 0.3f),
+            initialOffsetY = { 2000 },
+            animationSpec = tween(durationMillis = 100)
+        )+ fadeIn(initialAlpha = 0.6f),
         exit = slideOutVertically() + shrinkVertically() + fadeOut(),
+        content = content,
+        initiallyVisible = false
+    )
+}
+
+
+@ExperimentalAnimationApi
+@Composable
+fun EnterAnimation3(content: @Composable () -> Unit) {
+    AnimatedVisibility(
+        visible = true,
+        enter = fadeIn(animationSpec = tween(durationMillis = 150)),
+        exit = fadeOut(animationSpec = tween(durationMillis = 150)),
         content = content,
         initiallyVisible = false
     )
