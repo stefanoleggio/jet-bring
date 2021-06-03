@@ -58,6 +58,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.navigation.compose.rememberNavController
 import androidx.ui.graphics.BlendMode
 import com.example.jet_bring.model.Product
+import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.model.ricette
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
@@ -240,7 +241,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
 
 
 
-
+            //Text(text = listeViewModel.getRicetta(ricettaId).ingredienti.toString())
 
             ProductModeSwitcher(
                 listeViewModel.getRicetta(ricettaId).ingredienti,
@@ -351,7 +352,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long, addRicetta
             //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
         ) {
-            Icon(Icons.Filled.Close, contentDescription = "Localized description", tint = MaterialTheme.colors.onBackground, modifier = Modifier.size(24.dp) )
+            Icon(Icons.Filled.Close, contentDescription = "", tint = MaterialTheme.colors.onBackground, modifier = Modifier.size(24.dp) )
 
         }
     }

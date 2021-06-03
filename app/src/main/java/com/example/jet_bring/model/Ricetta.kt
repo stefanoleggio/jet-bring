@@ -9,13 +9,13 @@ import com.example.jet_bring.R
  */
 data class Ricetta(
     var id: Long? = -1,
-    var titolo: String? = "Nome Modello",
+    var titolo: String? = "",
     var pubblicatore: String? = "Io",
     var immagine: Int? = null,
     var sourceUrl: String? = "http://",
     var voti: Int? = 0,
-    var persone: Int? = 0,
-    var descrizione: String? = "descrizione",
+    var persone: Int? = 1,
+    var descrizione: String? = "",
     var ingredienti: List<Product> = listOf(),
     var dateAdded: String? = null,
     var changedList: Int = 0

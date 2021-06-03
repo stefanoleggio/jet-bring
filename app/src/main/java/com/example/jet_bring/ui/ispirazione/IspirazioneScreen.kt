@@ -24,7 +24,7 @@ fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: Paddi
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),
     ){
-        addRicettaViewModel.getricetteList().forEach { ricetta ->
+        ricette.forEach { ricetta ->
             RicetteCard(ricetta = ricetta, navController,"ispirazione/ricetteDetails")
         }
         Spacer(modifier = Modifier.height(scafPaddingValues.calculateBottomPadding()))

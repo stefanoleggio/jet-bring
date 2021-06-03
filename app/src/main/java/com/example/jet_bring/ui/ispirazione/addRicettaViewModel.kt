@@ -15,31 +15,15 @@ import com.example.jet_bring.ui.liste.ListeViewModel
 class AddRicettaViewModel : ViewModel() {
 
     var ricetta by mutableStateOf(Ricetta())
-    val listeViewModel = ListeViewModel()
+    var listeViewModel = ListeViewModel()
 
 
-    val ricetteList: MutableState<List<Ricetta>> = mutableStateOf(ArrayList())
-
-
-    fun inizialize(){
-        for(ricetta in ricette){
-            val current = ArrayList(this.ricetteList.value)
-            current.add(ricetta)
-            this.ricetteList.value = current
-        }
-    }
-
-    fun getricetteList(): List<Ricetta> {
-        return ArrayList(this.ricetteList.value)
-    }
 
 
 
     fun addRicetta() {
         this.onSaveDone()
-        val current = ArrayList(this.ricetteList.value)
-        current.add(ricetta)
-        this.ricetteList.value = current
+        ricette.add(this.ricetta)
     }
 
 
@@ -62,12 +46,16 @@ class AddRicettaViewModel : ViewModel() {
     }
 
     fun onSaveDone() {
-
         ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = listeViewModel.selectedProducts.component1()
 
         )
-
         ricette.plus(ricetta)
+
+    }
+
+    fun resetRicetta(){
+        ricetta = Ricetta()
+        listeViewModel = ListeViewModel()
     }
 
 

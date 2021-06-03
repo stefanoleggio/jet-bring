@@ -3,11 +3,9 @@ package com.example.jet_bring.ui.ispirazione.components
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -21,6 +19,8 @@ import androidx.navigation.NavHostController
 import kotlin.math.min
 
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.products
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
+import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.BreakerBay
@@ -41,7 +42,9 @@ import com.example.jet_bring.ui.theme.BreakerBay
 fun AddRicettePreview() {
     AddRicetta(
         rememberNavController(),
-        AddRicettaViewModel()
+        ListeViewModel(),
+        AddRicettaViewModel(),
+        ProfiloViewModel()
     )
 }
 
@@ -50,16 +53,16 @@ fun AddRicettePreview() {
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
-fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicettaViewModel) {
+fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,addRicettaViewModel: AddRicettaViewModel, profiloViewModel: ProfiloViewModel) {
 
     val scrollState = rememberScrollState()
+    LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
 
-    val profileViewModel  = ProfiloViewModel()
 
-
-        Column(
+    val state = rememberScrollState()
+    Column(
             modifier = Modifier
-                .verticalScroll(scrollState)
+                .verticalScroll(state )
                 .fillMaxSize(),
             horizontalAlignment = CenterHorizontally,
 
@@ -75,10 +78,9 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                     .noRippleClickable {
                         //navController.navigate("$route/${ricetta.id}")
 
-                    }
-                    .alpha(min(1f, 1 - (scrollState.value / 400f))),
+                    },
                 elevation = 0.dp,
-                backgroundColor = MaterialTheme.colors.error
+                backgroundColor = MaterialTheme.colors.background
             ){
 
 
@@ -95,21 +97,21 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                         Spacer(modifier = Modifier.height(100.dp))
 
 
-                        addRicettaViewModel.ricetta.titolo?.let { InputText(text = it, addRicettaViewModel::onTitoloChange, modifier = Modifier.fillMaxWidth()) }
+                        addRicettaViewModel.ricetta.titolo?.let { InputText(text = it, addRicettaViewModel::onTitoloChange, modifier = Modifier.fillMaxWidth(), label = "Nome Modello") }
                         Row() {
-                            addRicettaViewModel.ricetta.descrizione?.let { InputText(text = it, addRicettaViewModel::onDescrizioneChange, modifier = Modifier.fillMaxWidth(0.8f)) }
-                            addRicettaViewModel.ricetta.sourceUrl?.let { AlertDialogLink(link = it, addRicettaViewModel::onLinkChange, addRicettaViewModel = addRicettaViewModel) }
+                            addRicettaViewModel.ricetta.descrizione?.let { InputText(text = it, addRicettaViewModel::onDescrizioneChange, modifier = Modifier.fillMaxWidth(0.8f), label = "Descrizione") }
+                            addRicettaViewModel.ricetta.sourceUrl?.let { AlertDialogLink(link = it, addRicettaViewModel::onLinkChange, addRicettaViewModel = addRicettaViewModel,) }
                         }
 
 
                     }
 
             }
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             Text(text = "Articoli")
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(15.dp))
             Card(
-                modifier = Modifier.fillMaxWidth(0.9f),
+                modifier = Modifier.fillMaxWidth(0.50f),
                 border =  BorderStroke(2.dp, MaterialTheme.colors.onBackground),
             ){
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -118,6 +120,8 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
 
                         addRicettaViewModel.addRicetta()
                         navController.popBackStack()
+                        listeViewModel.selectedRicette = mutableStateOf(ArrayList(listeViewModel.setSelectedRicette()))
+                        addRicettaViewModel.resetRicetta()
 
 
                     }) {
@@ -139,12 +143,15 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
 
 
             }
+            // Mostra la griglia di tutti i prodotti disponibili
+            // Smoothly scroll
+            Spacer(modifier = Modifier.height(20.dp))
             ProductModeSwitcher(
                 products,
-                profileViewModel,
+                profiloViewModel,
                 onButtonClick = {
                         product ->
-                    if (addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
+                    if (  addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
                         addRicettaViewModel.listeViewModel.removeSelectedProduct(product.id)
                     } else {
                         addRicettaViewModel.listeViewModel.addSelectedProduct(product)
@@ -154,11 +161,15 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
                         product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                { product -> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
-                MaterialTheme.colors.background,
+                { product-> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
                 BreakerBay,
+                MaterialTheme.colors.background
             )
-            Spacer(modifier = Modifier.height(25.dp))
+
+
+
+
+            Spacer(modifier = Modifier.height(50.dp))
 
 
         }
@@ -191,5 +202,6 @@ fun AddRicetta(navController: NavHostController, addRicettaViewModel: AddRicetta
 
 
 }
+
 
 

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -48,7 +49,6 @@ fun NavigationManager (
     val listeViewModel = ListeViewModel()
     val profileViewModel  = ProfiloViewModel()
     val addRicettaViewModel = AddRicettaViewModel()
-    addRicettaViewModel.inizialize()
 
     NavHost(navController, startDestination = "liste") {
 
@@ -59,7 +59,10 @@ fun NavigationManager (
          */
 
         composable("liste") {
-            ListeScreen(navController, screenPadding, listeViewModel,profileViewModel)
+
+            EnterAnimation2 {
+                ListeScreen(navController, screenPadding, listeViewModel,profileViewModel)
+            }
             topBarTitle.value = "Liste"
             backArrow.value = false
         }
@@ -110,13 +113,15 @@ fun NavigationManager (
         )
         ) { backStackEntry ->
             val ricettaId : Long = backStackEntry.arguments?.getString("ricettaId")!!.toLong()
+            EnterAnimation {
+                RicetteDetails(navController, ricettaId, addRicettaViewModel,listeViewModel, profileViewModel)
+            }
 
-            RicetteDetails(navController, ricettaId, addRicettaViewModel,listeViewModel, profileViewModel)
             topBarTitle.value = "Ricetta"
 
         }
         composable("ispirazione/addRicetta") {
-            AddRicetta(navController, addRicettaViewModel, )
+            AddRicetta(navController, listeViewModel, addRicettaViewModel, profileViewModel)
             topBarTitle.value = "Aggiungi ricetta"
         }
 
@@ -192,6 +197,22 @@ fun EnterAnimation(content: @Composable () -> Unit) {
             //initialOffsetX = { -40 }
         ) /*+ fadeIn(initialAlpha = 0.3f)*/,
         exit = slideOutHorizontally() + shrinkHorizontally() + fadeOut(),
+        content = content,
+        initiallyVisible = false
+    )
+}
+
+@ExperimentalAnimationApi
+@Composable
+fun EnterAnimation2(content: @Composable () -> Unit) {
+    AnimatedVisibility(
+        visible = true,
+        enter = slideInVertically(
+            initialOffsetY = { +400 }
+        ) + expandVertically(
+            expandFrom = Alignment.Top
+        ) + fadeIn(initialAlpha = 0.3f),
+        exit = slideOutVertically() + shrinkVertically() + fadeOut(),
         content = content,
         initiallyVisible = false
     )
