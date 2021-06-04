@@ -8,6 +8,7 @@ import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import android.graphics.drawable.ColorDrawable
 import androidx.compose.material.Colors
+import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 
 
@@ -25,15 +26,15 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = Mirage,
+    primary = BlueBayoux,
     onPrimary = White,
     secondary = Paradiso,
     onSecondary = White,
     primaryVariant = BlueBayoux,
     secondaryVariant = TePapaGreen,
-    surface = EbonyClay,
-    background = LimedSpruce,
-    onBackground = Ceramic,
+    surface = Ceramic,
+    background = Ceramic,
+    onBackground = LimedSpruce,
     onSurface = Ceramic,
 )
 

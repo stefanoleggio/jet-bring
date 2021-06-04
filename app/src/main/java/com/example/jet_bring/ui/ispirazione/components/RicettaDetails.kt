@@ -1,73 +1,36 @@
 package com.example.jet_bring.ui.ispirazione.components
 
 import android.os.Build
-import android.telecom.Call
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
-import androidx.compose.ui.unit.min
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
-import com.example.jet_bring.R
 import kotlin.math.min
-import android.view.View
-import android.view.Window
 import com.example.jet_bring.ui.theme.BreakerBay
 
-import androidx.core.content.ContextCompat
 
-import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.MutableLiveData
-import androidx.navigation.compose.rememberNavController
-import androidx.ui.graphics.BlendMode
-import com.example.jet_bring.model.Product
-import com.example.jet_bring.model.Ricetta
-import com.example.jet_bring.model.ricette
-import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
-import com.example.jet_bring.ui.liste.ProductColumnMode
-import com.example.jet_bring.ui.liste.ProductGridMode
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
-import com.example.jet_bring.ui.theme.Roman
-import kotlinx.coroutines.launch
 
 /*
 @RequiresApi(Build.VERSION_CODES.R)
@@ -96,14 +59,8 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
     val ricetta = listeViewModel.getRicetta(ricettaId)
     val scrollState = rememberScrollState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-
-
-
-
 
     if (ricetta != null) {
-
 
         Column(
             modifier = Modifier
@@ -191,7 +148,9 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
             }
 
 
-
+            /**
+             * Generazione della lista degli ingredienti
+             * */
             ProductModeSwitcher(
                 listeViewModel.getRicetta(ricettaId).ingredienti,
                 profiloViewModel,
@@ -208,50 +167,29 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                 },
                 {product -> listeViewModel.isInSelectedRicettaList(product.id,ricettaId)},
                 BreakerBay,
-                MaterialTheme.colors.background,
+                MaterialTheme.colors.primary,
             )
 
 
             Spacer(modifier = Modifier.height(150.dp))
 
-            SnackbarHost(
-                hostState = snackbarHostState,
-                Modifier.wrapContentWidth(Alignment.CenterHorizontally)
-            )
+
             Button(
                 shape = MaterialTheme.shapes.medium,
                 onClick = {
 
-                    /*
-                    * Da sistemare la modifica della descrizione
-                    *
-                    *
-                    */
                     listeViewModel.addselectedRicettaListToSelectedProducts(ricettaId)
-                    getBack(ricettaId,
+                    getBack(
+                        ricettaId,
                         listeViewModel::resetRicetta,
-                        { navController.navigate("liste") {
+                    ) {
+
+
+                        navController.navigate("liste") {
                             popUpTo = navController.graph.startDestination
                             launchSingleTop = true
-                        }})
-                    //navController.popBackStack()
-                    //snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
-                    /*
-                    if(aggiunti == false) {
-                        for (ingrediente in ricetta.ingredienti) {
-                            listeViewModel.setDescription(ingrediente.id, ingrediente.description)
-                            listeViewModel.addSelectedProduct(ingrediente)
                         }
-                        aggiunti = true
-                        coroutineScope.launch {
-                            snackbarHostState.showSnackbar(message = "Prodotti aggiunti")
-                        }
-                    }else{
-                        coroutineScope.launch {
-                            var oldDescription = listeViewModel.getDescription(ingrediente.id)
-                            snackbarHostState.showSnackbar(message = "Descrizione aggiornata")
-                        }
-                    }*/
+                    }
 
                           },
                 colors = ButtonDefaults.textButtonColors(
@@ -287,26 +225,28 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
             Spacer(modifier = Modifier.height(50.dp))
         }
 
+        /**
+         * Tasto chiusura schermata
+         * */
         Button(
             onClick = { getBack(ricettaId,listeViewModel::resetRicetta,navController::popBackStack) },
             colors = ButtonDefaults.textButtonColors(
-                backgroundColor = Color.Transparent
+                backgroundColor = MaterialTheme.colors.onBackground.copy(alpha = 0.7f)
             ),
+            modifier = Modifier.padding(8.dp).width(51.dp).height(51.dp)
 
-            elevation = ButtonDefaults.elevation(
-                defaultElevation = 0.dp,
-                pressedElevation = 0.dp,
-                disabledElevation = 0.dp
-            ),
             //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
         ) {
-            Icon(Icons.Filled.Close, contentDescription = "", tint = MaterialTheme.colors.onBackground, modifier = Modifier.size(24.dp) )
+            Icon(Icons.Rounded.Close, contentDescription = "", tint = MaterialTheme.colors.background, modifier = Modifier.fillMaxSize() )
 
         }
     }
 }
 
+/**
+ * Funzione che mi riporta alla schermata principale una volta aggiunti gli ingrdienti alla lista
+ */
 fun getBack(ricettaId: Long, resetRicetta: (ricettaId: Long) -> Unit,goto: () -> Unit) {
     resetRicetta(ricettaId)
     goto()

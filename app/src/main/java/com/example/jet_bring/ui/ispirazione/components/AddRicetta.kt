@@ -33,6 +33,7 @@ import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.BreakerBay
+import com.example.jet_bring.ui.utils.InputText
 
 
 @ExperimentalFoundationApi
@@ -251,7 +252,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                 },
                 { product-> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
                 BreakerBay,
-                MaterialTheme.colors.background
+                MaterialTheme.colors.primary
             )
 
 

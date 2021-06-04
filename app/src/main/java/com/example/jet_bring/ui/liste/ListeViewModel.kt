@@ -6,6 +6,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
+import androidx.ui.animation.Crossfade
 import com.example.jet_bring.R
 import com.example.jet_bring.currentRoute
 import com.example.jet_bring.model.*
@@ -88,12 +89,17 @@ class ListeViewModel : ViewModel() {
 
     fun removeSelectedProduct(productId: Long) {
         val current = ArrayList(this.selectedProducts.value)
+
+
+
         for(product in current) {
+
             if(product.id == productId) {
                 current.remove(product)
                 break
             }
         }
+
         this.selectedProducts.value = current
     }
 

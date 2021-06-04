@@ -11,6 +11,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.ui.animation.Crossfade
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
@@ -33,7 +34,8 @@ fun CategoryScreen(
     Column(
         Modifier
             .verticalScroll(rememberScrollState())
-            .padding(top = PADDING_TOP,
+            .padding(
+                top = PADDING_TOP,
                 bottom = scafPaddingValues
                     .calculateBottomPadding()
                     .plus(PADDING_BOTTOM),
@@ -43,11 +45,13 @@ fun CategoryScreen(
             .fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
         ProductModeSwitcher(
             category.products,
             profiloViewModel,
             onButtonClick = {
                 product ->
+
                     if (listeViewModel.isInSelectedProduct(product.id)) {
                         listeViewModel.removeSelectedProduct(product.id)
                     } else {

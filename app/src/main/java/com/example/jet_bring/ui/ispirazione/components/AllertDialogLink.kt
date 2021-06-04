@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
+import com.example.jet_bring.ui.utils.InputText
 
 
 @ExperimentalComposeUiApi
@@ -77,28 +78,4 @@ fun AlertDialogLink(link: String, onModifiedText: (String) -> Unit, addRicettaVi
 }
 
 /**TODO : Mattere input text in comune*/
-@ExperimentalComposeUiApi
-@Composable
-fun InputText(
-    text: String,
-    onTextChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    onImeAction: () -> Unit = {},
-    label: String? = null
-) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    TextField(
-        value = text,
-        label = { label?.let { Text(it) } },
-        onValueChange = onTextChange,
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = {
-            onImeAction()
-            keyboardController?.hide()
-        }),
-        modifier = modifier
-    )
-}
 

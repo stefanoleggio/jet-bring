@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.R
+import com.example.jet_bring.navigation.animationFade
 import com.example.jet_bring.ui.theme.*
 
 @ExperimentalFoundationApi

@@ -162,6 +162,8 @@ fun MyButton(bText: String,bClick:() -> Unit, icon: ImageVector,modifier:Modifie
         }
     }
 }
+
+
 @ExperimentalComposeUiApi
 @Composable
 fun InputText(
@@ -184,6 +186,8 @@ fun InputText(
         modifier = modifier
     )
 }
+
+
 
 @Composable
 fun ChoosingTab(

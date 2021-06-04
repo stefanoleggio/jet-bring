@@ -65,7 +65,7 @@ fun NavigationManager (
 
         composable("liste") {
 
-            EnterAnimation3 {
+            animationFade {
                 ListeScreen(navController, screenPadding, listeViewModel,profiloViewModel)
             }
             topBarTitle.value = "Liste"
@@ -73,7 +73,7 @@ fun NavigationManager (
         }
 
         composable("ispirazione") {
-            EnterAnimation3 {
+            animationFade {
                 IspirazioneScreen(navController, screenPadding, addRicettaViewModel)
             }
 
@@ -82,8 +82,7 @@ fun NavigationManager (
         }
 
         composable("profilo") {
-            EnterAnimation3 {
-
+            animationFade {
                 ProfiloScreen(
                     navController,
                     screenPadding,
@@ -104,7 +103,7 @@ fun NavigationManager (
         composable(
             "liste/{categoryId}") { backStackEntry ->
             val categoryId: Long = backStackEntry.arguments?.getString("categoryId")!!.toLong()
-            EnterAnimation {
+            animationSlide {
                 CategoryScreen(navController, categoryId, screenPadding, listeViewModel,profiloViewModel)
             }
             topBarTitle.value = listeViewModel.getCategoryName(categoryId)
@@ -123,14 +122,14 @@ fun NavigationManager (
         )
         ) { backStackEntry ->
             val ricettaId : Long = backStackEntry.arguments?.getString("ricettaId")!!.toLong()
-            EnterAnimation {
+            animationSlide {
                 RicetteDetails(navController, ricettaId,listeViewModel, profiloViewModel)
             }
             topBarTitle.value = "Ricetta"
 
         }
         composable("ispirazione/addRicetta") {
-            EnterAnimation2 {
+            animationSlideVertically {
                 AddRicetta(navController, listeViewModel, addRicettaViewModel, profiloViewModel)
             }
 
@@ -148,24 +147,16 @@ fun NavigationManager (
         composable("profilo/ilTuoProfilo") {
             profiloViewModel.notSaved()
 
-            EnterAnimation {
+            animationSlide{
                 IlTuoProfilo(
                     profiloViewModel
                 )
             }
-
-
             topBarTitle.value = "Il tuo Profilo"
-
-
             backArrow.value = true
 
 
         }
-
-
-
-
     }
 }
 
@@ -185,7 +176,6 @@ fun AppBottomNavigation(
         val currentRoute = currentRoute(navController)
         items.forEach { screen ->
             BottomNavigationItem(
-
 
                 icon = {
                     Icon(
@@ -219,7 +209,7 @@ private fun currentRoute(navController: NavHostController): String? {
 
 @ExperimentalAnimationApi
 @Composable
-fun EnterAnimation(content: @Composable () -> Unit) {
+fun animationSlide(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visible = true,
         enter = slideInHorizontally(
@@ -231,6 +221,15 @@ fun EnterAnimation(content: @Composable () -> Unit) {
             // Overwrites the default animation with tween
             animationSpec = tween(durationMillis = 100)
         ) ,
+        exit = slideOutHorizontally(
+            // Offsets the content by 1/3 of its width to the left, and slide towards right
+            targetOffsetX = { fullWidth -> fullWidth },
+            // Overwrites the default animation with tween for this slide animation.
+            animationSpec = tween(durationMillis = 100)
+        ) + fadeOut(
+            // Overwrites the default animation with tween
+            animationSpec = tween(durationMillis = 100)
+        ),
         content = content,
         initiallyVisible = false
     )
@@ -238,7 +237,7 @@ fun EnterAnimation(content: @Composable () -> Unit) {
 
 @ExperimentalAnimationApi
 @Composable
-fun EnterAnimation2(content: @Composable () -> Unit) {
+fun animationSlideVertically(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visible = true,
         enter = slideInVertically(
@@ -254,7 +253,7 @@ fun EnterAnimation2(content: @Composable () -> Unit) {
 
 @ExperimentalAnimationApi
 @Composable
-fun EnterAnimation3(content: @Composable () -> Unit) {
+fun animationFade(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visible = true,
         enter = fadeIn(animationSpec = tween(durationMillis = 150)),
