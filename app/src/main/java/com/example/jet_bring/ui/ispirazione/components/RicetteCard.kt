@@ -29,14 +29,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.model.getProduct
 
-/**Sezione di navigazione*/
-object MainDestinations {
-    const val MAINSCREEN = "mainscreen"
-    const val CHILDSCREEN = "childscreen"
-    const val CHILD_TITLE_KEY = "childscreen_titletkey"
-}
-
-
+/**
+ * Funzione che nasconde l'effetto di tocco sulla card della ricetta
+ * */
 inline fun Modifier.noRippleClickable(crossinline onClick: ()->Unit): Modifier = composed {
     clickable(indication = null,
         interactionSource = remember { MutableInteractionSource() }) {
@@ -44,24 +39,6 @@ inline fun Modifier.noRippleClickable(crossinline onClick: ()->Unit): Modifier =
     }
 }
 
-
-
-
-/*
-@Preview
-@Composable
-fun CardPreview() {
-    RicetteCard(    Ricetta(0,"Pasta", "Carlotta e il bassotto",
-        R.drawable.crostoni_pancetta_funghi, "", 5, 4,  "Sano e delizioso", listOf(
-        getProduct("Pera", "2")
-    ), "2/2/2010"),
-        rememberNavController(),
-        "ispirazione/ricetteDetails"
-
-    )
-}
-
- */
 /**
  * Funzione che ritorna una card delle ricette
  *
