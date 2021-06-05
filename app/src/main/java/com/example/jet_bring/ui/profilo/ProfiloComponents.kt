@@ -24,6 +24,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -33,8 +34,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
-import com.example.jet_bring.ui.theme.JetbringTheme
-import com.example.jet_bring.ui.theme.LINE_SPACE
+import com.example.jet_bring.R
+import com.example.jet_bring.ui.theme.*
 
 
 @Composable
@@ -54,12 +55,12 @@ fun Table(
         Column(
         ) {
             HeaderBox(title = title, icon = iconTitle)
-            Spacer(modifier = Modifier.padding(padding/4))
+            Spacer(modifier = Modifier.padding(PADDING_TOP/4))
             Surface(
                 Modifier
                     .padding(PaddingValues(
-                        start = padding,
-                        end = padding/4
+                        start = PADDING_START,
+                        end = PADDING_END/4
                     )),
                 color = MaterialTheme.colors.background
             ){
@@ -90,8 +91,8 @@ fun Table(
             .background(MaterialTheme.colors.surface)
             .padding(
                 PaddingValues(
-                    start = padding,
-                    top = padding,
+                    start = PADDING_START,
+                    top = PADDING_TOP,
                     end = 5.dp
                 )
             )
@@ -100,7 +101,7 @@ fun Table(
         Icon(
             icon,
             contentDescription = null)
-        Spacer(modifier = Modifier.padding(padding/4))
+        Spacer(modifier = Modifier.padding(LINE_SPACE))
         Text(text = title)
         //
     }
@@ -124,40 +125,46 @@ fun ClickableBox(
             }
     ) {
         if(icon!= null) {
-            Row(Modifier.padding(padding,padding/2),
+            Row(Modifier.padding(PADDING_START, PADDING_BOTTOM/2),
                 verticalAlignment = Alignment.CenterVertically) {
                 Icon(icon, contentDescription = null,)
-                Spacer(modifier = Modifier.padding(padding/4))
+                Spacer(modifier = Modifier.padding(LINE_SPACE))
                 Text(text = title)
             }
         }else {
             Text(
                 text = title,
-                Modifier.padding(padding, padding / 2)
+                Modifier.padding(PADDING_START, PADDING_TOP / 2)
             )
         }
     }
 }
 @Composable
-fun TwoButtonsRow(b1Text: String,b2Text:String,b1Click:() -> Unit,b2Click:() -> Unit, icon1: ImageVector,icon2:ImageVector) {
+fun TwoButtonsRow(b1Text: String,b2Text:String,b1Click:() -> Unit,b2Click:() -> Unit, icon1: Int,icon2:Int) {
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(padding)) {
+            .padding(PADDING_TOP)) {
         MyButton(bText = b1Text, bClick = b1Click, icon = icon1, modifier = Modifier.weight(1f))
-        Spacer(Modifier.padding(padding))
+        Spacer(Modifier.padding(PADDING_TOP/3))
         MyButton(bText = b2Text, bClick = b2Click, icon = icon2, modifier = Modifier.weight(1f))
     }
 }
 @Composable
-fun MyButton(bText: String,bClick:() -> Unit, icon: ImageVector,modifier:Modifier) {
+fun MyButton(bText: String,bClick:() -> Unit, icon: Int,modifier:Modifier) {
     Button(
         onClick = bClick,
         modifier
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Icon(icon, contentDescription = null)
-            Text(bText, /*TODO sistemare dimensione testo*/
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                modifier = Modifier.height(20.dp),
+                tint = MaterialTheme.colors.onPrimary
+            )
+            Spacer(modifier = Modifier.padding(LINE_SPACE))
+            Text(bText,color = MaterialTheme.colors.onPrimary /*TODO sistemare dimensione testo*/
             )
         }
     }
@@ -256,7 +263,7 @@ fun ClickableBoxIconPreview() {
 @Composable
 @Preview
 fun TwoButtonsRowPreview() {
-    TwoButtonsRow("Aspetto della lista", "miao", {},{},Icons.Default.Add,Icons.Default.Settings)
+    TwoButtonsRow("Aspetto della lista", "miao", {},{}, R.drawable.ic_pixels, R.drawable.ic_half_circle)
 }
 
 @Composable

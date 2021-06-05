@@ -22,8 +22,8 @@ class ProfiloViewModel : ViewModel() {
     fun editProfileEmail(userEmail:String) {
         temp = UserData(temp.name,userEmail,temp.profileIcon)
     }
-    fun editProfileIcon(userMod: UserData) {
-        temp = userMod
+    fun editProfileIcon(userIcon:Int) {
+        temp = UserData(temp.name,temp.email,userIcon)
     }
 
     fun onSaveDone() {

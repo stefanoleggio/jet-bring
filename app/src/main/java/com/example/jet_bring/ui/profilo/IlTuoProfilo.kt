@@ -48,19 +48,18 @@ fun IlTuoProfilo(
                 Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colors.surface)
-                    .padding(padding),
+                    .padding(PADDING_TOP),
                 horizontalArrangement = Arrangement.Center
             ) {
                 Surface(
                     modifier = Modifier
-                        .size(100.dp)
-                        .clickable {},
+                        .size(100.dp),
                     shape = CircleShape,
                     color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-
+                    elevation = 4.dp
                     ) {
                     Image(
-                        painterResource(R.drawable.jet_bringicon),
+                        painterResource(profiloViewModel.user.profileIcon),
                         contentDescription = null
                     )
                 }
@@ -99,7 +98,7 @@ fun IlTuoProfilo(
             */
             Row(
                 Modifier
-                    .padding(padding)
+                    .padding(PADDING_TOP)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
             ) {
@@ -107,14 +106,18 @@ fun IlTuoProfilo(
                     onClick = {
                         profiloViewModel.onSaveDone()
                         coroutineScope.launch {
-                            snackbarHostState.showSnackbar(message = "Salvataggio Dati")
+                            snackbarHostState.showSnackbar(
+                                message = "Salvataggio Dati",
+                                duration = SnackbarDuration.Short
+                            )
                         }
                               },
                     Modifier,
                     colors = outlinedButtonColors(
                         backgroundColor = MaterialTheme.colors.secondary,
                         contentColor = MaterialTheme.colors.onSurface
-                    )
+                    ),
+                    elevation = ButtonDefaults.elevation()
                 )
                 {
                     Text("Salva")
@@ -136,7 +139,7 @@ fun ProfileInputRow(
     label: String,
 ) {
     Row(
-        Modifier.padding(top = padding,start = padding,end = padding),
+        Modifier.padding(top = PADDING_TOP,start = PADDING_START,end = PADDING_END),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
@@ -144,18 +147,21 @@ fun ProfileInputRow(
             contentDescription = "Localized description",
             tint = MaterialTheme.colors.onBackground,
         )
-        Spacer(modifier = Modifier.padding(padding/2))
+        Spacer(modifier = Modifier.padding(PADDING_TOP/2))
         Surface(
             Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(10.dp),
             color = MaterialTheme.colors.surface,
+            elevation = 4.dp
             ) {
             Column() {
                 InputText(
                     text = text,
                     onTextChange = onTextChange,
                     label = label,
-                    modifier = Modifier.padding(bottom = PADDING_BOTTOM,start = PADDING_START,end = PADDING_END).fillMaxWidth()
+                    modifier = Modifier
+                        .padding(bottom = PADDING_BOTTOM, start = PADDING_START, end = PADDING_END)
+                        .fillMaxWidth()
                 )
             }
         }

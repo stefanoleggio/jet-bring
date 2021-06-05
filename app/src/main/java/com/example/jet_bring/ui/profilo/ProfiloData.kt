@@ -15,7 +15,7 @@ import com.example.jet_bring.R
 data class UserData(
     var name: String = "John Doe",
     var email: String = "john_doe@gmail.com",
-    var profileIcon: Int = R.drawable.jet_bringicon
+    var profileIcon: Int = R.drawable.ic_profile
 )
 
 data class TableData(
@@ -32,9 +32,11 @@ data class CBoxArg(
 /*TODO correggere le icone per farle corrispondere a quelle originali*/
 val tableDataList = listOf<TableData>(
     TableData("Impostazioni", Icons.Default.Settings),
+    /*
     TableData("Guida e Consigli",Icons.Default.Info),
     TableData("Consigliala",Icons.Default.Lock),
     TableData("Altre Opzioni di Jet-Bring",Icons.Default.ArrowForward),
     TableData("Altro",Icons.Default.ThumbUp)
+     */
 )
 

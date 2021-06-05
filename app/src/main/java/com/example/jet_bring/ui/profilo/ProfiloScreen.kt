@@ -33,12 +33,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.ui.layout.Expanded
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.liste.ListeViewModel
-import com.example.jet_bring.ui.theme.JetbringTheme
-import com.example.jet_bring.ui.theme.PADDING_END
-import com.example.jet_bring.ui.theme.PADDING_START
-import com.example.jet_bring.ui.theme.themes
+import com.example.jet_bring.ui.theme.*
 
-val padding = 16.dp
 @ExperimentalAnimationApi
 @Composable
 fun ProfiloScreen(
@@ -52,10 +48,10 @@ fun ProfiloScreen(
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(
-                scafPaddingValues.calculateStartPadding(LayoutDirection.Ltr).plus(padding),
-                scafPaddingValues.calculateTopPadding().plus(padding),
-                scafPaddingValues.calculateEndPadding(LayoutDirection.Ltr).plus(padding),
-                scafPaddingValues.calculateBottomPadding().plus(padding)
+                scafPaddingValues.calculateStartPadding(LayoutDirection.Ltr).plus(PADDING_START),
+                scafPaddingValues.calculateTopPadding().plus(PADDING_TOP),
+                scafPaddingValues.calculateEndPadding(LayoutDirection.Ltr).plus(PADDING_END),
+                scafPaddingValues.calculateBottomPadding().plus(PADDING_BOTTOM)
             )
         ) {
 
@@ -63,7 +59,7 @@ fun ProfiloScreen(
                 "Hi, ${profiloViewModel.user.name}",
                 style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = fontSize )
             )}
-            item{Spacer(Modifier.size(padding))}
+            item{Spacer(Modifier.size(PADDING_TOP))}
 
             item {
                 Column(modifier = Modifier
@@ -81,15 +77,15 @@ fun ProfiloScreen(
                             .size(150.dp),
                         shape = CircleShape,
                         color = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-
+                        elevation = 4.dp
                         ) {
                         Image(
-                            painterResource(R.drawable.jet_bringicon),
+                            painterResource(profiloViewModel.user.profileIcon),
                             contentDescription = null
                         )
 
                     }
-                    Spacer(modifier = Modifier.padding(padding/2))
+                    Spacer(modifier = Modifier.padding(PADDING_TOP/2))
                     Text(text = profiloViewModel.user.name,
                     color = MaterialTheme.colors.onBackground
                         ) /*TODO inserire userData.name qui quando pronto*/
@@ -98,17 +94,18 @@ fun ProfiloScreen(
                     ) /*TODO inserire userData.email qui quando pronto*/
                 }
             }
-            item {Spacer(Modifier.size(padding))}
+            item {Spacer(Modifier.size(PADDING_TOP))}
 
             item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController,listeViewModel = listeViewModel,profiloViewModel)
 
             }
-            item{Spacer(Modifier.padding(padding))}
+            item{Spacer(Modifier.padding(PADDING_TOP))}
+            /*
             items(items = tableDataList.subList(1, tableDataList.lastIndex)) {
                 Table(it.title,it.iconTitle,navController,it.list)
                 Spacer(Modifier.padding(padding))
             }
-
+            */
         }
 }
 
@@ -122,21 +119,21 @@ fun SettingsTable(
     profiloViewModel: ProfiloViewModel
 )   {
     var expandedChoice by remember { mutableStateOf<String?>(null) }
-    Surface(
+    Card(
         modifier = Modifier
             .fillMaxWidth(),
         shape= RoundedCornerShape(10.dp),
-        color = MaterialTheme.colors.surface
-
+        backgroundColor = MaterialTheme.colors.surface,
+        elevation = 0.dp
     ) {
         Column(Modifier.animateContentSize() ) {
             HeaderBox(title = title, icon = iconTitle)
-            Spacer(modifier = Modifier.padding(padding/4))
+            Spacer(modifier = Modifier.padding(PADDING_TOP/4))
             Surface(
                 Modifier
                     .padding(PaddingValues(
                         start = PADDING_START,
-                        end = PADDING_END/4
+                        end = PADDING_END
                     )),
                 color = MaterialTheme.colors.background
             ){
@@ -157,8 +154,8 @@ fun SettingsTable(
                     if(expandedChoice.equals("tema")) expandedChoice = null
                     else   expandedChoice = "tema"
                 },
-                Icons.Default.ShoppingCart,
-                Icons.Default.ShoppingCart
+                R.drawable.ic_pixels,
+                R.drawable.ic_half_circle
             ) /*TODO aggiungere azioni bottoni e icone corrette*/
             AnimatedVisibility(visible = (expandedChoice != null)) {
                 if(expandedChoice == "aspettoDellaLista") {
@@ -176,7 +173,10 @@ fun SettingsTable(
                         modifier = Modifier.padding(start = PADDING_START, end = PADDING_END)
                     )
                 }
+
             }
+            Spacer(modifier = Modifier.padding(LINE_SPACE))
+            /*
             ClickableBox(title = "Impostazioni Lista",
                 navController = rememberNavController(),
                 route = "casamia",
@@ -186,7 +186,7 @@ fun SettingsTable(
                 navController = rememberNavController(),
                 route = "casatua"
             )
-            /*
+
             TwoButtonsRow(
                 "Column Mode",
                 "Grid Mode",

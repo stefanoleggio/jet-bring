@@ -174,7 +174,7 @@ fun AppBottomNavigation(
     items: List<Screen>
 ) {
 
-    BottomNavigation {
+    BottomNavigation(backgroundColor = MaterialTheme.colors.primary) {
         val currentRoute = currentRoute(navController)
         items.forEach { screen ->
             BottomNavigationItem(
