@@ -88,15 +88,15 @@ fun ProfiloScreen(
                     Spacer(modifier = Modifier.padding(PADDING_TOP/2))
                     Text(text = profiloViewModel.user.name,
                     color = MaterialTheme.colors.onBackground
-                        ) /*TODO inserire userData.name qui quando pronto*/
+                        )
                     Text(text = profiloViewModel.user.email,
                         color = MaterialTheme.colors.onBackground
-                    ) /*TODO inserire userData.email qui quando pronto*/
+                    )
                 }
             }
             item {Spacer(Modifier.size(PADDING_TOP))}
 
-            item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,navController,listeViewModel = listeViewModel,profiloViewModel)
+            item{SettingsTable(tableDataList.get(0).title,tableDataList.get(0).iconTitle,profiloViewModel)
 
             }
             item{Spacer(Modifier.padding(PADDING_TOP))}
@@ -114,8 +114,6 @@ fun ProfiloScreen(
 fun SettingsTable(
     title: String,
     iconTitle: ImageVector,
-    navController: NavHostController,
-    listeViewModel: ListeViewModel,
     profiloViewModel: ProfiloViewModel
 )   {
     var expandedChoice by remember { mutableStateOf<String?>(null) }
@@ -216,8 +214,6 @@ fun SettingsTablePreview() {
     SettingsTable(
         title = "Impostazioni",
         iconTitle = Icons.Default.Settings,
-        navController = rememberNavController(),
-        ListeViewModel(),
         ProfiloViewModel()
     )
 }
