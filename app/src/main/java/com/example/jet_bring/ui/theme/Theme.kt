@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color.Companion.White
 
 private val DarkColorPalette = darkColors(
     primary = Mirage,
-    onPrimary = White,
+    onPrimary = Ceramic,
     secondary = Paradiso,
-    onSecondary = White,
+    onSecondary = Iron,
     primaryVariant = BlueBayoux,
     secondaryVariant = TePapaGreen,
     surface = EbonyClay,
@@ -53,7 +53,7 @@ private val DreamColorPalette = lightColors(
 
 @Composable
 fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable() () -> Unit) {
-    var theme = aTheme /*TODO usare tema scuro di default*/
+    var theme = aTheme
     /*
     var themeName = aThemeName
     if(themeName == null) {

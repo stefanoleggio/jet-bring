@@ -27,6 +27,7 @@ import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.ui.graphics.BlendMode
@@ -172,15 +173,19 @@ fun AppBottomNavigation(
     navController: NavHostController,
     items: List<Screen>
 ) {
+
     BottomNavigation {
         val currentRoute = currentRoute(navController)
         items.forEach { screen ->
             BottomNavigationItem(
 
                 icon = {
+                    val color by animateColorAsState(
+                        targetValue = if (screen.route == currentRoute) colors.onPrimary else colors.onSecondary
+                    )
                     Icon(
                         screen.icon,
-                        tint = if(screen.route == currentRoute) colors.onBackground else colors.background, /*TODO sistemare colori*/
+                        tint = color, //if(screen.route == currentRoute) colors.onPrimary else colors.onSecondary, /*TODO sistemare colori*/
                         contentDescription = ""
                     )
                 },
