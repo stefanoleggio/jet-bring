@@ -48,9 +48,10 @@ class AddRicettaViewModel : ViewModel() {
     fun onPersonChange(function: String) {
         if(function == "plus")
             ricetta = Ricetta(id = ricetta.id, titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = ricetta.immagine, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = ricetta.ingredienti, persone = ricetta.persone?.plus(1))
-        else if(function == "minus")
+        else if(function == "minus" && ricetta.persone!! > 1)
             ricetta = Ricetta(id = ricetta.id, titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = ricetta.immagine, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = ricetta.ingredienti, persone = ricetta.persone?.minus(1))
-
+        else if(function == "minus" && ricetta.persone!! == 1)
+            ricetta = Ricetta(id = ricetta.id, titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = ricetta.immagine, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = ricetta.ingredienti, persone = ricetta.persone)
         else throw ArrayIndexOutOfBoundsException( "Il valore $function non è un operatore per la funzione PersonChange")
     }
 

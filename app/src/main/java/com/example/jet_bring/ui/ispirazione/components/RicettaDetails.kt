@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import kotlin.math.min
-import com.example.jet_bring.ui.theme.BreakerBay
 
 
 import androidx.annotation.RequiresApi
@@ -31,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
+import com.example.jet_bring.ui.theme.*
 
 /*
 @RequiresApi(Build.VERSION_CODES.R)
@@ -91,30 +91,28 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                     text = it,
                     style = MaterialTheme.typography.h6,
                     modifier = Modifier
-                        .padding(start = 5.dp, end = 5.dp, top = 15.dp, bottom = 5.dp),
+                        .padding(start = PADDING_START, end = PADDING_END, top = PADDING_TOP, bottom = 0.dp),
                 )
             }
             ricetta.titolo?.let {
                 Text(
                     text = it,
                     style = MaterialTheme.typography.h4,
-                    modifier = Modifier
-
-                        .padding(start = 5.dp, end = 5.dp, top = 5.dp, bottom = 15.dp),
+                    modifier = Modifier.padding(start = PADDING_START, end = PADDING_END, top = PADDING_TOP, bottom = PADDING_BOTTOM),
                     fontWeight = FontWeight.Bold,
                 )
 
             }
             AlignInRow(ricetta)
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(PADDING_TOP))
             Card(
                 shape = MaterialTheme.shapes.medium,
                 modifier = Modifier
                     .padding(
-                        bottom = 20.dp,
-                        top = 6.dp,
-                        start = 5.dp,
-                        end = 5.dp
+                        bottom = PADDING_BOTTOM,
+                        top = PADDING_TOP,
+                        start = PADDING_START,
+                        end = PADDING_END
 
                     )
                     .fillMaxWidth()
