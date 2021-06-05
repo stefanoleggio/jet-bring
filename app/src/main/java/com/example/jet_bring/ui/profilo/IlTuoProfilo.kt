@@ -30,9 +30,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.jet_bring.R
-import com.example.jet_bring.ui.theme.JetbringTheme
+import com.example.jet_bring.ui.theme.*
+import com.example.jet_bring.ui.utils.InputText
 import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
@@ -65,23 +65,38 @@ fun IlTuoProfilo(
                     )
                 }
             }
-
-            ProfileInputRow(
-                icon = Icons.Rounded.Person,
-                title = "Come ti chiamano i tuoi amici?",
-                text = profiloViewModel.temp.name,
-                onModifiedText = profiloViewModel::editProfileName
-            )
-            ProfileInputRow(
-                icon = Icons.Rounded.Email,
-                title = "Qual è la tua email?",
-                text = profiloViewModel.temp.email,
-                onModifiedText = profiloViewModel::editProfileEmail
-            )
-            SnackbarHost(
-                hostState = snackbarHostState,
-                Modifier.wrapContentWidth(Alignment.CenterHorizontally)
-            )
+            profiloViewModel.temp.name.let {
+                ProfileInputRow(
+                    icon = Icons.Rounded.Person,
+                    text = profiloViewModel.temp.name,
+                    label = "Come ti chiamano i tuoi amici?",
+                    onTextChange = profiloViewModel::editProfileName
+                )
+            }
+            profiloViewModel.temp.email.let {
+                ProfileInputRow(
+                    icon = Icons.Rounded.Email,
+                    label = "Qual è la tua email?",
+                    text = profiloViewModel.temp.email,
+                    onTextChange = profiloViewModel::editProfileEmail
+                )
+            }
+             /*
+            profiloViewModel.temp.name.let{
+                InputText(
+                    text = it,
+                    profiloViewModel::editProfileName,
+                    label = "Come ti chiamano i tuoi amici?"
+                )
+            }
+            profiloViewModel.temp.email.let{
+                InputText(
+                    text = it,
+                    profiloViewModel::editProfileEmail,
+                    label = "Qual è la tua email?"
+                )
+            }
+            */
             Row(
                 Modifier
                     .padding(padding)
@@ -105,6 +120,10 @@ fun IlTuoProfilo(
                     Text("Salva")
                 }
             }
+            SnackbarHost(
+                hostState = snackbarHostState,
+                Modifier.wrapContentWidth(Alignment.CenterHorizontally)
+            )
         }
 }
 
@@ -112,9 +131,9 @@ fun IlTuoProfilo(
 @Composable
 fun ProfileInputRow(
     icon: ImageVector,
-    title: String,
     text: String,
-    onModifiedText: (String) -> Unit
+    onTextChange: (String) -> Unit,
+    label: String,
 ) {
     Row(
         Modifier.padding(top = padding,start = padding,end = padding),
@@ -132,11 +151,12 @@ fun ProfileInputRow(
             color = MaterialTheme.colors.surface,
             ) {
             Column() {
-                Text(
-                    text = title,
-                    modifier =Modifier.padding(start = padding)
+                InputText(
+                    text = text,
+                    onTextChange = onTextChange,
+                    label = label,
+                    modifier = Modifier.padding(bottom = PADDING_BOTTOM,start = PADDING_START,end = PADDING_END).fillMaxWidth()
                 )
-                InputText(text = text, onModifiedText, modifier = Modifier.fillMaxWidth())
             }
         }
 
@@ -154,5 +174,5 @@ fun IlTuoProfiloPreview() {
 @Preview
 @Composable
 fun ProfileInputRowPreview() {
-    ProfileInputRow(Icons.Rounded.Person,"cosa mi vuoi dire?","ciao",{})
+    ProfileInputRow(Icons.Rounded.Person,"ciao",{},"cosa mi vuoi dire?")
 }

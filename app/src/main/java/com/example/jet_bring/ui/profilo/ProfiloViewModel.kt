@@ -17,10 +17,10 @@ class ProfiloViewModel : ViewModel() {
     private var themeSet: MutableState<Boolean> = mutableStateOf(false)
 
     fun editProfileName(userName:String) {
-        temp = UserData(userName,user.email,user.profileIcon)
+        temp = UserData(userName,temp.email,temp.profileIcon)
     }
     fun editProfileEmail(userEmail:String) {
-        temp = UserData(user.name,userEmail,user.profileIcon)
+        temp = UserData(temp.name,userEmail,temp.profileIcon)
     }
     fun editProfileIcon(userMod: UserData) {
         temp = userMod

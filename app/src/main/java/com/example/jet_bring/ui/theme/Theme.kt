@@ -35,7 +35,7 @@ private val LightColorPalette = lightColors(
     surface = Ceramic,
     background = Ceramic,
     onBackground = LimedSpruce,
-    onSurface = Ceramic,
+    onSurface = LimedSpruce,
 )
 
 private val DreamColorPalette = lightColors(
@@ -53,7 +53,7 @@ private val DreamColorPalette = lightColors(
 
 @Composable
 fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable() () -> Unit) {
-    var theme = aTheme
+    var theme = aTheme /*TODO usare tema scuro di default*/
     /*
     var themeName = aThemeName
     if(themeName == null) {
@@ -69,10 +69,12 @@ fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable() () -> Unit)
         LightColorPalette
     }
      */
+    /*
     if(isSet == false) {
         if(isSystemInDarkTheme()) theme = themes.get(0)
         else theme = themes.get(1)
     }
+     */
     MaterialTheme(
         colors = theme.colors,
         typography = Typography,

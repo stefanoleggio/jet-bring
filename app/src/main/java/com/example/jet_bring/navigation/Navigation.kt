@@ -180,7 +180,7 @@ fun AppBottomNavigation(
                 icon = {
                     Icon(
                         screen.icon,
-                        tint = if(screen.route == currentRoute) colors.onBackground else colors.background,
+                        tint = if(screen.route == currentRoute) colors.onBackground else colors.background, /*TODO sistemare colori*/
                         contentDescription = ""
                     )
                 },
