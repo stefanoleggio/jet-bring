@@ -52,7 +52,7 @@ private val DreamColorPalette = lightColors(
 )
 
 @Composable
-fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable() () -> Unit) {
+fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable () -> Unit) {
     var theme = aTheme
     /*
     var themeName = aThemeName
