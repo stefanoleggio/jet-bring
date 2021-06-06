@@ -80,11 +80,11 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
                     )
                     Text(
                         text = "Niente da comprare",
-                        fontSize = 25.sp
+                        style = MaterialTheme.typography.h1
                     )
                     Text(
                         text = "Sfoglia il nostro catalogo",
-                        fontSize = 15.sp
+                        style = MaterialTheme.typography.body1
                     )
                 }
 

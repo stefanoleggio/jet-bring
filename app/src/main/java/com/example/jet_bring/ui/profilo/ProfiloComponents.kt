@@ -164,7 +164,7 @@ fun MyButton(bText: String,bClick:() -> Unit, icon: Int,modifier:Modifier) {
                 tint = MaterialTheme.colors.onPrimary
             )
             Spacer(modifier = Modifier.padding(LINE_SPACE))
-            Text(bText,color = MaterialTheme.colors.onPrimary /*TODO sistemare dimensione testo*/
+            Text(bText,color = MaterialTheme.colors.onPrimary, style = MaterialTheme.typography.body1
             )
         }
     }

@@ -39,6 +39,7 @@ import com.example.jet_bring.ui.utils.MainTextButton
 import org.intellij.lang.annotations.JdkConstants
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.ui.core.HorizontalAlignmentLine
 
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
@@ -194,28 +195,29 @@ fun CategoryCard(navController: NavHostController, category: Category) {
         elevation = 8.dp,
     ) {
         Column(
-            verticalArrangement = Arrangement.Center,
         ) {
-            Row() {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Column(
                 ) {
                     Text(
                         text = category.name,
-                        Modifier.padding(10.dp),
-                        style = TextStyle(color = MaterialTheme.colors.onBackground, fontSize = 25.sp),
+                        color = MaterialTheme.colors.onBackground,
+                        style = MaterialTheme.typography.h1,
+                        modifier = Modifier.padding(start = 15.dp)
                     )
                 }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentSize(Alignment.CenterEnd)
+                        .wrapContentSize(Alignment.BottomEnd)
                 ) {
                     Icon(
                         Icons.Rounded.KeyboardArrowRight,
-                        contentDescription = "Expand",
+                        contentDescription = "",
                         modifier = Modifier
-                            .size(60.dp)
-                            .padding(5.dp)
+                            .size(55.dp)
                     )
                 }
             }
@@ -307,7 +309,7 @@ fun ProductRow(
             Text(
                 text = product.name,
                 Modifier.padding(start= 20.dp),
-                color = MaterialTheme.colors.onSurface
+                color = Color.White
             )
             var currentDescription = product.description
             if(currentDescription == null)
@@ -325,7 +327,7 @@ fun ProductRow(
         }
         Column(modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.End) {
-            Icon(Icons.Rounded.MoreVert, contentDescription = "Localized description",
+            Icon(Icons.Rounded.MoreVert, contentDescription = "", tint = Color.White,
                 modifier = Modifier.clickable {
                     openDescriptionAlert.value = true
                 })
@@ -422,22 +424,21 @@ fun ProductModeSwitcher(productsList: List<Product>,
 @Preview
 fun ProductButtonPreview() {
 
-    val listeViewModel = ListeViewModel()
-
-    listeViewModel.getProduct(0)?.let { ProductButton(it, {},{ product, string ->  }, {true }, Color.Blue,Color.Green) }
-}
-
-@Preview
-@Composable
-fun CategoryCardPreview() {
-    CategoryCard(rememberNavController(), ListeViewModel().getCategory(1))
+    ProductButton(
+        product = products[0],
+        onButtonClick = {  },
+        onDescriptionChange = { product, string ->  },
+        isSelected = { true},
+        selectedColor = BreakerBay,
+        unselectedColor =  Roman
+    )
 }
 
 @ExperimentalComposeUiApi
 @Preview
 @Composable
 fun ProductRowPreview() {
-    ProductRow(product = products[0],{},{product, string ->  }, {false},Color.Blue,Color.Green)
+    ProductRow(product = products[0],{},{product, string ->  }, {false},Roman,BreakerBay)
 }
 
 @ExperimentalComposeUiApi
@@ -449,5 +450,5 @@ fun ProductColumnModePreview() {
         products[1],
         products[6],
     )
-    ProductColumnMode(list,{},{product, string ->  },{true},Color.Blue,Color.Green)
+    ProductColumnMode(list,{},{product, string ->  },{true}, BreakerBay, Roman)
 }

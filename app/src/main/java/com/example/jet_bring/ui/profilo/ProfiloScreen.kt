@@ -142,7 +142,7 @@ fun SettingsTable(
             }
 
             TwoButtonsRow(
-                "Aspetto della lista",
+                "Aspetto lista",
                 "Tema",
                 {
                     if(expandedChoice.equals("aspettoDellaLista")) expandedChoice = null
@@ -175,11 +175,12 @@ fun SettingsTable(
             }
             Spacer(modifier = Modifier.padding(LINE_SPACE))
 
+            /*
             ClickableBox(title = "${profiloViewModel.state}", /*TODO ricordati di toglierlo*/
                 navController = rememberNavController(),
                 route = "casamia",
                 Icons.Default.List
-            )
+            )*/
             /*
             ClickableBox(title = "Altre Impostazioni",
                 navController = rememberNavController(),
