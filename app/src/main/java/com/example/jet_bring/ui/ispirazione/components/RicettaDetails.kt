@@ -85,142 +85,158 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
 
                     )
             }
-
-            ricetta.pubblicatore?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.h6,
-                    modifier = Modifier
-                        .padding(start = PADDING_START, end = PADDING_END, top = PADDING_TOP, bottom = 0.dp),
-                )
-            }
-            ricetta.titolo?.let {
-                Text(
-                    text = it,
-                    style = MaterialTheme.typography.h4,
-                    modifier = Modifier.padding(start = PADDING_START, end = PADDING_END, top = PADDING_TOP, bottom = PADDING_BOTTOM),
-                    fontWeight = FontWeight.Bold,
-                )
-
-            }
-            AlignInRow(ricetta)
-            Spacer(modifier = Modifier.height(PADDING_TOP))
-            Card(
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
-                    .padding(
-                        bottom = PADDING_BOTTOM,
-                        top = PADDING_TOP,
-                        start = PADDING_START,
-                        end = PADDING_END
-
-                    )
-                    .fillMaxWidth()
-                    .noRippleClickable {
-                        null
-                    },
-
-                elevation = 0.dp,
-                //backgroundColor = MaterialTheme.colors.background
-            ){
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-
+            Column(Modifier.padding(start = PADDING_START,end = PADDING_END)) {
+                ricetta.pubblicatore?.let {
                     Text(
-                        text = "${ricetta.persone} Persone",
-                        color = MaterialTheme.colors.onBackground,
+                        text = it,
+                        style = MaterialTheme.typography.h6,
                         modifier = Modifier
-                            .wrapContentWidth(Alignment.CenterHorizontally)
-                            .padding(start = 5.dp)
-
-
+                            .padding(
+                                start = PADDING_START,
+                                end = PADDING_END,
+                                top = PADDING_TOP,
+                                bottom = 0.dp
+                            ),
                     )
                 }
+                ricetta.titolo?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.h4,
+                        modifier = Modifier.padding(
+                            start = PADDING_START,
+                            end = PADDING_END,
+                            top = PADDING_TOP,
+                            bottom = PADDING_BOTTOM
+                        ),
+                        fontWeight = FontWeight.Bold,
+                    )
 
+                }
+                AlignInRow(ricetta)
+                Spacer(modifier = Modifier.height(PADDING_TOP))
+                Card(
+                    shape = MaterialTheme.shapes.medium,
+                    modifier = Modifier
+                        .padding(
+                            bottom = PADDING_BOTTOM,
+                            top = PADDING_TOP,
+                            start = PADDING_START,
+                            end = PADDING_END
 
-            }
+                        )
+                        .fillMaxWidth()
+                        .noRippleClickable {
+                            null
+                        },
 
-
-            /**
-             * Generazione della lista degli ingredienti
-             * */
-            ProductModeSwitcher(
-                listeViewModel.getRicetta(ricettaId).ingredienti,
-                profiloViewModel,
-                onButtonClick = {product ->
-                    if(listeViewModel.isInSelectedRicettaList(product.id,ricettaId))
-                        listeViewModel.removeFromSelectedRicetta(product.id,ricettaId)
-                    else
-                        listeViewModel.addToSelectedRicetta(product.id,ricettaId)
-                    Log.d(null,"${listeViewModel.getSelectedRicetta(ricettaId).ingredienti}")
-                },
-                onDescriptionChange = {
-                        product, description ->
-                    listeViewModel.setRicettaProductDescription(product.id, ricettaId, description)
-                },
-                {product -> listeViewModel.isInSelectedRicettaList(product.id,ricettaId)},
-                BreakerBay,
-                MaterialTheme.colors.primary,
-            )
-
-
-            Spacer(modifier = Modifier.height(150.dp))
-
-
-            Button(
-                shape = MaterialTheme.shapes.medium,
-                onClick = {
-
-                    listeViewModel.addselectedRicettaListToSelectedProducts(ricettaId)
-                    getBack(
-                        ricettaId,
-                        listeViewModel::resetRicetta,
+                    elevation = 0.dp,
+                    //backgroundColor = MaterialTheme.colors.background
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
 
 
-                        navController.navigate("liste") {
-                            popUpTo = navController.graph.startDestination
-                            launchSingleTop = true
-                        }
+                        Text(
+                            text = "${ricetta.persone} Persone",
+                            color = MaterialTheme.colors.onBackground,
+                            modifier = Modifier
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                                .padding(start = 5.dp)
+
+
+                        )
                     }
 
-                          },
-                colors = ButtonDefaults.textButtonColors(
-                    backgroundColor = BreakerBay
-                ),
-                elevation = ButtonDefaults.elevation(
-                    defaultElevation = 3.dp,
-                    pressedElevation = 3.dp,
-                    disabledElevation = 3.dp
-                ),
-                modifier = Modifier
-                    .padding(
-                        bottom = 6.dp,
-                        top = 6.dp,
-                        start = 6.dp,
-                        end = 6.dp
 
-                    )
-                    .fillMaxWidth()
-                    .height(70.dp)
+                }
 
-                //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
-            ) {
-                Text(
-                    text = "Aggiungi ${listeViewModel.getSelectedRicetta(ricettaId).ingredienti.size.toString()} ingredienti",
-                    color = MaterialTheme.colors.onBackground
-
+                /**
+                 * Generazione della lista degli ingredienti
+                 * */
+                ProductModeSwitcher(
+                    listeViewModel.getRicetta(ricettaId).ingredienti,
+                    profiloViewModel,
+                    onButtonClick = { product ->
+                        if (listeViewModel.isInSelectedRicettaList(product.id, ricettaId))
+                            listeViewModel.removeFromSelectedRicetta(product.id, ricettaId)
+                        else
+                            listeViewModel.addToSelectedRicetta(product.id, ricettaId)
+                        Log.d(null, "${listeViewModel.getSelectedRicetta(ricettaId).ingredienti}")
+                    },
+                    onDescriptionChange = { product, description ->
+                        listeViewModel.setRicettaProductDescription(
+                            product.id,
+                            ricettaId,
+                            description
+                        )
+                    },
+                    { product -> listeViewModel.isInSelectedRicettaList(product.id, ricettaId) },
+                    BreakerBay,
+                    MaterialTheme.colors.primary,
                 )
 
-            }
 
-            Spacer(modifier = Modifier.height(50.dp))
+                Spacer(modifier = Modifier.height(150.dp))
+
+
+                Button(
+                    shape = MaterialTheme.shapes.medium,
+                    onClick = {
+
+                        listeViewModel.addselectedRicettaListToSelectedProducts(ricettaId)
+                        getBack(
+                            ricettaId,
+                            listeViewModel::resetRicetta,
+                        ) {
+
+
+                            navController.navigate("liste") {
+                                popUpTo = navController.graph.startDestination
+                                launchSingleTop = true
+                            }
+                        }
+
+                    },
+                    colors = ButtonDefaults.textButtonColors(
+                        backgroundColor = BreakerBay
+                    ),
+                    elevation = ButtonDefaults.elevation(
+                        defaultElevation = 3.dp,
+                        pressedElevation = 3.dp,
+                        disabledElevation = 3.dp
+                    ),
+                    modifier = Modifier
+                            /*
+                        .padding(
+                            bottom = 6.dp,
+                            top = 6.dp,
+                            start = 6.dp,
+                            end = 6.dp
+
+                        )
+                             */
+                        .fillMaxWidth()
+                        .height(70.dp)
+
+                    //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
+
+                ) {
+                    Text(
+                        text = "Aggiungi ${listeViewModel.getSelectedRicetta(ricettaId).ingredienti.size.toString()} ingredienti",
+                        color = MaterialTheme.colors.onBackground
+
+                    )
+
+                }
+
+                Spacer(modifier = Modifier.height(50.dp))
+            }
         }
 
         /**
@@ -231,7 +247,10 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = MaterialTheme.colors.onBackground.copy(alpha = 0.7f)
             ),
-            modifier = Modifier.padding(8.dp).width(51.dp).height(51.dp)
+            modifier = Modifier
+                .padding(8.dp)
+                .width(51.dp)
+                .height(51.dp)
 
             //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 

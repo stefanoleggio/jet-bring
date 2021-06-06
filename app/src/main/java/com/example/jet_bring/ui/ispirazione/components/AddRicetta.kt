@@ -32,7 +32,7 @@ import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
-import com.example.jet_bring.ui.theme.BreakerBay
+import com.example.jet_bring.ui.theme.*
 import com.example.jet_bring.ui.utils.InputText
 
 
@@ -64,64 +64,93 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
     val state = rememberScrollState()
     Column(
             modifier = Modifier
-                .verticalScroll(state )
+                .verticalScroll(state)
                 .fillMaxSize(),
             horizontalAlignment = CenterHorizontally,
 
 
             ) {
 
-            Card(
-                shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
+        Card(
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier
 
-                    .fillMaxWidth()
-                    .height(380.dp)
-                    .noRippleClickable {
-                        //navController.navigate("$route/${ricetta.id}")
+                .fillMaxWidth()
+                .height(380.dp)
+                .noRippleClickable {
+                    //navController.navigate("$route/${ricetta.id}")
 
-                    },
-                elevation = 0.dp,
-                //backgroundColor = MaterialTheme.colors.background
-            ){
+                },
+            elevation = 0.dp,
+            //backgroundColor = MaterialTheme.colors.background
+        ) {
 
 
-                    Column() {
-                        Spacer(modifier = Modifier.height(90.dp))
-                        Icon(
-                            Icons.Rounded.Image,
-                            contentDescription = "Add image",
-                            tint = MaterialTheme.colors.onBackground,
-                            modifier = Modifier
-                                .size(60.dp)
-                                .align(CenterHorizontally)
+            Column() {
+                Spacer(modifier = Modifier.height(90.dp))
+                Icon(
+                    Icons.Rounded.Image,
+                    contentDescription = "Add image",
+                    tint = MaterialTheme.colors.onBackground,
+                    modifier = Modifier
+                        .size(60.dp)
+                        .align(CenterHorizontally)
+                )
+                Spacer(modifier = Modifier.height(100.dp))
+
+
+                addRicettaViewModel.ricetta.titolo?.let {
+                    InputText(
+                        text = it,
+                        addRicettaViewModel::onTitoloChange,
+                        modifier = Modifier.fillMaxWidth(),
+                        label = "Nome Modello"
+                    )
+                }
+                Row() {
+                    addRicettaViewModel.ricetta.descrizione?.let {
+                        InputText(
+                            text = it,
+                            addRicettaViewModel::onDescrizioneChange,
+                            modifier = Modifier.fillMaxWidth(0.8f),
+                            label = "Descrizione"
                         )
-                        Spacer(modifier = Modifier.height(100.dp))
-
-
-                        addRicettaViewModel.ricetta.titolo?.let { InputText(text = it, addRicettaViewModel::onTitoloChange, modifier = Modifier.fillMaxWidth(), label = "Nome Modello") }
-                        Row() {
-                            addRicettaViewModel.ricetta.descrizione?.let { InputText(text = it, addRicettaViewModel::onDescrizioneChange, modifier = Modifier.fillMaxWidth(0.8f), label = "Descrizione") }
-                            addRicettaViewModel.ricetta.sourceUrl?.let { AlertDialogLink(link = it, addRicettaViewModel::onLinkChange, addRicettaViewModel = addRicettaViewModel,) }
-                        }
-
-
                     }
+                    addRicettaViewModel.ricetta.sourceUrl?.let {
+                        AlertDialogLink(
+                            link = it,
+                            addRicettaViewModel::onLinkChange,
+                            addRicettaViewModel = addRicettaViewModel,
+                        )
+                    }
+                }
+
 
             }
-            Spacer(modifier = Modifier.height(15.dp))
 
+        }
+        Spacer(modifier = Modifier.height(15.dp))
 
+        Column(Modifier
+            .padding(
+                bottom = PADDING_BOTTOM,
+                top = LINE_SPACE,
+                start = PADDING_START,
+                end = PADDING_END
+
+            ),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Card(
                 shape = MaterialTheme.shapes.medium,
-                modifier = Modifier
+                modifier = Modifier/*
                     .padding(
-                        bottom = 20.dp,
-                        top = 6.dp,
-                        start = 15.dp,
-                        end = 15.dp
+                        bottom = PADDING_BOTTOM,
+                        top = LINE_SPACE,
+                        start = PADDING_START,
+                        end = PADDING_END
 
-                    )
+                    )*/
                     .fillMaxWidth()
                     .noRippleClickable {
                         null
@@ -129,7 +158,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
                 elevation = 0.dp,
                 //backgroundColor = MaterialTheme.colors.background
-            ){
+            ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -146,7 +175,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                     Spacer(modifier = Modifier.padding(80.dp))
                     Button(
                         onClick = {
-                                  addRicettaViewModel.onPersonChange("minus")
+                            addRicettaViewModel.onPersonChange("minus")
                         },
                         colors = ButtonDefaults.textButtonColors(
                             backgroundColor = MaterialTheme.colors.background
@@ -160,7 +189,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                             contentDescription = "Localized description",
                             tint = MaterialTheme.colors.onBackground,
 
-                        )
+                            )
 
                     }
                     Button(
@@ -181,11 +210,11 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
                     ) {
                         Icon(
-                            Icons.Rounded.AddCircleOutline
-                            , contentDescription = "Localized description",
+                            Icons.Rounded.AddCircleOutline,
+                            contentDescription = "Localized description",
                             tint = MaterialTheme.colors.onBackground,
 
-                        )
+                            )
 
                     }
 
@@ -198,15 +227,16 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
             Spacer(modifier = Modifier.height(15.dp))
             Card(
                 modifier = Modifier.fillMaxWidth(0.50f),
-                border =  BorderStroke(2.dp, MaterialTheme.colors.onBackground),
-            ){
+                border = BorderStroke(2.dp, MaterialTheme.colors.onBackground),
+            ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Spacer(modifier = Modifier.height(25.dp))
                     Button(onClick = {
 
                         addRicettaViewModel.addRicetta()
                         navController.popBackStack()
-                        listeViewModel.selectedRicette = mutableStateOf(ArrayList(listeViewModel.setSelectedRicette()))
+                        listeViewModel.selectedRicette =
+                            mutableStateOf(ArrayList(listeViewModel.setSelectedRicette()))
                         addRicettaViewModel.resetRicetta()
 
 
@@ -219,7 +249,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                                 .size(60.dp)
                                 .align(CenterVertically)
                         )
-                        Text(text = "Salva", )
+                        Text(text = "Salva",)
                     }
 
 
@@ -227,30 +257,26 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                 }
 
 
-
             }
-
+            Spacer(modifier = Modifier.height(PADDING_TOP))
             Text(text = "Articoli")
-            Spacer(modifier = Modifier.height(15.dp))
             // Mostra la griglia di tutti i prodotti disponibili
             // Smoothly scroll
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(PADDING_END))
             ProductModeSwitcher(
                 products,
                 profiloViewModel,
-                onButtonClick = {
-                        product ->
-                    if (  addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
+                onButtonClick = { product ->
+                    if (addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
                         addRicettaViewModel.listeViewModel.removeSelectedProduct(product.id)
                     } else {
                         addRicettaViewModel.listeViewModel.addSelectedProduct(product)
                     }
                 },
-                onDescriptionChange = {
-                        product, description ->
+                onDescriptionChange = { product, description ->
                     addRicettaViewModel.listeViewModel.setDescription(product.id, description)
                 },
-                { product-> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
+                { product -> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
                 BreakerBay,
                 MaterialTheme.colors.primary
             )
@@ -262,6 +288,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
 
         }
+    }
 
 
         Button(
