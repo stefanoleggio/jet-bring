@@ -1,6 +1,7 @@
 package com.example.jet_bring
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
@@ -32,6 +33,16 @@ class MainActivity : AppCompatActivity() {
             JetbringTheme(profiloViewModel.getSelectedTheme(),profiloViewModel.isSet()) {
                 JetbringApp(profiloViewModel)
             }
+        }
+    }
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            profiloViewModel.state = "Landscape" // this will automatically change the text to landscape
+            profiloViewModel.setColumnNumber()
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            profiloViewModel.state = "Potrait"   // this will automatically change the text to potrait
+            profiloViewModel.setColumnNumber()
         }
     }
 }

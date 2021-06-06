@@ -174,12 +174,13 @@ fun SettingsTable(
 
             }
             Spacer(modifier = Modifier.padding(LINE_SPACE))
-            /*
-            ClickableBox(title = "Impostazioni Lista",
+
+            ClickableBox(title = "${profiloViewModel.state}", /*TODO ricordati di toglierlo*/
                 navController = rememberNavController(),
                 route = "casamia",
                 Icons.Default.List
             )
+            /*
             ClickableBox(title = "Altre Impostazioni",
                 navController = rememberNavController(),
                 route = "casatua"

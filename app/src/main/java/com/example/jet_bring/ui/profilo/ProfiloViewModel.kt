@@ -15,6 +15,8 @@ class ProfiloViewModel : ViewModel() {
     private var columnMode: MutableState<Boolean> = mutableStateOf(false)
     private var theme: MutableState<Theme> = mutableStateOf(themes.get(0))
     private var themeSet: MutableState<Boolean> = mutableStateOf(false)
+    var state by mutableStateOf("Potrait")
+    var columnNumber by mutableStateOf(calculateColumnsNumber())
 
     fun editProfileName(userName:String) {
         temp = UserData(userName,temp.email,temp.profileIcon)
@@ -81,6 +83,9 @@ class ProfiloViewModel : ViewModel() {
         val minSize = 120
         val paddingSide = 32
         return (width - paddingSide) / minSize
+    }
+    fun setColumnNumber() {
+        columnNumber = calculateColumnsNumber()
     }
 
     private fun getDp(valInPx: Int):Int {

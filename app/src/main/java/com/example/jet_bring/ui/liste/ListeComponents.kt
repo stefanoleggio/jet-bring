@@ -404,7 +404,7 @@ fun ProductModeSwitcher(productsList: List<Product>,
     } else {
         ProductGridMode(
             productsList = productsList,
-            numOfColumns = profiloViewModel.calculateColumnsNumber(),
+            numOfColumns = profiloViewModel.columnNumber,
             onButtonClick = onButtonClick,
             onDescriptionChange = onDescriptionChange,
             isSelected = isSelected,
