@@ -28,6 +28,7 @@ import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.products
+import com.example.jet_bring.model.virginProducts
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
@@ -264,7 +265,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
             // Smoothly scroll
             Spacer(modifier = Modifier.height(PADDING_END))
             ProductModeSwitcher(
-                products,
+                virginProducts,
                 profiloViewModel,
                 onButtonClick = { product ->
                     if (addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
@@ -274,7 +275,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                     }
                 },
                 onDescriptionChange = { product, description ->
-                    addRicettaViewModel.listeViewModel.setDescription(product.id, description)
+                    addRicettaViewModel.listeViewModel.setDescription(productId = product.id,description = description)
                 },
                 { product -> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
                 BreakerBay,

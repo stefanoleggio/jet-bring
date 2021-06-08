@@ -1,6 +1,7 @@
 package com.example.jet_bring.ui.ispirazione.components
 
 
+import android.content.res.Configuration
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 
@@ -28,6 +30,7 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.model.getProduct
+import com.example.jet_bring.ui.ispirazione.paddingBasedOnOrientation
 
 /**
  * Funzione che nasconde l'effetto di tocco sulla card della ricetta
@@ -40,6 +43,7 @@ inline fun Modifier.noRippleClickable(crossinline onClick: ()->Unit): Modifier =
 }
 
 /**
+ * 
  * Funzione che ritorna una card delle ricette
  *
  * */
@@ -129,13 +133,18 @@ fun RicetteCard (
 
         }
 
-
+        /**
+         * Funzioni per disegnare elementi grafici
+         * */
         Canvas(
             //Rettangolo grigio
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 6.dp, top = 98.dp)){
+                .padding(
+                    start = paddingBasedOnOrientation().dp, top = 98.dp
+                )){
             drawRect(
+
                 color = Color.LightGray,
                 size = androidx.compose.ui.geometry.Size(130F, 60F)
             )
@@ -144,13 +153,13 @@ fun RicetteCard (
             val canvasHeight = size.height
             drawCircle(
                 color = Color.LightGray,
-                center = Offset(x = canvasWidth / 8 , y = canvasHeight + 30),
-                radius = size.maxDimension / 32
+                center = Offset(x = 136f , y = 30f),
+                radius = 30.00f
             )
         }
         Text(text = "Ricetta" ,modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 8.dp, top = 99.dp),
+            .padding(start = (paddingBasedOnOrientation()+4).dp, top = 99.dp),
             color = Color.Black,
             fontFamily = FontFamily.Cursive
         )

@@ -20,6 +20,7 @@ class ListeViewModel : ViewModel() {
 
     var selectedRicette: MutableState<List<Ricetta>> = mutableStateOf(ArrayList(setSelectedRicette()))
 
+
     /**
      *
      * Category model methods
@@ -232,6 +233,8 @@ class ListeViewModel : ViewModel() {
         }
 
     }
+
+
 
     fun getRicettaProductDescription(productId: Long,ricettaId: Long):String? {
         for (product in getSelectedRicettaProducts(ricettaId)) {

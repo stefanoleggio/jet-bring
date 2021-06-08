@@ -9,6 +9,7 @@ import com.example.jet_bring.R
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.model.ricette
+import com.example.jet_bring.model.virginProducts
 import com.example.jet_bring.ui.liste.ListeViewModel
 
 
@@ -16,6 +17,13 @@ class AddRicettaViewModel : ViewModel() {
 
     var ricetta by mutableStateOf(Ricetta())
     var listeViewModel = ListeViewModel()
+
+
+
+
+
+
+
 
 
 
@@ -56,8 +64,12 @@ class AddRicettaViewModel : ViewModel() {
     }
 
 
+
+
     fun onSaveDone() {
-        ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = listeViewModel.selectedProducts.component1(), persone = ricetta.persone)
+
+
+        ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = listeViewModel.selectedProducts.value, persone = ricetta.persone)
         ricette.plus(ricetta)
 
     }
@@ -65,6 +77,14 @@ class AddRicettaViewModel : ViewModel() {
     fun resetRicetta(){
         ricetta = Ricetta()
         listeViewModel = ListeViewModel()
+        /*
+        for (product in virginProducts) {
+                product.description = "1"
+
+        }
+
+         */
+
     }
 
 

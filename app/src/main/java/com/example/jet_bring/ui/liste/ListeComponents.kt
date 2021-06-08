@@ -3,6 +3,7 @@ package com.example.jet_bring.ui.liste
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -359,8 +360,9 @@ fun ProductGridMode(productsList: List<Product>,
     val productsPerRow = productsList.chunked(numOfColumns)
     Column(
 
-        Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        //Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxWidth()
         /*if(listeViewModel.getSelectedProducts().size < listeViewModel.calculateColumnsNumber())
             Alignment.Start
         else Alignment.CenterHorizontally*/
