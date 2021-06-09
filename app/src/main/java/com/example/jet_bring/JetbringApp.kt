@@ -41,7 +41,7 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @Composable
-fun JetbringApp(profiloViewModel: ProfiloViewModel)
+fun JetbringApp(profiloViewModel: ProfiloViewModel, listeViewModel: ListeViewModel)
 {
 
 
@@ -99,7 +99,8 @@ fun JetbringApp(profiloViewModel: ProfiloViewModel)
                     title,
                     itemPadding,
                     backArrow,
-                    profiloViewModel
+                    profiloViewModel,
+                    listeViewModel
                 )
             },
             floatingActionButton = {
@@ -128,15 +129,4 @@ fun JetbringApp(profiloViewModel: ProfiloViewModel)
 fun currentRoute(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-}
-
-
-@RequiresApi(Build.VERSION_CODES.R)
-@ExperimentalAnimationApi
-@ExperimentalFoundationApi
-@ExperimentalComposeUiApi
-@Composable
-@Preview
-fun JetBringAppPreview() {
-    JetbringApp(ProfiloViewModel())
 }

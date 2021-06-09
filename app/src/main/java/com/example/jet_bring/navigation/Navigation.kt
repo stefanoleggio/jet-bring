@@ -13,7 +13,6 @@ import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -26,11 +25,7 @@ import com.example.jet_bring.ui.liste.ListeScreen
 import com.example.jet_bring.ui.profilo.IlTuoProfilo
 import com.example.jet_bring.ui.profilo.ProfiloScreen
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import androidx.ui.graphics.BlendMode
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
@@ -45,16 +40,9 @@ fun NavigationManager (
     topBarTitle: MutableState<String>,
     screenPadding: PaddingValues = PaddingValues(0.dp),
     backArrow: MutableState<Boolean>,
-    profiloViewModel: ProfiloViewModel
+    profiloViewModel: ProfiloViewModel,
+    listeViewModel: ListeViewModel
 ){
-    /**
-     *
-     * ViewModels
-     *
-     */
-
-    val listeViewModel = ListeViewModel()
-    //val addRicettaViewModel = AddRicettaViewModel()
 
     NavHost(navController, startDestination = "liste") {
 
@@ -130,9 +118,8 @@ fun NavigationManager (
 
         }
         composable("ispirazione/addRicetta") {
-            val addRicettaViewModel = AddRicettaViewModel()
             animationSlideVertically {
-                AddRicetta(navController, listeViewModel, addRicettaViewModel ,profiloViewModel)
+                AddRicetta(navController, listeViewModel, AddRicettaViewModel() ,profiloViewModel)
             }
 
             topBarTitle.value = "Aggiungi ricetta"

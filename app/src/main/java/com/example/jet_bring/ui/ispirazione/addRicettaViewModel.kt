@@ -1,7 +1,6 @@
 package com.example.jet_bring.ui.ispirazione
 
 import android.content.res.Resources
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -15,16 +14,6 @@ class AddRicettaViewModel : ViewModel() {
 
     var ricetta by mutableStateOf(Ricetta())
     var listeViewModel = ListeViewModel()
-
-
-
-
-
-
-
-
-
-
 
     fun addRicetta() {
         this.onSaveDone()
@@ -100,10 +89,6 @@ class AddRicettaViewModel : ViewModel() {
     fun setDescriptionVirginProducts(productId: Long, description: String?){
             val product = getProduct(productId)
             product?.description = description
-
     }
-
-
-
 
 }

@@ -1,7 +1,5 @@
 package com.example.jet_bring.model
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import com.example.jet_bring.R
 
 /**
