@@ -7,19 +7,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.example.jet_bring.R
 import com.example.jet_bring.model.*
-import com.example.jet_bring.ui.ispirazione.components.RicetteCard
 
 
 
 
 @Composable
 fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: PaddingValues) {
-
-
-
-
 
     Column(
         modifier = Modifier.verticalScroll(rememberScrollState()),

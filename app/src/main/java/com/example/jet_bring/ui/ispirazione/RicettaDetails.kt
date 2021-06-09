@@ -1,4 +1,4 @@
-package com.example.jet_bring.ui.ispirazione.components
+package com.example.jet_bring.ui.ispirazione
 
 import android.os.Build
 import android.util.Log

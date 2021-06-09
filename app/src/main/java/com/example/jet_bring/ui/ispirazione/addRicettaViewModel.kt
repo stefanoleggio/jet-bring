@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.R
+import com.example.jet_bring.currentRoute
 import com.example.jet_bring.model.*
 import com.example.jet_bring.ui.liste.ListeViewModel
 
@@ -13,7 +14,7 @@ import com.example.jet_bring.ui.liste.ListeViewModel
 class AddRicettaViewModel : ViewModel() {
 
     var ricetta by mutableStateOf(Ricetta())
-    var listeViewModel = ListeViewModel()
+    val prodottiAddRicetta = getProdutsWithOutComments()
 
     fun addRicetta() {
         this.onSaveDone()
@@ -21,9 +22,10 @@ class AddRicettaViewModel : ViewModel() {
     }
 
 
-    /*
-    * funzioni per cambiare la ricetta corrente
-     */
+
+    /**
+     * Funzioni che modificano la ricetta
+     * */
     fun onTitoloChange(newName: String) {
         ricetta = Ricetta(id = ricetta.id, titolo = newName, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = ricetta.immagine, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = ricetta.ingredienti, persone = ricetta.persone )
 
@@ -50,45 +52,70 @@ class AddRicettaViewModel : ViewModel() {
     }
 
 
+    fun isInSelectedProductsRicetta(productId: Long): Boolean {
+        val current = ArrayList(ricetta.ingredienti)
+        for(product in current) {
+            if(product.id == productId)
+                return true
+        }
+        return false
+    }
 
+    fun removeSelectedProductsRicetta(productId: Long) {
+        val current = ArrayList(ricetta.ingredienti)
+
+        for(product in current) {
+            if(product.id == productId) {
+                current.remove(product)
+                break
+            }
+        }
+        ricetta = Ricetta(id = ricetta.id, titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = current, persone = ricetta.persone)
+
+    }
+
+    fun addSelectedProductsRicetta(product: Product) {
+        val current = ArrayList(ricetta.ingredienti)
+        if(!this.isInSelectedProductsRicetta(product.id))
+            current.add(product)
+        ricetta = Ricetta(id = ricetta.id, titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = current, persone = ricetta.persone)
+
+    }
+
+
+    fun setNamePerson(name : String){
+        ricetta = Ricetta(id = ricetta.id, titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = name, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = ricetta.ingredienti, persone = ricetta.persone)
+    }
 
     fun onSaveDone() {
 
         val current = mutableListOf<Product>()
-        current.remove(getProduct("mela","1"))
 
-
-        for (prodotto in listeViewModel.selectedProducts.value)
+        for (prodotto in ricetta.ingredienti)
             prodotto.description?.let { getProduct(prodotto.name, it) }?.let { current.add(it) }
 
 
-        ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = current, persone = ricetta.persone)
-        ricette.plus(ricetta)
+        ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo+" ", descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = current, persone = ricetta.persone)
 
 
-    }
-
-    fun resetRicetta(){
-        ricetta = Ricetta()
-        listeViewModel = ListeViewModel()
-        for(prodotti in virginProducts)
-            setDescriptionVirginProducts(productId = prodotti.id, description = "1")
-
-
-    }
-
-
-    fun getProduct(productId: Long): Product {
-        for (product in virginProducts) {
-            if(product.id == productId)
-                return product
-        }
-        throw Resources.NotFoundException("prodotto non trovato")
     }
 
     fun setDescriptionVirginProducts(productId: Long, description: String?){
-            val product = getProduct(productId)
-            product?.description = description
+
+        for(prodotto in prodottiAddRicetta){
+            if(productId == prodotto.id)
+                prodotto.description = description
+        }
     }
+
+    fun getProdutsWithOutComments():List<Product> {
+        val current = mutableListOf<Product>()
+        for (prodotto in products)
+            current.add(getProduct(prodotto.name, "1"))
+
+        return current
+    }
+
+
 
 }

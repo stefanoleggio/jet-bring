@@ -1,4 +1,4 @@
-package com.example.jet_bring.ui.ispirazione.components
+package com.example.jet_bring.ui.ispirazione
 
 
 import android.os.Build
@@ -28,13 +28,13 @@ import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.products
-import com.example.jet_bring.model.virginProducts
 import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.*
 import com.example.jet_bring.ui.utils.InputText
+import kotlinx.coroutines.launch
 
 
 @ExperimentalFoundationApi
@@ -110,7 +110,12 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                         label = "Nome Modello"
                     )
                 }
-                Row() {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+
+                ) {
                     addRicettaViewModel.ricetta.descrizione?.let {
                         InputText(
                             text = it,
@@ -166,8 +171,10 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+
                     Text(
                         text = "${addRicettaViewModel.ricetta.persone} Persone",
                         color = MaterialTheme.colors.onBackground,
@@ -175,56 +182,69 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                             .wrapContentWidth(Alignment.CenterHorizontally)
                             .padding(start = 15.dp)
                     )
-                    Spacer(modifier = Modifier.padding(80.dp))
-                    Button(
-                        onClick = {
-                            addRicettaViewModel.onPersonChange("minus")
-                        },
-                        colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = MaterialTheme.colors.background
-                        ),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp,
-                            disabledElevation = 0.dp
-                        ),
+                    Row(
+
                         modifier = Modifier
-                            .wrapContentWidth(Alignment.End)
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
 
                     ) {
-                        Icon(
-                            Icons.Rounded.RemoveCircleOutline,
-                            contentDescription = "Localized description",
-                            tint = MaterialTheme.colors.onBackground,
+                        Button(
+                            onClick = {
+                                addRicettaViewModel.onPersonChange("minus")
+                            },
+                            colors = ButtonDefaults.textButtonColors(
+                                backgroundColor = MaterialTheme.colors.background
+                            ),
+                            elevation = ButtonDefaults.elevation(
+                                defaultElevation = 0.dp,
+                                pressedElevation = 0.dp,
+                                disabledElevation = 0.dp
+                            ),
+                            modifier = Modifier
+                                .wrapContentWidth(Alignment.End)
 
-                            )
+                        ) {
+                            Icon(
+                                Icons.Rounded.RemoveCircleOutline,
+                                contentDescription = "Localized description",
+                                tint = MaterialTheme.colors.onBackground,
 
+                                )
+
+                        }
+                        Button(
+                            onClick = {
+                                addRicettaViewModel.onPersonChange("plus")
+                            },
+                            colors = ButtonDefaults.textButtonColors(
+                                backgroundColor = MaterialTheme.colors.background
+                            ),
+                            elevation = ButtonDefaults.elevation(
+                                defaultElevation = 0.dp,
+                                pressedElevation = 0.dp,
+                                disabledElevation = 0.dp
+                            ),
+                            modifier = Modifier
+                                .wrapContentWidth(Alignment.End)
+                            //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
+
+                        ) {
+                            Icon(
+                                Icons.Rounded.AddCircleOutline,
+                                contentDescription = "Localized description",
+                                tint = MaterialTheme.colors.onBackground,
+
+                                )
+
+                        }
                     }
-                    Button(
-                        onClick = {
-                            addRicettaViewModel.onPersonChange("plus")
-                        },
-                        colors = ButtonDefaults.textButtonColors(
-                            backgroundColor = MaterialTheme.colors.background
-                        ),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp,
-                            disabledElevation = 0.dp
-                        ),
-                        modifier = Modifier
-                            .wrapContentWidth(Alignment.End)
-                        //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
-                    ) {
-                        Icon(
-                            Icons.Rounded.AddCircleOutline,
-                            contentDescription = "Localized description",
-                            tint = MaterialTheme.colors.onBackground,
 
-                            )
+                    //Spacer(modifier = Modifier.padding(80.dp))
 
-                    }
 
 
                 }
@@ -233,39 +253,30 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
             }
 
             Spacer(modifier = Modifier.height(15.dp))
-            Card(
-                modifier = Modifier.fillMaxWidth(0.50f),
-                border = BorderStroke(2.dp, MaterialTheme.colors.onBackground),
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Spacer(modifier = Modifier.height(25.dp))
-                    Button(onClick = {
-
-                        addRicettaViewModel.addRicetta()
-                        navController.popBackStack()
-                        listeViewModel.selectedRicette =
-                            mutableStateOf(ArrayList(listeViewModel.setSelectedRicette()))
-                        addRicettaViewModel.resetRicetta()
 
 
-                    }) {
-                        Icon(
-                            Icons.Rounded.Save,
-                            contentDescription = "Add image",
-                            tint = MaterialTheme.colors.onBackground,
-                            modifier = Modifier
-                                .size(60.dp)
-                                .align(CenterVertically)
-                        )
-                        Text(text = "Salva",)
-                    }
+            Button(
+                onClick = {
 
-
-                    Spacer(modifier = Modifier.height(25.dp))
-                }
-
-
+                    addRicettaViewModel.setNamePerson(profiloViewModel.user.name)
+                    addRicettaViewModel.addRicetta()
+                    navController.popBackStack()
+                    listeViewModel.selectedRicette =
+                        mutableStateOf(ArrayList(listeViewModel.setSelectedRicette()))
+                },
+                Modifier,
+                colors = ButtonDefaults.outlinedButtonColors(
+                    backgroundColor = MaterialTheme.colors.secondary,
+                    contentColor = MaterialTheme.colors.onSurface
+                ),
+                elevation = ButtonDefaults.elevation()
+            )
+            {
+                Text("Salva")
             }
+
+
+
             Spacer(modifier = Modifier.height(PADDING_TOP))
             Text(text = "Articoli")
             // Mostra la griglia di tutti i prodotti disponibili
@@ -273,24 +284,22 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
             Spacer(modifier = Modifier.height(PADDING_END))
 
             ProductModeSwitcher(
-                virginProducts,
+                addRicettaViewModel.prodottiAddRicetta,
                 profiloViewModel,
                 onButtonClick = { product ->
-                    if (addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id)) {
-                        addRicettaViewModel.listeViewModel.removeSelectedProduct(product.id)
+                    if (addRicettaViewModel.isInSelectedProductsRicetta(product.id)) {
+                        addRicettaViewModel.removeSelectedProductsRicetta(product.id)
                     } else {
-                        addRicettaViewModel.listeViewModel.addSelectedProduct(product)
+                        addRicettaViewModel.addSelectedProductsRicetta(product)
                     }
                 },
                 onDescriptionChange = { product, description ->
                     addRicettaViewModel.setDescriptionVirginProducts(productId = product.id,description = description)
                 },
-                { product -> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
+                { product -> addRicettaViewModel.isInSelectedProductsRicetta(product.id) },
                 BreakerBay,
                 MaterialTheme.colors.primary
             )
-
-
 
 
             Spacer(modifier = Modifier.height(50.dp))
