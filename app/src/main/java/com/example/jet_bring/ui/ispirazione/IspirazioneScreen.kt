@@ -15,7 +15,7 @@ import com.example.jet_bring.ui.ispirazione.components.RicetteCard
 
 
 @Composable
-fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: PaddingValues, addRicettaViewModel: AddRicettaViewModel) {
+fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: PaddingValues) {
 
 
 

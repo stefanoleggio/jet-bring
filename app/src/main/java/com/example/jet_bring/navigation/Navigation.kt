@@ -54,7 +54,7 @@ fun NavigationManager (
      */
 
     val listeViewModel = ListeViewModel()
-    val addRicettaViewModel = AddRicettaViewModel()
+    //val addRicettaViewModel = AddRicettaViewModel()
 
     NavHost(navController, startDestination = "liste") {
 
@@ -75,7 +75,7 @@ fun NavigationManager (
 
         composable("ispirazione") {
             animationFade {
-                IspirazioneScreen(navController, screenPadding, addRicettaViewModel)
+                IspirazioneScreen(navController, screenPadding)
             }
 
             topBarTitle.value = "Ispirazione"
@@ -130,8 +130,9 @@ fun NavigationManager (
 
         }
         composable("ispirazione/addRicetta") {
+            val addRicettaViewModel = AddRicettaViewModel()
             animationSlideVertically {
-                AddRicetta(navController, listeViewModel, addRicettaViewModel, profiloViewModel)
+                AddRicetta(navController, listeViewModel, addRicettaViewModel ,profiloViewModel)
             }
 
             topBarTitle.value = "Aggiungi ricetta"

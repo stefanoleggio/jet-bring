@@ -56,10 +56,12 @@ fun AddRicettePreview() {
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
 @Composable
-fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,addRicettaViewModel: AddRicettaViewModel, profiloViewModel: ProfiloViewModel) {
+fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel, addRicettaViewModel: AddRicettaViewModel,profiloViewModel: ProfiloViewModel) {
 
     val scrollState = rememberScrollState()
     LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
+
+
 
 
     val state = rememberScrollState()
@@ -181,6 +183,11 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                         colors = ButtonDefaults.textButtonColors(
                             backgroundColor = MaterialTheme.colors.background
                         ),
+                        elevation = ButtonDefaults.elevation(
+                            defaultElevation = 0.dp,
+                            pressedElevation = 0.dp,
+                            disabledElevation = 0.dp
+                        ),
                         modifier = Modifier
                             .wrapContentWidth(Alignment.End)
 
@@ -264,6 +271,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
             // Mostra la griglia di tutti i prodotti disponibili
             // Smoothly scroll
             Spacer(modifier = Modifier.height(PADDING_END))
+
             ProductModeSwitcher(
                 virginProducts,
                 profiloViewModel,
@@ -275,7 +283,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                     }
                 },
                 onDescriptionChange = { product, description ->
-                    addRicettaViewModel.listeViewModel.setDescription(productId = product.id,description = description)
+                    addRicettaViewModel.setDescriptionVirginProducts(productId = product.id,description = description)
                 },
                 { product -> addRicettaViewModel.listeViewModel.isInSelectedProduct(product.id) },
                 BreakerBay,

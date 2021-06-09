@@ -1,15 +1,13 @@
 package com.example.jet_bring.ui.ispirazione
 
+import android.content.res.Resources
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.R
-import com.example.jet_bring.model.Product
-import com.example.jet_bring.model.Ricetta
-import com.example.jet_bring.model.ricette
-import com.example.jet_bring.model.virginProducts
+import com.example.jet_bring.model.*
 import com.example.jet_bring.ui.liste.ListeViewModel
 
 
@@ -17,7 +15,6 @@ class AddRicettaViewModel : ViewModel() {
 
     var ricetta by mutableStateOf(Ricetta())
     var listeViewModel = ListeViewModel()
-
 
 
 
@@ -68,24 +65,45 @@ class AddRicettaViewModel : ViewModel() {
 
     fun onSaveDone() {
 
+        val current = mutableListOf<Product>()
+        current.remove(getProduct("mela","1"))
 
-        ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = listeViewModel.selectedProducts.value, persone = ricetta.persone)
+
+        for (prodotto in listeViewModel.selectedProducts.value)
+            prodotto.description?.let { getProduct(prodotto.name, it) }?.let { current.add(it) }
+
+
+        ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo, descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = current, persone = ricetta.persone)
         ricette.plus(ricetta)
+
 
     }
 
     fun resetRicetta(){
         ricetta = Ricetta()
         listeViewModel = ListeViewModel()
-        /*
-        for (product in virginProducts) {
-                product.description = "1"
+        for(prodotti in virginProducts)
+            setDescriptionVirginProducts(productId = prodotti.id, description = "1")
 
-        }
-
-         */
 
     }
+
+
+    fun getProduct(productId: Long): Product {
+        for (product in virginProducts) {
+            if(product.id == productId)
+                return product
+        }
+        throw Resources.NotFoundException("prodotto non trovato")
+    }
+
+    fun setDescriptionVirginProducts(productId: Long, description: String?){
+            val product = getProduct(productId)
+            product?.description = description
+
+    }
+
+
 
 
 }
