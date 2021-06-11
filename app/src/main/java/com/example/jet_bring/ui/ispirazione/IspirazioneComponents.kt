@@ -37,6 +37,9 @@ import androidx.navigation.compose.navigate
 import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.ui.utils.InputText
 
+
+
+
 @Composable
 fun paddingBasedOnOrientation() : Int{
     if(LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE){
@@ -178,7 +181,7 @@ fun RicetteCard (
         }
         Text(text = "Ricetta" ,modifier = Modifier
             .fillMaxWidth()
-            .padding(start = (paddingBasedOnOrientation()+4).dp, top = 99.dp),
+            .padding(start = (paddingBasedOnOrientation() + 4).dp, top = 99.dp),
             color = Color.Black,
             fontFamily = FontFamily.Cursive
         )
@@ -191,13 +194,16 @@ fun RicetteCard (
 @Composable
 fun AlertDialogLink(link: String, onModifiedText: (String) -> Unit, addRicettaViewModel: AddRicettaViewModel) {
 
-    Column {
+
+    Column (){
         val openDialog = remember { mutableStateOf(false)  }
 
-        Button(onClick = {
+        Button(
+            modifier = Modifier.padding(top = 15.dp, start = 15.dp),
+            onClick = {
             openDialog.value = true
         }) {
-            Icon(Icons.Filled.Link, contentDescription = "", tint = MaterialTheme.colors.onBackground, modifier = Modifier.size(30.dp) )
+            Icon(Icons.Filled.Link, contentDescription = "", tint = MaterialTheme.colors.onBackground )
         }
 
         if (openDialog.value) {
@@ -267,7 +273,7 @@ fun AlignInRow(ricetta: Ricetta,) {
             ),
 
             ) {
-            Icon(Icons.Rounded.Link, contentDescription = "Localized description", tint = MaterialTheme.colors.onBackground)
+            Icon(Icons.Rounded.Link, contentDescription = "", tint = MaterialTheme.colors.onBackground)
             Text(
                 text = "Vedi la ricetta",
                 color = MaterialTheme.colors.onBackground

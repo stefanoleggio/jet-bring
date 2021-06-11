@@ -85,7 +85,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
 
                     )
             }
-            Column(Modifier.padding(start = PADDING_START,end = PADDING_END)) {
+            Column(Modifier.padding()) {
                 ricetta.pubblicatore?.let {
                     Text(
                         text = it,
@@ -146,7 +146,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                             color = MaterialTheme.colors.onBackground,
                             modifier = Modifier
                                 .wrapContentWidth(Alignment.CenterHorizontally)
-                                .padding(start = 5.dp)
+                                .padding(start = 15.dp)
 
 
                         )
@@ -187,6 +187,10 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
 
                 Button(
                     shape = MaterialTheme.shapes.medium,
+                    modifier = Modifier
+                        .padding(start = PADDING_START, end = PADDING_END)
+                        .fillMaxWidth()
+                        .height(70.dp),
                     onClick = {
 
                         listeViewModel.addselectedRicettaListToSelectedProducts(ricettaId)
@@ -211,21 +215,6 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                         pressedElevation = 3.dp,
                         disabledElevation = 3.dp
                     ),
-                    modifier = Modifier
-                            /*
-                        .padding(
-                            bottom = 6.dp,
-                            top = 6.dp,
-                            start = 6.dp,
-                            end = 6.dp
-
-                        )
-                             */
-                        .fillMaxWidth()
-                        .height(70.dp)
-
-                    //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
-
                 ) {
                     Text(
                         text = "Aggiungi ${listeViewModel.getSelectedRicetta(ricettaId).ingredienti.size.toString()} ingredienti",
