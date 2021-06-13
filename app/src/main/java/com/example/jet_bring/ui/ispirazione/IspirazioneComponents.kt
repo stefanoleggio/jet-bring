@@ -226,7 +226,7 @@ fun AlertDialogLink(link: String, onModifiedText: (String) -> Unit, addRicettaVi
             onClick = {
             openDialog.value = true
         }) {
-            Icon(Icons.Filled.Link, contentDescription = "", tint = MaterialTheme.colors.onBackground )
+            Icon(Icons.Filled.Link, contentDescription = "", tint = MaterialTheme.colors.onPrimary )
         }
 
         if (openDialog.value) {

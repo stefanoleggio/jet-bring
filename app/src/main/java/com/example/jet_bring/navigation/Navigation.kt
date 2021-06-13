@@ -75,8 +75,7 @@ fun NavigationManager (
                 ProfiloScreen(
                     navController,
                     screenPadding,
-                    profiloViewModel,
-                    listeViewModel
+                    profiloViewModel
                 )
             }
             topBarTitle.value = "Profilo"
@@ -173,7 +172,7 @@ fun AppBottomNavigation(
                     )
                     Icon(
                         screen.icon,
-                        tint = color, //if(screen.route == currentRoute) colors.onPrimary else colors.onSecondary, /*TODO sistemare colori*/
+                        tint = color,
                         contentDescription = ""
                     )
                 },

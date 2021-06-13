@@ -41,7 +41,6 @@ fun ProfiloScreen(
     navController: NavHostController,
     scafPaddingValues: PaddingValues,
     profiloViewModel: ProfiloViewModel,
-    listeViewModel: ListeViewModel,
 ) {
 
     val fontSize = 24.sp
@@ -100,12 +99,12 @@ fun ProfiloScreen(
 
             }
             item{Spacer(Modifier.padding(PADDING_TOP))}
-            /*
-            items(items = tableDataList.subList(1, tableDataList.lastIndex)) {
+
+            items(items = tableDataList.subList(1, tableDataList.size)) {
                 Table(it.title,it.iconTitle,navController,it.list)
-                Spacer(Modifier.padding(padding))
+                Spacer(Modifier.padding(PADDING_TOP))
             }
-            */
+
         }
 }
 
@@ -154,7 +153,7 @@ fun SettingsTable(
                 },
                 R.drawable.ic_pixels,
                 R.drawable.ic_half_circle
-            ) /*TODO aggiungere azioni bottoni e icone corrette*/
+            )
             AnimatedVisibility(visible = (expandedChoice != null)) {
                 if(expandedChoice == "aspettoDellaLista") {
                     ChoosingTab(
@@ -174,28 +173,6 @@ fun SettingsTable(
 
             }
             Spacer(modifier = Modifier.padding(LINE_SPACE))
-
-            /*
-            ClickableBox(title = "${profiloViewModel.state}", /*TODO ricordati di toglierlo*/
-                navController = rememberNavController(),
-                route = "casamia",
-                Icons.Default.List
-            )*/
-            /*
-            ClickableBox(title = "Altre Impostazioni",
-                navController = rememberNavController(),
-                route = "casatua"
-            )
-
-            TwoButtonsRow(
-                "Column Mode",
-                "Grid Mode",
-                {profiloViewModel.columnMode()},
-                {profiloViewModel.gridMode()},
-                Icons.Default.ShoppingCart,
-                Icons.Default.ShoppingCart
-            )
-             */
         }
     }
 }
@@ -205,7 +182,7 @@ fun SettingsTable(
 @Preview
 fun ProfiloScreenPreview() {
     ProfiloScreen(navController = rememberNavController(), PaddingValues(0.dp,0.dp),
-        ProfiloViewModel(), ListeViewModel()
+        ProfiloViewModel()
     )
 }
 

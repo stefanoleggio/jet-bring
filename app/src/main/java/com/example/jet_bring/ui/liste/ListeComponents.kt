@@ -272,7 +272,6 @@ fun ProductColumnMode(
         }
     }
 }
-/*TODO sistemare altezza riga, aggiungere bottone per modificare item*/
 @ExperimentalComposeUiApi
 @Composable
 fun ProductRow(

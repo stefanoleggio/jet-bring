@@ -118,7 +118,7 @@ fun JetbringApp(profiloViewModel: ProfiloViewModel, listeViewModel: ListeViewMod
                         Icon(
                             Icons.Rounded.Add,
                             contentDescription = null,
-                            tint = MaterialTheme.colors.onBackground
+                            tint = MaterialTheme.colors.onPrimary
                         )
                     }
                 }

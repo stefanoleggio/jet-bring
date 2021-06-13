@@ -39,14 +39,14 @@ private val LightColorPalette = lightColors(
 )
 
 private val DreamColorPalette = lightColors(
-    primary = Roman,
-    onPrimary = Yellow,
-    secondary = Mediumspringgreen,
-    primaryVariant = Springgreen,
-    secondaryVariant = Magenta,
-    surface = Lightseagreen,
-    onSecondary = White,
-    background = Darkgreen,
+    primary = DarkSlateBlue,
+    onPrimary = Ceramic,
+    secondary = Citron,
+    primaryVariant = OrchidCrayola,
+    secondaryVariant = DarkBlueGray,
+    surface = StPatricksBlue,
+    onSecondary = LowAlphaIron,
+    background = RoyalPurple,
     onBackground = Ceramic,
     onSurface = Ceramic,
 )

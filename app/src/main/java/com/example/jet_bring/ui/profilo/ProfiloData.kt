@@ -30,13 +30,10 @@ data class CBoxArg(
 )
 
 /*TODO correggere le icone per farle corrispondere a quelle originali*/
-val tableDataList = listOf<TableData>(
+val tableDataList = listOf(
     TableData("Impostazioni", Icons.Default.Settings),
     /*
-    TableData("Guida e Consigli",Icons.Default.Info),
-    TableData("Consigliala",Icons.Default.Lock),
-    TableData("Altre Opzioni di Jet-Bring",Icons.Default.ArrowForward),
-    TableData("Altro",Icons.Default.ThumbUp)
-     */
+    TableData("Informazioni su JetBring",Icons.Default.ThumbUp)
+    */
 )
 

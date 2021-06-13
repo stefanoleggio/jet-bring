@@ -208,7 +208,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
 
                     },
                     colors = ButtonDefaults.textButtonColors(
-                        backgroundColor = BreakerBay
+                        backgroundColor = MaterialTheme.colors.secondary
                     ),
                     elevation = ButtonDefaults.elevation(
                         defaultElevation = 3.dp,

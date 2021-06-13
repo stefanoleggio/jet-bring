@@ -37,20 +37,6 @@ import com.example.jet_bring.ui.utils.InputText
 import kotlinx.coroutines.launch
 
 
-@ExperimentalFoundationApi
-@RequiresApi(Build.VERSION_CODES.R)
-@ExperimentalComposeUiApi
-@Preview
-@Composable
-fun AddRicettePreview() {
-    AddRicetta(
-        rememberNavController(),
-        ListeViewModel(),
-        AddRicettaViewModel(),
-        ProfiloViewModel()
-    )
-}
-
 
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
@@ -270,7 +256,7 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                     Modifier,
                     colors = ButtonDefaults.outlinedButtonColors(
                         backgroundColor = MaterialTheme.colors.secondary,
-                        contentColor = MaterialTheme.colors.onSurface
+                        contentColor = MaterialTheme.colors.onPrimary
                     ),
                     elevation = ButtonDefaults.elevation()
                 )
@@ -322,21 +308,24 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
                 disabledElevation = 0.dp
             ),
             //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
-
         ) {
             Icon(Icons.Filled.Close, contentDescription = "", tint = MaterialTheme.colors.onBackground, modifier = Modifier.size(24.dp) )
-
         }
+}
 
 
-
-
-
-
-
-
-
-
+@ExperimentalFoundationApi
+@RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+fun AddRicettePreview() {
+    AddRicetta(
+        rememberNavController(),
+        ListeViewModel(),
+        AddRicettaViewModel(),
+        ProfiloViewModel()
+    )
 }
 
 
