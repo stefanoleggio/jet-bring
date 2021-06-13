@@ -123,8 +123,8 @@ fun ProductButton(
                 modifier = Modifier
                     .padding(top = 0.dp),
                 text = currentDescription,
+                color = Color.White,
                 fontSize = 12.sp,
-                color = Color.White
             )
         }
     }
@@ -148,14 +148,14 @@ fun DescriptionAlert(
             Text(product.name)
         },
         text = {
-            Column(
-            ) {
+            Column() {
+                Text("")
                 MainInputText(
                     onTextChange = {
                         run { descriptionText.value = it }
                     },
                     text = descriptionText.value,
-                    label = "Descrizione Prodotto",
+                    label = "Descrizione",
 
                 )
 
@@ -247,7 +247,7 @@ fun ProductColumnMode(
     selectedColor: Color,
     unselectedColor: Color
 ) {
-    Surface(shape= RoundedCornerShape(10.dp),) {
+    Surface(shape= RoundedCornerShape(10.dp), color = MaterialTheme.colors.background) {
         Column() {
             var i = 0
             productsList.forEach() {

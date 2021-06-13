@@ -120,7 +120,7 @@ fun IlTuoProfilo(
                     elevation = ButtonDefaults.elevation()
                 )
                 {
-                    Text("Salva")
+                    Text("Salva", color = Color.White)
                 }
             }
             SnackbarHost(

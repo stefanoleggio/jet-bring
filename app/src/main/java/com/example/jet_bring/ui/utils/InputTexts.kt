@@ -5,10 +5,8 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+
 
 @ExperimentalComposeUiApi
 @Composable
@@ -17,14 +15,13 @@ fun MainInputText(
     text: String,
     label: String
 ) {
-
     OutlinedTextField(
         value = text,
-        label = { Text(text = label, color = Color.White) },
+        label = { Text(text = label, color = MaterialTheme.colors.onBackground) } ,
         onValueChange = onTextChange,
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color.White),
+            focusedBorderColor = MaterialTheme.colors.onBackground,
+            unfocusedBorderColor = MaterialTheme.colors.onBackground),
         modifier = Modifier.fillMaxWidth(),
     )
 }

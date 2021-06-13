@@ -159,27 +159,30 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                 /**
                  * Generazione della lista degli ingredienti
                  * */
-                ProductModeSwitcher(
-                    listeViewModel.getRicetta(ricettaId).ingredienti,
-                    profiloViewModel,
-                    onButtonClick = { product ->
-                        if (listeViewModel.isInSelectedRicettaList(product.id, ricettaId))
-                            listeViewModel.removeFromSelectedRicetta(product.id, ricettaId)
-                        else
-                            listeViewModel.addToSelectedRicetta(product.id, ricettaId)
-                        Log.d(null, "${listeViewModel.getSelectedRicetta(ricettaId).ingredienti}")
-                    },
-                    onDescriptionChange = { product, description ->
-                        listeViewModel.setRicettaProductDescription(
-                            product.id,
-                            ricettaId,
-                            description
-                        )
-                    },
-                    { product -> listeViewModel.isInSelectedRicettaList(product.id, ricettaId) },
-                    BreakerBay,
-                    MaterialTheme.colors.primary,
-                )
+                Column(modifier = Modifier.padding(start = PADDING_START, end = PADDING_END)) {
+                    ProductModeSwitcher(
+                        listeViewModel.getRicetta(ricettaId).ingredienti,
+                        profiloViewModel,
+                        onButtonClick = { product ->
+                            if (listeViewModel.isInSelectedRicettaList(product.id, ricettaId))
+                                listeViewModel.removeFromSelectedRicetta(product.id, ricettaId)
+                            else
+                                listeViewModel.addToSelectedRicetta(product.id, ricettaId)
+                            Log.d(null, "${listeViewModel.getSelectedRicetta(ricettaId).ingredienti}")
+                        },
+                        onDescriptionChange = { product, description ->
+                            listeViewModel.setRicettaProductDescription(
+                                product.id,
+                                ricettaId,
+                                description
+                            )
+                        },
+                        { product -> listeViewModel.isInSelectedRicettaList(product.id, ricettaId) },
+                        BreakerBay,
+                        MaterialTheme.colors.primary,
+                    )
+                }
+
 
 
                 Spacer(modifier = Modifier.height(150.dp))

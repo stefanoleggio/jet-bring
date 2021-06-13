@@ -1,6 +1,5 @@
 package com.example.jet_bring.ui.utils
 
-import androidx.annotation.MainThread
 import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -8,6 +7,7 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -26,7 +26,7 @@ fun MainTextButton(
                 contentColor = MaterialTheme.colors.onSurface
             )
         ) {
-            Text(text, color = MaterialTheme.colors.onBackground)
+            Text(text, color = Color.White)
         }
     } else {
         TextButton(

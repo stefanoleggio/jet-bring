@@ -297,20 +297,26 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
     }
 
 
-        Button(
-            onClick = { navController.popBackStack() },
-            colors = ButtonDefaults.textButtonColors(
-                backgroundColor = Color.Transparent
-            ),
-            elevation = ButtonDefaults.elevation(
-                defaultElevation = 0.dp,
-                pressedElevation = 0.dp,
-                disabledElevation = 0.dp
-            ),
-            //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
-        ) {
-            Icon(Icons.Filled.Close, contentDescription = "", tint = MaterialTheme.colors.onBackground, modifier = Modifier.size(24.dp) )
-        }
+    /**
+     * Tasto chiusura schermata
+     * */
+    Button(
+        onClick = { navController.popBackStack() },
+        colors = ButtonDefaults.textButtonColors(
+            backgroundColor = MaterialTheme.colors.onBackground.copy(alpha = 0.7f)
+        ),
+        modifier = Modifier
+            .padding(8.dp)
+            .width(51.dp)
+            .height(51.dp)
+
+        //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
+
+    ) {
+        Icon(Icons.Rounded.Close, contentDescription = "", tint = MaterialTheme.colors.background, modifier = Modifier.fillMaxSize() )
+
+    }
+
 }
 
 
