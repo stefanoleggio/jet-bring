@@ -25,6 +25,8 @@ import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.MeasurePolicy
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -225,7 +227,8 @@ fun RadioButtonRow(
     ) {
         RadioButton(
             onClick = { onStateChange(index)},
-            selected = selected
+            selected = selected,
+            modifier = Modifier.semantics {  contentDescription = description }
         )
         Spacer(Modifier.padding(LINE_SPACE))
         Text(text = description)

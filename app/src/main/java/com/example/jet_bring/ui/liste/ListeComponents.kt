@@ -40,6 +40,8 @@ import com.example.jet_bring.ui.utils.MainTextButton
 import org.intellij.lang.annotations.JdkConstants
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.ui.core.HorizontalAlignmentLine
 
 @ExperimentalFoundationApi
@@ -153,7 +155,10 @@ fun DescriptionAlert(
                         run { descriptionText.value = it }
                     },
                     text = descriptionText.value,
-                    label = "Descrizione")
+                    label = "Descrizione Prodotto",
+
+                )
+
             }
 
         },
@@ -164,8 +169,11 @@ fun DescriptionAlert(
                     onDescriptionChange(product, descriptionText.value)
                 },
                 isBackgroundSecondary = true,
-                text = "Conferma"
+                text = "Conferma",
+
+
             )
+
         },
         dismissButton = {
             MainTextButton(

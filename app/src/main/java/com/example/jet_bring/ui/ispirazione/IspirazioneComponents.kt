@@ -3,6 +3,8 @@ package com.example.jet_bring.ui.ispirazione
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.*
@@ -28,15 +30,35 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.Ricetta
+import com.example.jet_bring.model.ricette
+import com.example.jet_bring.ui.liste.ListeViewModel
+import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.utils.InputText
 
+
+@ExperimentalFoundationApi
+@RequiresApi(Build.VERSION_CODES.R)
+@ExperimentalComposeUiApi
+@Preview
+@Composable
+fun CardPreview() {
+    RicetteCard(
+        ricetta = ricette[1],
+        navController = rememberNavController(),
+        route = "prova"
+
+    )
+}
 
 
 
@@ -87,6 +109,7 @@ fun RicetteCard (
                 end = 16.dp
 
             )
+            .semantics {  "Card Ricetta" }
             .fillMaxWidth()
             .noRippleClickable {
                 navController.navigate("$route/${ricetta.id}") {
