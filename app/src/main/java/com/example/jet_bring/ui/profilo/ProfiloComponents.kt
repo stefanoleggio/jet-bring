@@ -39,7 +39,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.theme.*
 
-
+/**
+ * funzione componente che genera una Table riutilizzabile per la finestra del profilo
+ */
 @Composable
 fun Table(
     title: String,
@@ -80,6 +82,10 @@ fun Table(
     }
 }
 
+/**
+ * funzione che genera la riga di header utilizzata dalle funzioni table e SettingsTable per creare
+ * il titolo delle tavole di modifica dei componenti profilo
+ */
 @Composable
  fun HeaderBox(
 
@@ -109,7 +115,10 @@ fun Table(
     }
 }
 
-
+/**
+ * Funzione componente che genera i box universali utilizzati da Table e settingsTable che,
+ * se cliccati permettono di muoversi all'interno dell'applicazione
+ */
 @Composable
 fun ClickableBox(
     title: String,
@@ -141,6 +150,10 @@ fun ClickableBox(
         }
     }
 }
+/**
+ * Funzione componente che genera una riga contenente due bottoni,
+ * utilizzata da settingsTable per i bottoni Tema e AspettoLIsta
+ */
 @Composable
 fun TwoButtonsRow(b1Text: String,b2Text:String,b1Click:() -> Unit,b2Click:() -> Unit, icon1: Int,icon2:Int) {
     Row(
@@ -152,6 +165,9 @@ fun TwoButtonsRow(b1Text: String,b2Text:String,b1Click:() -> Unit,b2Click:() -> 
         MyButton(bText = b2Text, bClick = b2Click, icon = icon2, modifier = Modifier.weight(1f))
     }
 }
+/**
+ * Funzione componente che genera un bottone custom riutilizzabile all'interno dell'applicazione
+ */
 @Composable
 fun MyButton(bText: String,bClick:() -> Unit, icon: Int,modifier:Modifier) {
     Button(
@@ -172,32 +188,9 @@ fun MyButton(bText: String,bClick:() -> Unit, icon: Int,modifier:Modifier) {
     }
 }
 
-/*
-@ExperimentalComposeUiApi
-@Composable
-fun InputText(
-    text: String,
-    onTextChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    onImeAction: () -> Unit = {}
-) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    TextField(
-        value = text,
-        onValueChange = onTextChange,
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
-        maxLines = 1,
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
-        keyboardActions = KeyboardActions(onDone = {
-            onImeAction()
-            keyboardController?.hide()
-        }),
-        modifier = modifier
-    )
-}
-
-*/
-
+/**
+ * Funzione componente che genera un pannello contenente un numero di RadialButton definito da
+ */
 @Composable
 fun ChoosingTab(
     selectedState: Int,

@@ -1,14 +1,10 @@
 package com.example.jet_bring.ui.theme
 
-import android.app.ActionBar
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import android.graphics.drawable.ColorDrawable
 import androidx.compose.material.Colors
-import androidx.compose.ui.graphics.Color.Companion.Gray
 import androidx.compose.ui.graphics.Color.Companion.White
 
 
@@ -54,27 +50,6 @@ private val DreamColorPalette = lightColors(
 @Composable
 fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable () -> Unit) {
     var theme = aTheme
-    /*
-    var themeName = aThemeName
-    if(themeName == null) {
-        if (isSystemInDarkTheme()) themeName = "DARK_THEME"
-        else themeName = "LIGHT_THEME"
-    }
-    val theme = Theme.valueOf(themeName)*/
-    /*
-    val colors = if (darkTheme) {
-
-        LightColorPalette
-    } else {
-        LightColorPalette
-    }
-     */
-    /*
-    if(isSet == false) {
-        if(isSystemInDarkTheme()) theme = themes.get(0)
-        else theme = themes.get(1)
-    }
-     */
     MaterialTheme(
         colors = theme.colors,
         typography = Typography,
@@ -83,13 +58,6 @@ fun JetbringTheme(aTheme:Theme,isSet:Boolean, content: @Composable () -> Unit) {
 
     )
 }
-/*
-enum class Theme(val colors: Colors,val description:String) {
-    DARK_THEME(DarkColorPalette,"Dark Theme"),
-    LIGHT_THEME(LightColorPalette,"Light Theme"),
-    DREAM_THEME(DreamColorPalette,"Dream Theme")
-}
-*/
 data class Theme(val colors: Colors, val description:String)
 
 val themes = arrayListOf(

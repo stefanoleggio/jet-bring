@@ -1,23 +1,16 @@
 package com.example.jet_bring.ui.profilo
 
-import android.graphics.drawable.Icon
-import androidx.compose.animation.expandHorizontally
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.ButtonDefaults.outlinedButtonColors
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -25,16 +18,17 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.jet_bring.R
 import com.example.jet_bring.ui.theme.*
 import com.example.jet_bring.ui.utils.InputText
 import kotlinx.coroutines.launch
 
+/**
+ * Funzione utilizzata per generare la schermata dedicata alla modifica delle informazioni
+ * riguardanti il profilo
+ */
 @ExperimentalComposeUiApi
 @Composable
 fun IlTuoProfilo(
@@ -43,7 +37,6 @@ fun IlTuoProfilo(
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
         Column {
-            //Spacer(modifier = Modifier.padding(padding))
             Row(
                 Modifier
                     .fillMaxWidth()
@@ -80,22 +73,6 @@ fun IlTuoProfilo(
                     onTextChange = profiloViewModel::editProfileEmail
                 )
             }
-             /*
-            profiloViewModel.temp.name.let{
-                InputText(
-                    text = it,
-                    profiloViewModel::editProfileName,
-                    label = "Come ti chiamano i tuoi amici?"
-                )
-            }
-            profiloViewModel.temp.email.let{
-                InputText(
-                    text = it,
-                    profiloViewModel::editProfileEmail,
-                    label = "Qual è la tua email?"
-                )
-            }
-            */
             Row(
                 Modifier
                     .padding(PADDING_TOP)
@@ -129,7 +106,9 @@ fun IlTuoProfilo(
             )
         }
 }
-
+/**
+ * Funzione utilizzata per generare le due superfici contenenti le righe di modifica del testo
+ */
 @ExperimentalComposeUiApi
 @Composable
 fun ProfileInputRow(
@@ -168,14 +147,18 @@ fun ProfileInputRow(
 
     }
 }
-
+/**
+ * Funzione di preview della schermata IlTuoProfilo
+ */
 @ExperimentalComposeUiApi
 @Preview
 @Composable
 fun IlTuoProfiloPreview() {
     IlTuoProfilo(ProfiloViewModel())
 }
-
+/**
+ * Funzione di preview dell'elemento grafico InputRow
+ */
 @ExperimentalComposeUiApi
 @Preview
 @Composable
