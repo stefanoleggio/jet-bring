@@ -30,6 +30,9 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.R
 import com.example.jet_bring.ui.theme.*
 
+/**
+ *funzione usata per la generazione della screen riguardante il profilo utente
+ */
 @ExperimentalAnimationApi
 @Composable
 fun ProfiloScreen(
@@ -103,6 +106,10 @@ fun ProfiloScreen(
         }
 }
 
+/**
+ * Tavola presente in profiloScreen con bottoni per la selezione della modalità delle liste e il
+ * tipo di tema
+ */
 @ExperimentalAnimationApi
 @Composable
 fun SettingsTable(
@@ -172,6 +179,9 @@ fun SettingsTable(
     }
 }
 
+/**
+ * Funzione di preview di ProfiloScreen
+ */
 @ExperimentalAnimationApi
 @Composable
 @Preview
@@ -180,7 +190,9 @@ fun ProfiloScreenPreview() {
         ProfiloViewModel()
     )
 }
-
+/**
+ * Funzione di preview di SettingsTable
+ */
 @ExperimentalAnimationApi
 @Composable
 @Preview

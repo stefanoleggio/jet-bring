@@ -2,11 +2,13 @@ package com.example.jet_bring.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+/**
+ * lista di colori utilizzati nell'applicazione
+ */
 val Paradiso = Color(0xff2f8578)
 val Ceramic = Color(0xfffefffd)
 val Iron = Color(0xffd1d5d6)
 val LowAlphaIron = Color(0xd0d1d5d6)
-val Firefly = Color(0xff0b1820)
 val Mirage = Color(0xff1a2b33)
 val TePapaGreen = Color(0xff1c3339)
 val EbonyClay = Color(0xff24353d)
@@ -14,17 +16,9 @@ val LimedSpruce = Color(0xff303e47)
 val BlueBayoux = Color(0xff546e7b)
 val BreakerBay = Color(0xff529e94)
 val Roman = Color(0xffDB5259)
-val Mediumspringgreen = Color(0xff00FA9A)
-val Darkgreen = Color(0xff006400)
-val MajorelleBlue = Color(0xff724CF9)
-val Lightseagreen = Color(0xff20B2AA)
 val Citron = Color(0xffa1ac0c)
-val Byzantium = Color(0xff7f055f)
-val TyrianPurple = Color(0xff4A082E)
 val OrchidCrayola = Color(0xfff896d8)
 val DarkBlueGray = Color(0xff7365a5)
-val Iris = Color(0xff6449c6)
 val DarkSlateBlue = Color(0xFF564592)
 val RoyalPurple = Color(0xFF65569C)
-val RussianViolet = Color(0xFF2C1E5C)
 val StPatricksBlue = Color(0xFF34236C)
