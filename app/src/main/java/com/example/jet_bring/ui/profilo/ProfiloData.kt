@@ -32,8 +32,7 @@ data class CBoxArg(
 /**
  * lista di dati utilizzata per generare le table in profilo
  */
-/*TODO correggere le icone per farle corrispondere a quelle originali*/
 val tableDataList = listOf(
-    TableData("Impostazioni", Icons.Default.Settings)
+    TableData("Impostazioni", Icons.Default.Settings),
 )
 

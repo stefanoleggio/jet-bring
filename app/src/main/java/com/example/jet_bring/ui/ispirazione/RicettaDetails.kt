@@ -62,7 +62,6 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                         .alpha(min(1f, 1 - (scrollState.value / 400f)))
                         .height(300.dp),
                     contentScale = ContentScale.Crop,
-                    //contentScale = ContentScale.Crop,
                     contentDescription = "",
 
                     )
@@ -227,8 +226,6 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                 .padding(8.dp)
                 .width(51.dp)
                 .height(51.dp)
-
-            //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
 
         ) {
             Icon(Icons.Rounded.Close, contentDescription = "", tint = MaterialTheme.colors.background, modifier = Modifier.fillMaxSize() )

@@ -316,7 +316,6 @@ fun ProductRow(
             contentScale = ContentScale.Inside,
             modifier = Modifier
                 .size(60.dp)
-                //.padding(start = 10.dp,top = 10.dp,bottom = 10.dp) /*TODO sostituire con valore fissato in layout class*/
         )
         Column() {
             Text(
@@ -372,12 +371,8 @@ fun ProductGridMode(productsList: List<Product>,
     val productsPerRow = productsList.chunked(numOfColumns)
     Column(
 
-        //Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxWidth()
-        /*if(listeViewModel.getSelectedProducts().size < listeViewModel.calculateColumnsNumber())
-            Alignment.Start
-        else Alignment.CenterHorizontally*/
     ) {
         Column(
             horizontalAlignment = Alignment.Start
@@ -385,7 +380,7 @@ fun ProductGridMode(productsList: List<Product>,
             for (products in productsPerRow) {
                 Row() {
                     for (product in products) {
-                       ProductButton(product,onButtonClick, onDescriptionChange, isSelected,selectedColor,unselectedColor) //ProductButton(product, removeSelectedProduct = isSelectedMode, listeViewModel)
+                       ProductButton(product,onButtonClick, onDescriptionChange, isSelected,selectedColor,unselectedColor)
                     }
                 }
             }

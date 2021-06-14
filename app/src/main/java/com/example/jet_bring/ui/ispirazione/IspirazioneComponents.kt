@@ -308,7 +308,7 @@ fun AlignInRow(ricetta: Ricetta,) {
             )
         }
         Button(
-            onClick = { /* Do something! */ },
+            onClick = { },
             colors = ButtonDefaults.textButtonColors(
                 backgroundColor = MaterialTheme.colors.background
             ),
