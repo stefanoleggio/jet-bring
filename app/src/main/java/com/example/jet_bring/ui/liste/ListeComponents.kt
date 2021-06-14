@@ -330,7 +330,7 @@ fun ProductRow(
             Text(
                 text = currentDescription,
                 Modifier.padding(start= 20.dp),
-                color = MaterialTheme.colors.onSurface
+                color = Color.White
             )
         }
         Column(modifier = Modifier.fillMaxWidth(),
