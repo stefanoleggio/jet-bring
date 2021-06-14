@@ -3,32 +3,25 @@ package com.example.jet_bring.ui.liste
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
-import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
-import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.Category
 import com.example.jet_bring.model.Product
 import com.example.jet_bring.model.products
@@ -37,13 +30,15 @@ import com.example.jet_bring.ui.theme.BreakerBay
 import com.example.jet_bring.ui.theme.Roman
 import com.example.jet_bring.ui.utils.MainInputText
 import com.example.jet_bring.ui.utils.MainTextButton
-import org.intellij.lang.annotations.JdkConstants
-import androidx.compose.material.icons.*
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.ui.core.HorizontalAlignmentLine
 
+/**
+ * Funzione per la creazione del bottone Prodotto
+ * onButtonClick è una funzione lambda che indica l'azione da fare nel momento del click
+ * onDescriptionChange è una funzione lambda per gestire il cambio della descrizione
+ * isSelected è una funzione lambda per definire lo stato del bottone (se attivo o meno)
+ * selectedColor e unSelected color sono due parametri che definiscono i colori che il bottone deve assumere nel momento della selezione
+ */
 @ExperimentalFoundationApi
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
@@ -131,7 +126,9 @@ fun ProductButton(
 
 }
 
-
+/**
+ * Funzione che definisce la scheda popup per la modifica della descrizione del profotto
+ */
 @ExperimentalComposeUiApi
 @Composable
 fun DescriptionAlert(
@@ -187,6 +184,10 @@ fun DescriptionAlert(
     )
 }
 
+/**
+ * Funzione che definisce la Card della categoria
+ * Sono visibili nella schermata iniziale di Liste
+ */
 @Composable
 fun CategoryCard(navController: NavHostController, category: Category) {
     Card(
@@ -272,6 +273,10 @@ fun ProductColumnMode(
         }
     }
 }
+
+/**
+ * Funzione che definisce il bottone del prodotto nella modalità Column
+ */
 @ExperimentalComposeUiApi
 @Composable
 fun ProductRow(
@@ -426,6 +431,10 @@ fun ProductModeSwitcher(productsList: List<Product>,
     }
 }
 
+
+/**
+ * Preview dei componenti utilizzate durante lo sviluppo
+ */
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi

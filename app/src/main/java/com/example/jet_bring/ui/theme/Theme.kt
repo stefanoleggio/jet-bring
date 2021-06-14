@@ -8,6 +8,10 @@ import androidx.compose.material.Colors
 import androidx.compose.ui.graphics.Color.Companion.White
 
 
+/**
+ * Definizione delle color pallette per i temi
+ */
+
 private val DarkColorPalette = darkColors(
     primary = Mirage,
     onPrimary = Ceramic,

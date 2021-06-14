@@ -1,29 +1,28 @@
 package com.example.jet_bring.ui.liste
 
 import android.content.res.Resources
-import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.lifecycle.ViewModel
-import androidx.ui.animation.Crossfade
-import com.example.jet_bring.R
-import com.example.jet_bring.currentRoute
 import com.example.jet_bring.model.*
-import java.lang.Math.ceil
-import java.lang.Math.floor
 
 class ListeViewModel : ViewModel() {
 
 
+    /**
+     * Variabile contenente i prodotti selezionati
+     */
     val selectedProducts: MutableState<List<Product>> = mutableStateOf(ArrayList())
 
+    /**
+     * Variabile contenente le ricette selezionate
+     */
     var selectedRicette: MutableState<List<Ricetta>> = mutableStateOf(ArrayList(setSelectedRicette()))
 
 
     /**
      *
-     * Category model methods
+     * Metodi per le categorie
      *
      */
 
@@ -42,7 +41,7 @@ class ListeViewModel : ViewModel() {
 
     /**
      *
-     * Product model methods
+     * Metodi per i prodotti
      *
      */
 
@@ -77,7 +76,7 @@ class ListeViewModel : ViewModel() {
 
     /**
      *
-     * Selected products methods
+     * Metodi per la modifica dei prodotti selezionati
      *
      */
 
@@ -122,7 +121,7 @@ class ListeViewModel : ViewModel() {
     }
 
     /**
-     * Ricette Logic
+     * Metodi per le ricette
      */
 
     fun setSelectedRicette(): ArrayList<Ricetta> {

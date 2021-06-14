@@ -1,12 +1,7 @@
 package com.example.jet_bring.ui.profilo
 
-import android.graphics.drawable.Drawable
-import android.media.Image
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.material.icons.rounded.Email
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.jet_bring.R
 

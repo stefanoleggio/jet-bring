@@ -5,18 +5,19 @@ import androidx.annotation.RequiresApi
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
-import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.ui.animation.Crossfade
 import com.example.jet_bring.model.Category
-import com.example.jet_bring.model.Product
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.*
 
+
+/**
+ * Funzione che definisce lo screen della categoria
+ * L'id della categoria viene passato come parametro dal navigation
+ */
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalFoundationApi
@@ -46,6 +47,9 @@ fun CategoryScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        /**
+         * Visualizzo i prodotti a seconda della modalità selezionata nel ProfiloViewModel
+         */
         ProductModeSwitcher(
             category.products,
             profiloViewModel,
