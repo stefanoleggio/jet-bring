@@ -41,10 +41,11 @@ import androidx.navigation.compose.navigate
 import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.model.Ricetta
 import com.example.jet_bring.model.ricette
-import com.example.jet_bring.ui.liste.ListeViewModel
-import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.utils.InputText
 
+/**
+ *Preview delle Card ricette
+ */
 
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
@@ -60,7 +61,9 @@ fun CardPreview() {
     )
 }
 
-
+/**
+ *funzione che ritorna il numero usato nel padding in funzione dell'orintamento del dispositivo
+ */
 
 @Composable
 fun paddingBasedOnOrientation() : Int{
@@ -212,6 +215,9 @@ fun RicetteCard (
     }
 }
 
+/**
+ * Funzione che mostra unn Allert DIalog nella sezione AddRicetta quando modifichiamo il link
+ * */
 
 @ExperimentalComposeUiApi
 @Composable
@@ -233,9 +239,6 @@ fun AlertDialogLink(link: String, onModifiedText: (String) -> Unit, addRicettaVi
 
             AlertDialog(
                 onDismissRequest = {
-                    // Dismiss the dialog when the user clicks outside the dialog or on the back
-                    // button. If you want to disable that functionality, simply use an empty
-                    // onCloseRequest.
                     openDialog.value = false
                 },
                 title = {
@@ -269,7 +272,9 @@ fun AlertDialogLink(link: String, onModifiedText: (String) -> Unit, addRicettaVi
     }
 }
 
-
+/**
+ * Funzione che mostra i 3 bottoni presenti sotto le card delle ricette
+ * */
 
 @Composable
 fun AlignInRow(ricetta: Ricetta,) {
@@ -312,7 +317,7 @@ fun AlignInRow(ricetta: Ricetta,) {
                 pressedElevation = 0.dp,
                 disabledElevation = 0.dp
             ),
-            //elevation = ButtonElevation.elevation(enabled = false, interactionSource = null )
+
 
         ) {
             Icon(Icons.Rounded.Share, contentDescription = "Localized description", tint = MaterialTheme.colors.onBackground )

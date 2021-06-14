@@ -14,17 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
 import kotlin.math.min
-
-
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.text.font.FontWeight
 import com.example.jet_bring.ui.liste.ListeViewModel
@@ -32,24 +28,11 @@ import com.example.jet_bring.ui.liste.ProductModeSwitcher
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.ui.theme.*
 
-/*
-@RequiresApi(Build.VERSION_CODES.R)
-@Preview
-@Composable
-fun DetailsPreview() {
-    val listeViewModel = ListeViewModel()
-    val profileViewModel  = ProfiloViewModel()
-    RicetteDetails(
-        rememberNavController(),
-        "0",
-        listeViewModel,
-        profileViewModel
-    )
-}
 
 
- */
-
+/**
+ * Funzione usata come scermata per la visualizzazione delle ricette nel dettaglio
+ * */
 
 @ExperimentalComposeUiApi
 @RequiresApi(Build.VERSION_CODES.R)
@@ -58,7 +41,6 @@ fun DetailsPreview() {
 fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewModel) {
     val ricetta = listeViewModel.getRicetta(ricettaId)
     val scrollState = rememberScrollState()
-    val snackbarHostState = remember { SnackbarHostState() }
 
     if (ricetta != null) {
 
@@ -187,7 +169,9 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
 
                 Spacer(modifier = Modifier.height(150.dp))
 
-
+                /**
+                 * Bottone che ci permette di aggiungere gli elementi alla lista principale
+                 * */
                 Button(
                     shape = MaterialTheme.shapes.medium,
                     modifier = Modifier
