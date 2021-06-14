@@ -3,8 +3,10 @@ package com.example.jet_bring.ui.profilo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.ButtonDefaults.outlinedButtonColors
 import androidx.compose.material.icons.Icons
@@ -36,7 +38,9 @@ fun IlTuoProfilo(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-        Column {
+        Column (
+            Modifier.verticalScroll(rememberScrollState())
+                ){
             Row(
                 Modifier
                     .fillMaxWidth()
