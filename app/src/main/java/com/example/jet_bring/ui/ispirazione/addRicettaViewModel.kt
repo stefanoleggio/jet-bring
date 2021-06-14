@@ -116,7 +116,4 @@ class AddRicettaViewModel : ViewModel() {
 
         return current
     }
-
-
-
 }
