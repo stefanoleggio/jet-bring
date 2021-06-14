@@ -22,6 +22,9 @@ class AddRicettaViewModel : ViewModel() {
 
     fun addRicetta() {
         this.onSaveDone()
+        if(this.ricetta.sourceUrl == "http://") {
+            this.ricetta.sourceUrl = "https://developer.android.com/jetpack/compose"
+        }
         ricette.add(this.ricetta)
     }
 

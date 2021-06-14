@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.jet_bring.model.*
 
@@ -23,6 +24,7 @@ fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: Paddi
         ricette.forEach { ricetta ->
             RicetteCard(ricetta = ricetta, navController,"ispirazione/ricetteDetails")
         }
+        Spacer(Modifier.height(60.dp))
         Spacer(modifier = Modifier.height(scafPaddingValues.calculateBottomPadding()))
     }
 

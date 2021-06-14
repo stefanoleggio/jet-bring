@@ -49,7 +49,7 @@ val ricette = arrayListOf(
         "Giallo Zafferano",
         R.drawable.crostoni_pancetta_funghi,
         "https://www.tavolartegusto.it/ricetta/crostini-di-pane/",
-        502,
+        25,
         2,
         "Buoni e gustosi",
         listOf(

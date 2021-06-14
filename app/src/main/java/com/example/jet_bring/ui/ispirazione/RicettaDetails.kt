@@ -22,6 +22,7 @@ import androidx.navigation.compose.navigate
 import kotlin.math.min
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.liste.ProductModeSwitcher
@@ -204,7 +205,7 @@ fun RicetteDetails(navController: NavHostController, ricettaId: Long,listeViewMo
                 ) {
                     Text(
                         text = "Aggiungi ${listeViewModel.getSelectedRicetta(ricettaId).ingredienti.size.toString()} ingredienti",
-                        color = MaterialTheme.colors.onBackground
+                        color = Color.White
 
                     )
 
