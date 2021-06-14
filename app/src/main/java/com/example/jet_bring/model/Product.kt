@@ -3,6 +3,11 @@ package com.example.jet_bring.model
 import androidx.compose.runtime.Immutable
 import com.example.jet_bring.R
 
+
+/**
+ * Data class dei prodotti
+ * Ogni prodotto ha un id, nome, riferimeno a un'icona e la descrizione che può essere null
+ */
 @Immutable
 data class Product(
     val id : Long,

@@ -1,7 +1,6 @@
 package com.example.jet_bring.ui.profilo
 
 import android.content.res.Resources
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.ui.theme.Theme

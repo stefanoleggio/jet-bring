@@ -15,13 +15,15 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 import com.example.jet_bring.R
-import com.example.jet_bring.navigation.animationFade
 import com.example.jet_bring.ui.theme.*
 
+/**
+ * Funzione principale per Liste Screen
+ * Vengono passati i due viewModel profiloViewModel e listeViewModel per accedere ai dati
+ */
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
@@ -53,6 +55,9 @@ fun ListeScreen(
     }
 }
 
+/**
+ * Funzione che definisce la card che contiene i prodotti selezionati
+ */
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalComposeUiApi
@@ -62,6 +67,7 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
         modifier = Modifier
             .padding(bottom = 20.dp),
     ) {
+        //Controllo se ci sono dei prodotti selezionati
         if (listeViewModel.isSelectedProductsEmpty()) {
             Card(
                 modifier = Modifier
@@ -90,6 +96,9 @@ fun MyProductsCard(listeViewModel: ListeViewModel,profiloViewModel:ProfiloViewMo
 
             }
         } else {
+            /**
+             * Richiamo anche qui il ProductModeSwitcher per stampare i prodotti nella modalità selezionata (Column mode oppure Grid mode)
+             */
             ProductModeSwitcher(
                 listeViewModel.getSelectedProducts(),
                 profiloViewModel,
