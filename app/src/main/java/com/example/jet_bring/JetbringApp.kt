@@ -2,27 +2,20 @@ package com.example.jet_bring
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.AddCircle
-import androidx.compose.material.icons.rounded.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.KEY_ROUTE
@@ -32,11 +25,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.jet_bring.navigation.AppBottomNavigation
 import com.example.jet_bring.navigation.NavigationManager
 import com.example.jet_bring.navigation.Screen
-import com.example.jet_bring.ui.ispirazione.AddRicettaViewModel
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
-import com.example.jet_bring.ui.profilo.UserData
-import com.example.jet_bring.ui.theme.JetbringTheme
 
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalAnimationApi
@@ -45,10 +35,9 @@ import com.example.jet_bring.ui.theme.JetbringTheme
 @Composable
 fun JetbringApp(profiloViewModel: ProfiloViewModel, listeViewModel: ListeViewModel)
 {
-
-
     val title = remember { mutableStateOf("Liste") }
     val backArrow = remember {mutableStateOf(false)}
+    //Creazione del navController
     val navController = rememberNavController()
 
 
@@ -58,6 +47,9 @@ fun JetbringApp(profiloViewModel: ProfiloViewModel, listeViewModel: ListeViewMod
             Screen.Profilo,
         )
         val backgroundColor = MaterialTheme.colors.secondaryVariant
+        /**
+         * Creazione dello scaffold
+         */
         Scaffold(
             topBar = {
                 if (backArrow.value) {

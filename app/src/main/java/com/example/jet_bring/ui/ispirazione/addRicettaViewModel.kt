@@ -1,20 +1,24 @@
 package com.example.jet_bring.ui.ispirazione
 
-import android.content.res.Resources
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.jet_bring.R
-import com.example.jet_bring.currentRoute
 import com.example.jet_bring.model.*
-import com.example.jet_bring.ui.liste.ListeViewModel
 
+/**
+ * ViewModel usato per l'AddRicetta
+ * */
 
 class AddRicettaViewModel : ViewModel() {
 
     var ricetta by mutableStateOf(Ricetta())
     val prodottiAddRicetta = getProdutsWithOutComments()
+
+    /**
+     * Funzione che salva la ricetta
+     * */
 
     fun addRicetta() {
         this.onSaveDone()
@@ -94,10 +98,7 @@ class AddRicettaViewModel : ViewModel() {
         for (prodotto in ricetta.ingredienti)
             prodotto.description?.let { getProduct(prodotto.name, it) }?.let { current.add(it) }
 
-
         ricetta = Ricetta(id = (ricette.lastIndex.toLong()+1), titolo = ricetta.titolo+" ", descrizione = ricetta.descrizione, pubblicatore = ricetta.pubblicatore, immagine = R.drawable.empty_plate, sourceUrl = ricetta.sourceUrl, voti = ricetta.voti, ingredienti = current, persone = ricetta.persone)
-
-
     }
 
     fun setDescriptionVirginProducts(productId: Long, description: String?){

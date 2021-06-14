@@ -35,11 +35,14 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
+        /**
+         * Gestione della rotazione
+         */
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            profiloViewModel.state = "Landscape" // this will automatically change the text to landscape
+            profiloViewModel.state = "Landscape"
             profiloViewModel.setColumnNumber()
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            profiloViewModel.state = "Potrait"   // this will automatically change the text to potrait
+            profiloViewModel.state = "Potrait"
             profiloViewModel.setColumnNumber()
         }
     }

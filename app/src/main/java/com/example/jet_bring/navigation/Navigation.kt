@@ -30,6 +30,8 @@ import com.example.jet_bring.ui.ispirazione.RicetteDetails
 import com.example.jet_bring.ui.liste.ListeViewModel
 import com.example.jet_bring.ui.profilo.ProfiloViewModel
 
+
+
 @RequiresApi(Build.VERSION_CODES.R)
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
@@ -44,16 +46,18 @@ fun NavigationManager (
     listeViewModel: ListeViewModel
 ){
 
+    /**
+     * Creazione del NavHost
+     */
     NavHost(navController, startDestination = "liste") {
 
         /**
-         *
-         * Main routes
-         *
+         * Routes principali
+         * Di seguito vengono definite le rotte per le schermate principali
+         * Alcune di queste si occupano anche di effettuare il passaggio di parametri
          */
 
         composable("liste") {
-
             animationFade {
                 ListeScreen(navController, screenPadding, listeViewModel,profiloViewModel)
             }
@@ -154,7 +158,9 @@ sealed class Screen(val route: String, val label: String, val icon: ImageVector)
     object Profilo: Screen("profilo", "Profilo", Icons.Default.Person)
 }
 
-
+/**
+ * Definizione della Bottom bar
+ */
 @Composable
 fun AppBottomNavigation(
     navController: NavHostController,
@@ -199,27 +205,24 @@ private fun currentRoute(navController: NavHostController): String? {
     return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
 }
 
+/**
+ * Definizione delle animazioni nel passaggio delle schermate
+ */
 @ExperimentalAnimationApi
 @Composable
 fun animationSlide(content: @Composable () -> Unit) {
     AnimatedVisibility(
         visible = true,
         enter = slideInHorizontally(
-            // Offsets the content by 1/3 of its width to the left, and slide towards right
             initialOffsetX = { fullWidth -> fullWidth },
-            // Overwrites the default animation with tween for this slide animation.
             animationSpec = tween(durationMillis = 100)
         ) + fadeIn(
-            // Overwrites the default animation with tween
             animationSpec = tween(durationMillis = 100)
         ) ,
         exit = slideOutHorizontally(
-            // Offsets the content by 1/3 of its width to the left, and slide towards right
             targetOffsetX = { fullWidth -> fullWidth },
-            // Overwrites the default animation with tween for this slide animation.
             animationSpec = tween(durationMillis = 100)
         ) + fadeOut(
-            // Overwrites the default animation with tween
             animationSpec = tween(durationMillis = 100)
         ),
         content = content,

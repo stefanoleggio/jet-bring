@@ -2,6 +2,10 @@ package com.example.jet_bring.model
 
 import androidx.compose.runtime.Immutable
 
+/**
+ * Data class per le Categorie
+ * Ogni categoria ha una lista di prodotti, in particolare una subList della lista products
+ */
 @Immutable
 data class Category(
     val id: Long,

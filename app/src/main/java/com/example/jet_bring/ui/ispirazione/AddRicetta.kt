@@ -37,6 +37,9 @@ import com.example.jet_bring.ui.utils.InputText
 import kotlinx.coroutines.launch
 
 
+/**
+ * Schermata di addRicette
+ * */
 
 @ExperimentalFoundationApi
 @RequiresApi(Build.VERSION_CODES.R)
@@ -49,7 +52,9 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
 
 
-
+    /**
+     * Colonna di elementi che scorre per visualizzare tutti gli elementi
+     * */
     val state = rememberScrollState()
     Column(
             modifier = Modifier
@@ -60,6 +65,13 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
             ) {
 
+        /**
+         * Card contenente l'icona dell'immagine,
+         * campo del Nome,
+         * campo della Descrizione
+         * Bottone per insertire il link
+         *
+         * */
         Card(
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
@@ -126,6 +138,10 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
         }
         Spacer(modifier = Modifier.height(15.dp))
 
+        /**
+         * Card che visualizza le informazioni riguardante il numero di persone
+         * con i bottini per poter interagire
+         * */
         Column(Modifier
             .padding(
                 bottom = PADDING_BOTTOM,
@@ -241,6 +257,9 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
 
             Spacer(modifier = Modifier.height(15.dp))
             Spacer(modifier = Modifier.height(PADDING_TOP))
+            /**
+             * Bottone per salvare la ricetta
+             * */
             Column(
                 modifier = Modifier.fillMaxWidth().wrapContentSize(Alignment.CenterEnd)
             ) {
@@ -271,6 +290,9 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
             Spacer(modifier = Modifier.height(PADDING_TOP))
             Spacer(modifier = Modifier.height(PADDING_END))
 
+            /**
+             * Viusualizzatore dei prodotti
+             * */
             ProductModeSwitcher(
                 addRicettaViewModel.prodottiAddRicetta,
                 profiloViewModel,
@@ -318,6 +340,10 @@ fun AddRicetta(navController: NavHostController, listeViewModel: ListeViewModel,
     }
 
 }
+
+/**
+ * Funzione per la visualizzazione della Preview di addRicette
+ * */
 
 
 @ExperimentalFoundationApi

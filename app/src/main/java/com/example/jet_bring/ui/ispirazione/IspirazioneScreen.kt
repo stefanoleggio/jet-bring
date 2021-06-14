@@ -11,7 +11,9 @@ import com.example.jet_bring.model.*
 
 
 
-
+/**
+ * Funzione usata per la schermata delle ricette. Mostra una lista di Card, ciascuna rappresenta una ricetta diverse
+ * */
 @Composable
 fun IspirazioneScreen(navController: NavHostController, scafPaddingValues: PaddingValues) {
 
